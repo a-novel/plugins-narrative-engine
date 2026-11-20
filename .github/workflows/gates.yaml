@@ -1,0 +1,56 @@
+# Runs the governance gates of a pull request in one job, through kit/workflows' gates-run.yaml:
+# merge-gate, epic-freeze, review-gate and the board Status of the issues it closes. The [Agent] App
+# posts each check under the integration id the ruleset requires.
+name: gates
+
+on:
+  # pull_request_target runs this default-branch copy, which a pull request cannot rewrite.
+  pull_request_target: # zizmor: ignore[dangerous-triggers] The gates only call the GitHub API; they never check out the pull request.
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+      - unlabeled
+      - ready_for_review
+      - converted_to_draft
+      - closed
+  # Reviews and merge groups run a pull request's own copy of a workflow, so they arrive through
+  # pr-relay.yaml.
+  workflow_run: # zizmor: ignore[dangerous-triggers] relay-context reads the relayed pull request through the API only.
+    workflows: [pr-relay]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  evaluate:
+    # The engine reads the pull request and its closing issues; every write uses the App.
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    uses: a-novel-kit/workflows/.github/workflows/gates-run.yaml@v1.87.1
+    with:
+      client_id: ${{ vars.AGENT_BOT_CLIENT_ID }}
+      dependabot_security_login: ${{ vars.DEPENDABOT_SECURITY_LOGIN }}
+    secrets:
+      app_private_key: ${{ secrets.AGENT_BOT_PRIVATE_KEY }}
+
+  # Posts reviews to the chat. notify-pr-run reads the pull request and its latest review back through
+  # the API instead of trusting the relay's run.
+  notify-review:
+    if: github.event.workflow_run.event == 'pull_request_review'
+    # The engine lists a bot pull request's CI runs; the pull request itself it reads through the App.
+    permissions:
+      actions: read
+    uses: a-novel-kit/workflows/.github/workflows/notify-pr-run.yaml@v1.87.1
+    with:
+      client_id: ${{ vars.AGENT_BOT_CLIENT_ID }}
+      roles: ${{ vars.CHAT_REPO_ROLES }}
+      bws_server_url: ${{ vars.BWS_SERVER_URL }}
+    secrets:
+      private_key: ${{ secrets.AGENT_BOT_PRIVATE_KEY }}
+      reviews_webhook: ${{ secrets.REVIEWS_WEBHOOK }}
+      dependencies_webhook: ${{ secrets.DEPENDENCIES_WEBHOOK }}
+      bws_access_token: ${{ secrets.BWS_READ_TOKEN }}

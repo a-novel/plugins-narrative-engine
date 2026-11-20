@@ -1,0 +1,21 @@
+# Assigns a pull request to the person who opened it. A bot's pull request stays unassigned: an
+# assignee would be notified of every version bump, and a failing one reaches the chat's
+# dependencies feed instead. Skipping the job, rather than the step, spares a runner per bot PR.
+name: auto-assign author
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+permissions: {}
+
+jobs:
+  assign-author:
+    if: github.event.pull_request.user.type != 'Bot'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: a-novel-kit/workflows/generic-actions/assign-author@v1.87.1
+        with:
+          github_token: ${{ github.token }}
