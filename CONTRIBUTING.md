@@ -13,33 +13,43 @@ The root holds the tooling: the ESLint and Prettier presets of
 [`@a-novel-kit/nodelib-config`](https://github.com/a-novel-kit/nodelib/tree/master/packages/configs),
 the Vitest configuration, and a `tsconfig.json` that type-checks the root's own TypeScript files.
 
-The contract keeps its sources in `contract/src`, each test beside the file it covers as
-`<name>.test.ts`. A `<name>.fixture.ts` file holds data that only tests read. Neither kind is built,
-so neither is published.
+Each package keeps its sources in its `src` directory, each test beside the file it covers as
+`<name>.test.ts`. A `<name>.browser.test.ts` file runs in Chromium, and a `<name>.fixture.ts` file
+holds data that only tests read. None of them is built, so none is published.
 
 A host loads the contract in a browser and a Worker: its build reads no Node types, and a test fails
-when its entry bundles a module outside the package and its dependency. Code that knows nothing of
-plugins goes in [nodelib](https://github.com/a-novel-kit/nodelib), where the JSON tools the contract
-depends on live.
+when its entry bundles a module outside the package and its dependency. What only a plugin author
+runs goes in the kit, whose main entry exports the contract. The commands of `plugin-kit` live in
+`kit/src/cli`. Code that knows nothing of plugins goes in
+[nodelib](https://github.com/a-novel-kit/nodelib), where the JSON tools both packages depend on live.
+
+`kit/test/sample` is a small plugin, laid out as the [kit's README](./kit/README.md#the-folder)
+describes. The tests check, build and publish it, then mount it in a browser. It imports the kit by
+its package name, as a plugin does, and the root `package.json` declares what it depends on.
 
 ## What CI checks
 
 Run every command from the repository root.
 
-| Command      | CI job     | What it checks                                                  |
-| ------------ | ---------- | --------------------------------------------------------------- |
-| `pnpm lint`  | `lint-js`  | Prettier, the type checks and ESLint, over the whole repository |
-| `pnpm test`  | `test-js`  | The unit tests, with Vitest                                     |
-| `pnpm build` | `build-js` | The contract compiles to `contract/dist`                        |
+| Command        | CI job     | What it checks                                                            |
+| -------------- | ---------- | ------------------------------------------------------------------------- |
+| `pnpm lint`    | `lint-js`  | Prettier, the type checks and ESLint, over the whole repository           |
+| `pnpm test:ci` | `test-js`  | The packages compile, then Vitest runs the tests, in Node and Chromium    |
+| `pnpm build`   | `build-js` | Each package compiles to its `dist`, the contract first: the kit reads it |
+
+`pnpm test` runs the tests alone. The kit's tests read both packages as compiled, so run
+`pnpm build` first after a change to their sources. The browser tests need Chromium.
+`pnpm exec playwright install chromium` downloads it, and CI runs them in the Playwright container
+image.
 
 Run `pnpm format` before committing, since `lint-js` fails on any Prettier difference.
 
 ## Publishing
 
-The contract takes the repository's version, and a release publishes it to GitHub Packages. Cut a
+Both packages take the repository's version, and a release publishes them to GitHub Packages. Cut a
 release from **Actions → release**; a `dry_run` shows the version it would cut. The workflow sizes
 the release from the commit history, bumps the version and tags the commit, and the tag publishes
-the package. The protected `release` environment decides who can cut a release.
+the packages. The protected `release` environment decides who can cut a release.
 
 ## Questions?
 

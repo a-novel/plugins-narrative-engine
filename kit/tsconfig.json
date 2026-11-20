@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    // The type check reads the contract from its sources, so it needs no build.
+    "paths": {
+      "@a-novel/plugins-narrative-engine-contract": ["../contract/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

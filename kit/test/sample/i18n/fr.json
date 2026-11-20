@@ -1,0 +1,11 @@
+{
+  "title": "Exemple",
+  "description": "Liste les temps forts d'une histoire.",
+  "messages": {
+    "schema": { "title": "Temps forts", "beat": { "title": "Titre" } },
+    "exports": { "beats": "Temps forts" },
+    "heading": "Temps forts",
+    "title": "Titre du prochain temps fort",
+    "add": "Ajouter le temps fort"
+  }
+}
