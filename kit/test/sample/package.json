@@ -1,0 +1,6 @@
+{
+  "name": "sample",
+  "private": true,
+  "description": "The plugin the kit's tests check, build and publish. The root package declares what it imports.",
+  "type": "module"
+}

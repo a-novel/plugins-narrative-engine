@@ -1,0 +1,16 @@
+manifest: 1
+schema:
+  type: array
+  title: schema.title
+  items:
+    $ref: "#/$defs/beat"
+  default: []
+  $defs:
+    beat:
+      type: object
+      required: [id, title]
+      properties:
+        id: { type: string }
+        title: { type: string, title: schema.beat.title }
+exports:
+  beats: { name: exports.beats, select: "$[*]", id: /id, label: /title }
