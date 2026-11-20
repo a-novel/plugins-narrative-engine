@@ -12,6 +12,9 @@ The plugins A-Novel maintains for the Narrative Engine.
 [![License: RPL-1.5](https://img.shields.io/badge/license-RPL--1.5-blue)](LICENSE)
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/a-novel/plugins-narrative-engine/main.yaml)
+[![codecov](https://codecov.io/gh/a-novel/plugins-narrative-engine/graph/badge.svg)](https://codecov.io/gh/a-novel/plugins-narrative-engine)
+
+![Coverage graph](https://codecov.io/gh/a-novel/plugins-narrative-engine/graphs/sunburst.svg)
 
 ## What this is
 
