@@ -4,6 +4,10 @@ name: release
 # dispatches this workflow. `plan` rehearses with no credential; `cut` runs in the protected
 # `release` environment, the "who can publish" gate whose key only it reads, and pushes the version
 # commit, the tag and the GitHub Release as the release App.
+#
+# The tag then runs this workflow again, and that run publishes the package from the tag. Only the
+# release App and admins can create a tag, so one approval covers the release, and a hotfix tag
+# publishes its line the same way.
 on:
   workflow_dispatch:
     inputs:
@@ -12,8 +16,10 @@ on:
         required: false
         type: boolean
         default: false
+  push:
+    tags: ["v*"]
 
-run-name: "🚀 release ${{ github.ref_name }}${{ inputs.dry_run && ' (dry-run)' || '' }}"
+run-name: "${{ github.event_name == 'push' && format('📦 publish {0}', github.ref_name) || format('🚀 release {0}{1}', github.ref_name, inputs.dry_run && ' (dry-run)' || '') }}"
 
 # plan and cut run release-core with this CLI version.
 env:
@@ -26,6 +32,7 @@ env:
 
 jobs:
   plan:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -58,7 +65,7 @@ jobs:
 
   cut:
     needs: [plan, notes]
-    if: ${{ !inputs.dry_run }}
+    if: github.event_name != 'push' && !inputs.dry_run
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -70,10 +77,25 @@ jobs:
           client_id: ${{ vars.RELEASE_BOT_CLIENT_ID }}
           app_private_key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
 
-  # Everything on the default branch just shipped: clear this repo's awaiting-release items off
-  # the board. The Agent key is a secret of the governance environment, never of the release one.
+  # Publishes the package from the release tag.
+  build:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - uses: a-novel-kit/workflows/publish-actions/npm@v1.87.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # Clears this repo's awaiting-release items off the board once the package ships. The Agent key
+  # is a secret of the governance environment, never of the release one.
   archive:
-    needs: [cut]
+    needs: [build]
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
       name: governance
