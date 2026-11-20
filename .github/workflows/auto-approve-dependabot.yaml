@@ -1,0 +1,81 @@
+# Approves the pull requests the trusted dependency bots open, so routine version
+# bumps wait on no person, and adds each approved one to the merge queue. Two
+# facts keep it safe. A contributor cannot impersonate the bot that authors the
+# pull request. A commit GitHub did not sign for that bot withholds the approval,
+# so a tampered pull request falls back to normal review.
+#
+# A Renovate update merges alone only when Renovate itself put it on auto-merge, so
+# the updates its presets leave to review, such as majors, wait for a person.
+#
+# Any branch of a repository can publish its packages, so a first-party package or
+# image version is approved only with its release proof: an attestation from its
+# producer's release workflow at the version's tag, and an immutable Release from
+# the org's release App.
+#
+# The approval waits while the head's `renovate/stability-days` status is pending,
+# which enforces Renovate's release age. Renovate marks an update stable with a
+# status event, hence the `status` trigger. Every status in the repo fires it, and
+# the job skips all but that one.
+#
+# On a-novel/infra, whose merges deploy production, the approval runs strict. A
+# bot's pull request merges on its own only as a release pin, as a version update
+# Renovate itself put on auto-merge, or as a refresh of Google's service ranges
+# to exactly what Google publishes. Anything else waits for a maintainer's or an
+# admin's review.
+# Renovate arms auto-merge seconds after it opens its pull request, and that event
+# re-runs the job; the agent arming a pin does not.
+name: auto-approve dependencies
+
+on:
+  # Runs this default-branch copy; the approval reads the pull request through the API only.
+  pull_request_target: # zizmor: ignore[dangerous-triggers] Fixed API calls only; no pull request checkout.
+    types: [opened, synchronize, reopened, auto_merge_enabled]
+  status:
+  # Only fixed API calls and pinned actions consume validated metadata; no PR checkout, artifacts, caches or environment files.
+  # Only the Dependabot job reads it, so every other branch's CI starts no run.
+  workflow_run: # zizmor: ignore[dangerous-triggers] Privileged bot approval requires base-branch Actions secrets.
+    workflows: [main]
+    types: [completed]
+    branches: ["dependabot/**"]
+
+jobs:
+  auto-approve:
+    if: >-
+      github.actor != vars.DEPENDABOT_SECURITY_LOGIN &&
+      (github.event.action != 'auto_merge_enabled' || github.event.sender.login == vars.DEPENDENCY_BOT_LOGIN) &&
+      (github.event.pull_request.user.login == vars.DEPENDENCY_BOT_LOGIN ||
+       github.event.pull_request.user.login == vars.DEPENDABOT_SECURITY_LOGIN ||
+       (github.event_name == 'status' && github.event.context == 'renovate/stability-days' &&
+        github.event.state == 'success'))
+    # The callee mints a scoped App token for every write. The default token makes the reads the
+    # App cannot: the release age, and each first-party version's attestation and npm tarball with
+    # the diff they belong to. The caller grants only those reads.
+    permissions:
+      statuses: read
+      contents: read
+      attestations: read
+      packages: read
+    uses: a-novel-kit/workflows/.github/workflows/auto-approve-dependabot-run.yaml@v1.87.1
+    with:
+      client_id: ${{ vars.AGENT_BOT_CLIENT_ID }}
+      dependency_bot_login: ${{ vars.DEPENDENCY_BOT_LOGIN }}
+      dependabot_security_login: ${{ vars.DEPENDABOT_SECURITY_LOGIN }}
+      strict: ${{ github.repository == 'a-novel/infra' }}
+    secrets:
+      bot_private_key: ${{ secrets.AGENT_BOT_PRIVATE_KEY }}
+
+  # Dependabot's own pull request events read no Actions secret, so the completion of its CI run,
+  # which runs this default-branch copy, gates and approves its pull request.
+  dependabot:
+    if: github.event_name == 'workflow_run'
+    # The engine reads the pull request and its closing issues; every write uses the App.
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    uses: a-novel-kit/workflows/.github/workflows/dependabot-run.yaml@v1.87.1
+    with:
+      client_id: ${{ vars.AGENT_BOT_CLIENT_ID }}
+      dependabot_security_login: ${{ vars.DEPENDABOT_SECURITY_LOGIN }}
+    secrets:
+      app_private_key: ${{ secrets.AGENT_BOT_PRIVATE_KEY }}

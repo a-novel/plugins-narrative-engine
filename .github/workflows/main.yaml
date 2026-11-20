@@ -1,0 +1,38 @@
+name: main
+
+on:
+  merge_group:
+  push:
+    branches:
+      - "**"
+      # merge_group already runs the queue; a push run on its branch would repeat every job.
+      - "!gh-readonly-queue/**"
+    tags-ignore:
+      - "**"
+
+jobs:
+  lint-js:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: a-novel-kit/workflows/node-actions/lint-node@v1.87.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # Runs offline, so no hosted scanner can block a merge.
+  scan-secrets:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: a-novel-kit/workflows/security-actions/scan-secrets@v1.87.1
+
+  # Audits the workflows themselves, such as for excessive permissions.
+  lint-workflows:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: a-novel-kit/workflows/security-actions/lint-workflows@v1.87.1

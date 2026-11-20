@@ -1,0 +1,11 @@
+packages:
+  - kit
+  - plugins/*
+
+# nodelib-config declares a peer for every tool it has a preset for. Installing them all would bring
+# Vite, Storybook and SvelteKit into a workspace that uses only the lint and format presets.
+autoInstallPeers: false
+
+minimumReleaseAgeExclude:
+  - "@a-novel-kit/*"
+  - "@a-novel/*"
