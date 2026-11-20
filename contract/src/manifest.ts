@@ -1,8 +1,16 @@
 import type { ExportedItem } from "./contract.js";
-import type { Json, JsonObject } from "./json.js";
 import manifestSchema from "./manifest.schema.json" with { type: "json" };
-import { format, get, isObject, parse } from "./pointer.js";
-import { validate } from "./validate.js";
+
+import {
+  type Json,
+  type JsonObject,
+  formatJsonPointer,
+  isJsonObject,
+  listSubschemas,
+  parseJsonPointer,
+  resolveJsonPointer,
+  validateJson,
+} from "@a-novel-kit/nodelib-json";
 
 /** An ExportDefinition declares one named list of linkable items of an instance. */
 export interface ExportDefinition {
@@ -46,38 +54,6 @@ export interface Messages {
   messages: JsonObject;
 }
 
-// Keywords whose value is a subschema, or a list of subschemas. `additionalItems` is older than
-// draft 2020-12, and the validator still applies it.
-const SUBSCHEMA_KEYWORDS = [
-  "additionalItems",
-  "additionalProperties",
-  "allOf",
-  "anyOf",
-  "contains",
-  "contentSchema",
-  "else",
-  "if",
-  "items",
-  "not",
-  "oneOf",
-  "prefixItems",
-  "propertyNames",
-  "then",
-  "unevaluatedItems",
-  "unevaluatedProperties",
-];
-
-// Keywords whose value maps names to subschemas. `definitions` and `dependencies` are older than
-// draft 2020-12, and the validator still applies them.
-const SUBSCHEMA_MAP_KEYWORDS = [
-  "$defs",
-  "definitions",
-  "dependencies",
-  "dependentSchemas",
-  "patternProperties",
-  "properties",
-];
-
 // Keywords outside the dialect: the browser's validator lacks the first two, and validators
 // disagree on formats.
 const UNSUPPORTED_KEYWORDS = ["$dynamicRef", "$dynamicAnchor", "format"];
@@ -101,20 +77,25 @@ const SELECT_STEP = /[^$.[\]]+/g;
  * are then left unchecked.
  */
 export function checkManifest(manifest: unknown, english?: unknown): string[] {
-  const problems = validate(manifestSchema, manifest as Json).map(({ path, message }) => `${path || "/"}: ${message}`);
+  const problems = validateJson(manifestSchema, manifest as Json).map(
+    ({ path, message }) => `${path || "/"}: ${message}`
+  );
   if (problems.length > 0) return problems;
 
   const { schema, exports } = manifest as Manifest;
-  const keys = english === undefined ? undefined : translationKeys(isObject(english) ? english.messages : undefined);
+  const keys =
+    english === undefined ? undefined : translationKeys(isJsonObject(english) ? english.messages : undefined);
   const isMissing = (key: Json | undefined) => keys !== undefined && !(typeof key === "string" && keys.has(key));
 
-  for (const [at, subschema] of subschemas(schema)) {
+  for (const [tokens, subschema] of listSubschemas(schema)) {
+    const at = ["schema", ...tokens];
+
     if (Object.hasOwn(subschema, "$ref") && !(typeof subschema.$ref === "string" && subschema.$ref.startsWith("#"))) {
-      problems.push(`${format([...at, "$ref"])}: a reference stays inside the schema, starting with "#".`);
+      problems.push(`${formatJsonPointer([...at, "$ref"])}: a reference stays inside the schema, starting with "#".`);
     }
     for (const keyword of UNSUPPORTED_KEYWORDS) {
       if (Object.hasOwn(subschema, keyword))
-        problems.push(`${format([...at, keyword])}: a plugin schema cannot use "${keyword}".`);
+        problems.push(`${formatJsonPointer([...at, keyword])}: a plugin schema cannot use "${keyword}".`);
     }
     for (const keyword of ["title", "description"]) {
       if (Object.hasOwn(subschema, keyword) && isMissing(subschema[keyword]))
@@ -131,34 +112,7 @@ export function checkManifest(manifest: unknown, english?: unknown): string[] {
 
 /** Formats the problem of a translation key the English messages lack. */
 function missingKey(at: string[], key: Json | undefined): string {
-  return `${format(at)}: ${JSON.stringify(key)} is not a key of the English messages.`;
-}
-
-/**
- * Lists every subschema of a schema with its reference tokens. It walks by keyword, so a property
- * named after a keyword and the content of a `default` or an `enum` are never read as schemas.
- */
-function subschemas(schema: JsonObject): [string[], JsonObject][] {
-  const found: [string[], JsonObject][] = [[["schema"], schema]];
-  const add = (at: string[], node: Json | undefined) => {
-    if (isObject(node)) found.push([at, node]);
-  };
-
-  // The list grows while it is read: each subschema adds its own.
-  for (const [at, node] of found) {
-    for (const keyword of SUBSCHEMA_KEYWORDS) {
-      const value = node[keyword];
-      if (Array.isArray(value)) value.forEach((item, index) => add([...at, keyword, String(index)], item));
-      else add([...at, keyword], value);
-    }
-
-    for (const keyword of SUBSCHEMA_MAP_KEYWORDS) {
-      const map = node[keyword];
-      for (const [name, value] of isObject(map) ? Object.entries(map) : []) add([...at, keyword, name], value);
-    }
-  }
-
-  return found;
+  return `${formatJsonPointer(at)}: ${JSON.stringify(key)} is not a key of the English messages.`;
 }
 
 /** Checks that a schema has a default, which is valid against it. */
@@ -167,7 +121,7 @@ function checkDefault(schema: JsonObject): string[] {
   if (initial === undefined) return ["/schema/default: a schema needs a default, the content of a new instance."];
 
   try {
-    return validate(schema, initial).map(({ path, message }) => `/schema/default${path}: ${message}`);
+    return validateJson(schema, initial).map(({ path, message }) => `/schema/default${path}: ${message}`);
   } catch (error) {
     // The validator throws on a schema it cannot evaluate. Its message lists every known schema
     // after the first line.
@@ -185,14 +139,14 @@ function checkDefault(schema: JsonObject): string[] {
  * messages as `language` to check English itself.
  */
 export function checkMessages(english: Messages, language: unknown): string[] {
-  if (!isObject(language)) return ["/: a language is an object."];
+  if (!isJsonObject(language)) return ["/: a language is an object."];
 
   const problems = ["title", "description"]
     .filter((name) => typeof language[name] !== "string" || language[name] === "")
     .map((name) => `/${name}: a language needs a non-empty ${name}.`);
 
   const keys = translationKeys(language.messages, problems);
-  const expected = translationKeys(isObject(english) ? english.messages : undefined);
+  const expected = translationKeys(isJsonObject(english) ? english.messages : undefined);
 
   for (const key of expected) if (!keys.has(key)) problems.push(`${pointerOf(key)}: the translation is missing.`);
   for (const key of keys) if (!expected.has(key)) problems.push(`${pointerOf(key)}: English has no such key.`);
@@ -202,7 +156,7 @@ export function checkMessages(english: Messages, language: unknown): string[] {
 
 /** Formats the JSON Pointer of a translation key in a language. */
 function pointerOf(key: string): string {
-  return format(["messages", ...key.split(".")]);
+  return formatJsonPointer(["messages", ...key.split(".")]);
 }
 
 /**
@@ -216,13 +170,14 @@ function translationKeys(messages: unknown, problems: string[] = []): Set<string
   // Members are stacked last to first, so the keys come out in the order of the document.
   for (let entry = pending.pop(); entry; entry = pending.pop()) {
     const [at, node] = entry;
-    if (isObject(node)) {
+    if (isJsonObject(node)) {
       for (const [name, child] of Object.entries(node).reverse()) pending.push([[...at, name], child]);
     } else if (at.length === 0) {
       problems.push("/messages: the messages of a language are an object.");
     } else {
       keys.add(at.join("."));
-      if (typeof node !== "string") problems.push(`${format(["messages", ...at])}: a translation is a string.`);
+      if (typeof node !== "string")
+        problems.push(`${formatJsonPointer(["messages", ...at])}: a translation is a string.`);
     }
   }
 
@@ -244,13 +199,13 @@ export function listExports(exports: Manifest["exports"], content: Json): Omit<E
 
   for (const [name, { select, id, label }] of Object.entries(exports)) {
     if (!SELECT.test(select)) throw new RangeError(`Export "${name}" selects outside the path subset: ${select}`);
-    const [idTokens, labelTokens] = [parse(id), parse(label)];
+    const [idTokens, labelTokens] = [parseJsonPointer(id), parseJsonPointer(label)];
 
     let selected = [content];
     for (const step of select.match(SELECT_STEP) ?? []) selected = selected.flatMap((value) => children(value, step));
 
     for (const item of selected) {
-      const [itemId, itemLabel] = [get(item, idTokens), get(item, labelTokens)];
+      const [itemId, itemLabel] = [resolveJsonPointer(item, idTokens), resolveJsonPointer(item, labelTokens)];
       if (typeof itemId !== "string") continue;
 
       items.push({ export: name, id: itemId, label: typeof itemLabel === "string" ? itemLabel : "" });
@@ -263,10 +218,10 @@ export function listExports(exports: Manifest["exports"], content: Json): Omit<E
 /** Applies one step of an export path to a value: `*` reaches every child, a name reaches one member. */
 function children(value: Json, step: string): Json[] {
   if (step !== "*") {
-    const member = get(value, [step]);
+    const member = resolveJsonPointer(value, [step]);
     return member === undefined ? [] : [member];
   }
 
   if (Array.isArray(value)) return value;
-  return isObject(value) ? Object.values(value) : [];
+  return isJsonObject(value) ? Object.values(value) : [];
 }

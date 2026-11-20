@@ -1,8 +1,9 @@
 import { v1, v2, v2RootRequired } from "./composer.fixture.js";
-import type { Json, JsonObject } from "./json.js";
 import { type Migration, upgrade } from "./upgrade.js";
 
 import { describe, expect, it } from "vitest";
+
+import type { Json, JsonObject } from "@a-novel-kit/nodelib-json";
 
 const layers = [{ id: "l-0", kind: "notes", name: "Notes" }];
 const withScene = (scene: JsonObject): JsonObject => ({

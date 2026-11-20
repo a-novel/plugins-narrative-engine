@@ -1,5 +1,4 @@
-import type { Json, JsonObject } from "./json.js";
-import { salvage } from "./salvage.js";
+import { type Json, type JsonObject, salvageJson } from "@a-novel-kit/nodelib-json";
 
 /** A MigrationResult is what a migration makes of the content of the previous version. */
 export interface MigrationResult {
@@ -55,12 +54,12 @@ export type UpgradeResult =
 /**
  * Carries `content` through `steps`, ordered from the oldest version to the newest. Each step runs
  * its migration when it has one, then validates the content against its schema and moves what fails
- * aside, as {@link salvage} does.
+ * aside, as `salvageJson` of `@a-novel-kit/nodelib-json` does.
  *
  * The upgrade stops at the first step whose content cannot be made valid, and returns nothing of
  * the steps before it. `content` is never modified: a migration works on a copy.
  *
- * @throws What a migration throws, and what {@link salvage} throws.
+ * @throws What a migration throws, and what `salvageJson` throws.
  */
 export async function upgrade(content: Json, steps: UpgradeStep[]): Promise<UpgradeResult> {
   const unmigrated: UnmigratedEntry[] = [];
@@ -72,11 +71,11 @@ export async function upgrade(content: Json, steps: UpgradeStep[]): Promise<Upgr
       if (result.unmigrated !== undefined) unmigrated.push({ version, path: "", value: result.unmigrated });
     }
 
-    const salvaged = salvage(schema, content);
+    const salvaged = salvageJson(schema, content);
     if (!salvaged.ok) return { ok: false, version, reason: salvaged.reason };
 
-    content = salvaged.content;
-    for (const { path, value } of salvaged.unmigrated) unmigrated.push({ version, path, value });
+    content = salvaged.value;
+    for (const { path, value } of salvaged.removed) unmigrated.push({ version, path, value });
   }
 
   return { ok: true, content, unmigrated };

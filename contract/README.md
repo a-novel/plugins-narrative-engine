@@ -1,16 +1,17 @@
-# @a-novel/plugins-narrative-engine-kit
+# @a-novel/plugins-narrative-engine-contract
 
-The contract between a host application and the plugins of the Narrative Engine, with the checks and
-the upgrade chain that keep an instance's content valid.
+The contract between a host application and the plugins of the Narrative Engine: the types both
+sides share, the formats of a plugin version with their checks, and the upgrade of an instance's
+content.
 
 ## Installation
 
-Configure the `@a-novel` registry as the
+Configure the registry as the
 [repository README](https://github.com/a-novel/plugins-narrative-engine#installation) shows, then add
 the package:
 
 ```bash
-pnpm add @a-novel/plugins-narrative-engine-kit
+pnpm add @a-novel/plugins-narrative-engine-contract
 ```
 
 ## What it holds
@@ -19,16 +20,21 @@ A plugin version is a manifest, a UI module, an optional migration and its messa
 one use of a plugin in a project: it pins a version and holds one JSON document, its content. The
 host is the application that mounts plugins and saves their content, which is Studio today.
 
-The package has one entry, which both sides import. It needs no DOM and no framework, so it runs in
-a browser, a Worker and Node.
+The package has one entry, which both sides import. It needs no DOM, no framework and no Node
+module, so it runs in a browser, a Worker and Node.
 
 | Subject       | What the package gives                                                                |
 | ------------- | ------------------------------------------------------------------------------------- |
 | The UI module | The `Plugin` and `Host` types: what a plugin exports, and what it can ask of the host |
 | The manifest  | The `Manifest` and `Messages` types, `checkManifest`, `checkMessages`, `listExports`  |
-| The content   | `validate`, `salvage` and `upgrade`, with the `Migration` type                        |
+| The content   | `upgrade`, with the `Migration` type                                                  |
 
-## Writing a plugin
+Its one dependency is
+[`@a-novel-kit/nodelib-json`](https://github.com/a-novel-kit/nodelib/tree/master/packages/json),
+which validates a JSON value against a schema. The package exports the `Json` and `JsonObject` types
+its own signatures use, and nothing else of that dependency.
+
+## A plugin version
 
 ### The UI module
 
@@ -36,7 +42,7 @@ A UI module exports a `Plugin` by default. The host calls `mount` with an elemen
 keeps the handle it gets back. This plugin edits its content as raw JSON:
 
 ```ts
-import type { Plugin } from "@a-novel/plugins-narrative-engine-kit";
+import type { Plugin } from "@a-novel/plugins-narrative-engine-contract";
 
 const plugin: Plugin = {
   mount(target, host) {
@@ -100,7 +106,7 @@ A manifest holds the schema of the content and the items an instance exports for
 is what a link stores, so it must survive a reorder: an index would not.
 
 The package also exports the shape as a JSON Schema, for tools that read a manifest without this
-package: `@a-novel/plugins-narrative-engine-kit/manifest.schema.json`.
+package: `@a-novel/plugins-narrative-engine-contract/manifest.schema.json`.
 
 ### The messages
 
@@ -127,7 +133,7 @@ Both checks return a list of problems, each opening with a JSON Pointer to its p
 list for a valid document. `checkMessages` checks English too, passed as its own translation.
 
 ```ts
-import { checkManifest, checkMessages } from "@a-novel/plugins-narrative-engine-kit";
+import { checkManifest, checkMessages } from "@a-novel/plugins-narrative-engine-contract";
 
 const problems = [
   ...checkManifest(manifest, english),
@@ -144,7 +150,7 @@ the new shape. What the new shape has no place for goes in `unmigrated`, which t
 the writer.
 
 ```ts
-import type { Migration } from "@a-novel/plugins-narrative-engine-kit";
+import type { Migration } from "@a-novel/plugins-narrative-engine-contract";
 
 // The version before held the list of beats alone.
 const migrate: Migration = (content) => ({ migrated: { beats: content } });
@@ -155,13 +161,15 @@ export default migrate;
 ## Hosting plugins
 
 A host implements `Host` for each plugin it mounts, and runs the content through three functions.
-None of them modifies its input.
+None of them modifies its input. A host validates with `@a-novel-kit/nodelib-json`, which it
+installs itself.
 
 ```ts
-import { listExports, upgrade, validate } from "@a-novel/plugins-narrative-engine-kit";
+import { validateJson } from "@a-novel-kit/nodelib-json";
+import { listExports, upgrade } from "@a-novel/plugins-narrative-engine-contract";
 
 // On load and before a save: an empty list means the content is valid.
-const problems = validate(manifest.schema, content);
+const problems = validateJson(manifest.schema, content);
 
 // On an upgrade: one step per version above the instance's, oldest first.
 const result = await upgrade(content, [
@@ -173,19 +181,20 @@ const result = await upgrade(content, [
 const items = listExports(manifest.exports, content);
 ```
 
-| Function      | What it returns                                                                                       |
-| ------------- | ----------------------------------------------------------------------------------------------------- |
-| `validate`    | The problems of a content, each with a JSON Pointer to the failing value                              |
-| `salvage`     | A valid copy of a content, and the subtrees that had to leave it                                      |
-| `upgrade`     | The content at the last step with everything the steps set aside, or the step that stopped it and why |
-| `listExports` | The items a content exports, without the instance ID, which the host adds                             |
+| Function       | What it returns                                                                                       |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| `validateJson` | The problems of a content, each with a JSON Pointer to the failing value                              |
+| `upgrade`      | The content at the last step with everything the steps set aside, or the step that stopped it and why |
+| `listExports`  | The items a content exports, without the instance ID, which the host adds                             |
 
 `upgrade` runs each step's migration, then validates against that step's schema and moves what fails
-aside, as `salvage` does. A missing required property takes its schema default. When the root has the
-wrong type or lacks a required property that has no default, the upgrade stops and returns nothing of
-the earlier steps, so the host leaves the instance as it was.
+aside, as `salvageJson` of nodelib-json does. A missing required property takes its schema default.
+When the root has the wrong type or lacks a required property that has no default, the upgrade stops
+and returns nothing of the earlier steps, so the host leaves the instance as it was.
 
-These functions block while they run: a content of 4 MB takes about a second to salvage. Run them in
-a Worker. They throw on a schema that cannot be evaluated, and `upgrade` rejects with what a
-migration throws. The validator can also overflow its stack on a large content where most values
-fail, so treat a thrown error as a content that cannot be validated.
+`validateJson` and `upgrade` block while they run, about a second for a content of a few megabytes.
+Run them in a Worker. They throw on a schema that cannot be evaluated, and `upgrade` rejects with
+what a migration throws. The validator also throws on a content that fails in more places than it
+can report, as
+[its limits](https://github.com/a-novel-kit/nodelib/tree/master/packages/json#limits) measure, so
+treat a thrown error as a content that cannot be validated.

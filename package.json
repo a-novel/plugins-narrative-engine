@@ -9,13 +9,13 @@
   "license": "RPL-1.5",
   "type": "module",
   "scripts": {
-    "build": "tsc -p kit/tsconfig.build.json",
+    "build": "tsc -p contract/tsconfig.build.json",
     "format": "prettier --write . --config prettier.config.ts",
     "preinstall": "npx only-allow pnpm",
     "lint": "pnpm lint:stylecheck && pnpm lint:typecheck && pnpm lint:eslint",
     "lint:eslint": "eslint .",
     "lint:stylecheck": "prettier --check . --config prettier.config.ts",
-    "lint:typecheck": "tsc --noEmit && tsc -p kit --noEmit",
+    "lint:typecheck": "tsc --noEmit && tsc -p contract --noEmit",
     "test": "vitest run"
   },
   "devDependencies": {

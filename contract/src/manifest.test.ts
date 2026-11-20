@@ -1,8 +1,9 @@
 import { type Edit, edit, generate } from "./composer.fixture.js";
-import type { Json, JsonObject } from "./json.js";
 import { type Manifest, checkManifest, checkMessages, listExports } from "./manifest.js";
 
 import { describe, expect, it } from "vitest";
+
+import type { Json, JsonObject } from "@a-novel-kit/nodelib-json";
 
 const english = {
   title: "Scenes Composer",

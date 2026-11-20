@@ -1,4 +1,4 @@
-import type { Json, JsonObject } from "./json.js";
+import type { Json, JsonObject } from "@a-novel-kit/nodelib-json";
 
 /** The version of the {@link Host} interface this package describes. */
 export const HOST_API = 1;

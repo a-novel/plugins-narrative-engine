@@ -1,7 +1,12 @@
 // Schemas and contents of a Scenes Composer, for the tests. Version 2 is derived from version 1 by
 // explicit edits, so every breaking change shows in one place.
-import type { Json, JsonObject } from "./json.js";
-import { get, isObject, parse } from "./pointer.js";
+import {
+  type Json,
+  type JsonObject,
+  isJsonObject,
+  parseJsonPointer,
+  resolveJsonPointer,
+} from "@a-novel-kit/nodelib-json";
 
 const COLORS = ["red", "orange", "yellow", "green", "blue", "purple", "gray"];
 
@@ -100,13 +105,13 @@ export function edit(schema: JsonObject, ...edits: Edit[]): JsonObject {
   const copy = structuredClone(schema);
 
   for (const [pointer, value] of edits) {
-    const tokens = parse(pointer);
-    const parent = get(copy, tokens.slice(0, -1));
+    const tokens = parseJsonPointer(pointer);
+    const parent = resolveJsonPointer(copy, tokens.slice(0, -1));
     const key = tokens.at(-1) ?? "";
 
     if (Array.isArray(parent)) {
       parent.splice(key === "-" ? parent.length : Number(key), 1, ...(value === undefined ? [] : [value]));
-    } else if (!isObject(parent)) throw new Error(`Nothing to edit at ${pointer}`);
+    } else if (!isJsonObject(parent)) throw new Error(`Nothing to edit at ${pointer}`);
     else if (value === undefined) delete parent[key];
     else parent[key] = value;
   }
@@ -144,12 +149,6 @@ export const v2RootRequired = edit(
   ["/properties/meta", closed(["owner"], { owner: { type: "string" } })],
   ["/required/-", "meta"]
 );
-
-/** Version 2 where a link cell needs a link, so that emptying its list cascades. */
-export const v2MinItems = edit(v2, ["/$defs/linkCell/properties/links/minItems", 1]);
-
-/** Version 2 with its union written as an anyOf. */
-export const v2AnyOf = edit(v2, ["/$defs/cell", { anyOf: get(v2, parse("/$defs/cell/oneOf")) ?? [] }]);
 
 const WORDS =
   "the night was long and the road ran north past a broken mill where nobody had lived since the war she kept the letter folded twice inside her coat and said nothing of it to anyone until morning came".split(
