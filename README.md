@@ -20,15 +20,32 @@ This repository is the home of the plugins A-Novel maintains for the
 built with. A plugin defines one kind of document a writer works on: the schema of its content, and
 the interface that edits it.
 
+## Installation
+
+The kit lives on GitHub Packages. GitHub asks for a Personal Access Token with the `read:packages`
+scope, even for a public package
+([details](https://github.com/orgs/community/discussions/23386#discussioncomment-3240193)). Point the
+`@a-novel` scope at the registry in an `.npmrc` at your project root:
+
+```ini
+@a-novel:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${YOUR_PERSONAL_ACCESS_TOKEN}
+```
+
+Then add the kit:
+
+```bash
+pnpm add @a-novel/plugins-narrative-engine-kit
+```
+
 ## Packages
 
-The repository is a pnpm workspace. Its `pnpm-workspace.yaml` declares two locations for packages,
-and neither holds one yet.
+The repository is a pnpm workspace. Its `pnpm-workspace.yaml` declares two locations for packages.
 
-| Location          | For                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| `kit/`            | The kit: the package a plugin is built, tested and published with. |
-| `plugins/<name>/` | One plugin per directory, named after the plugin.                  |
+| Location          | For                                                                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kit/`            | [`@a-novel/plugins-narrative-engine-kit`](./kit): the contract between a host and a plugin, with the checks and the upgrade chain that keep a content valid. |
+| `plugins/<name>/` | One plugin per directory, named after the plugin.                                                                                                            |
 
 ## Contributing
 

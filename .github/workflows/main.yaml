@@ -36,3 +36,23 @@ jobs:
       contents: read
     steps:
       - uses: a-novel-kit/workflows/security-actions/lint-workflows@v1.87.1
+
+  test-js:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: a-novel-kit/workflows/node-actions/test-node@v1.87.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-js:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: a-novel-kit/workflows/node-actions/build-node@v1.87.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
