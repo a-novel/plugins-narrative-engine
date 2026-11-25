@@ -7,6 +7,8 @@ import { playwright } from "@vitest/browser-playwright";
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   test: {
+    // The tests build real modules and run the command, which takes seconds on a CI runner.
+    testTimeout: 30_000,
     coverage: {
       enabled: true,
       provider: "v8",

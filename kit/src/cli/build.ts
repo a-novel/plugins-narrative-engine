@@ -120,8 +120,13 @@ async function bundle(root: string, entry: string, plugins: PluginOption[] = [],
     build: {
       write: false,
       lib: { entry, formats: ["es"] },
-      // A library build keeps its whitespace for the same bundler.
-      rolldownOptions: { input, output: { codeSplitting: false, minify: true } },
+      rolldownOptions: {
+        input,
+        // Compiling Svelte is most of a build, which the bundler reports as a warning on a slow machine.
+        checks: { bundlerTimings: false },
+        // A library build keeps its whitespace for the same bundler.
+        output: { codeSplitting: false, minify: true },
+      },
     },
   });
 
