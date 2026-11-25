@@ -1,0 +1,11 @@
+{
+  "title": "Sample",
+  "description": "Lists the beats of a story.",
+  "messages": {
+    "schema": { "title": "Beats", "beat": { "title": "Title" } },
+    "exports": { "beats": "Beats" },
+    "heading": "Beats",
+    "title": "Title of the next beat",
+    "add": "Add the beat"
+  }
+}

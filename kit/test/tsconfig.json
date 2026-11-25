@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@a-novel/plugins-narrative-engine-contract": ["../../contract/src/index.ts"],
+      "@a-novel/plugins-narrative-engine-kit": ["../src/index.ts"],
+      "@a-novel/plugins-narrative-engine-kit/*": ["../src/*.ts"]
+    }
+  },
+  "include": ["."]
+}

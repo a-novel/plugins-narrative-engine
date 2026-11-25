@@ -5,7 +5,7 @@ name: release
 # `release` environment, the "who can publish" gate whose key only it reads, and pushes the version
 # commit, the tag and the GitHub Release as the release App.
 #
-# The tag then runs this workflow again, and that run publishes the package from the tag. Only the
+# The tag then runs this workflow again, and that run publishes the packages from the tag. Only the
 # release App and admins can create a tag, so one approval covers the release, and a hotfix tag
 # publishes its line the same way.
 on:
@@ -77,7 +77,7 @@ jobs:
           client_id: ${{ vars.RELEASE_BOT_CLIENT_ID }}
           app_private_key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
 
-  # Publishes the package from the release tag.
+  # Publishes the packages from the release tag.
   build:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -91,7 +91,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  # Clears this repo's awaiting-release items off the board once the package ships. The Agent key
+  # Clears this repo's awaiting-release items off the board once the packages ship. The Agent key
   # is a secret of the governance environment, never of the release one.
   archive:
     needs: [build]
