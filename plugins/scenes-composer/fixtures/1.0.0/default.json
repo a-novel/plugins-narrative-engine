@@ -1,0 +1,15 @@
+{
+  "beats": [],
+  "layers": [
+    {
+      "id": "d596181e-9aad-439a-8138-10d438d79a5e",
+      "kind": "logline",
+      "name": "Scenes"
+    },
+    {
+      "id": "a5ed3dc1-dae2-4bb1-9400-e44cf61a856b",
+      "kind": "script",
+      "name": "Enriched scenes"
+    }
+  ]
+}

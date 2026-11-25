@@ -1,0 +1,224 @@
+{
+  "title": "Compositeur de scènes",
+  "description": "Dispose une histoire en scènes dans le temps, regroupées en temps forts, avec des calques d'information qui les traversent.",
+  "messages": {
+    "schema": {
+      "title": "Compositeur",
+      "description": "Une histoire disposée dans le temps, avec des temps forts qui contiennent des scènes et les calques qui les traversent.",
+      "properties": {
+        "beats": { "title": "Temps forts", "description": "Les temps forts de l'histoire, dans l'ordre du récit." },
+        "layers": { "title": "Calques", "description": "Les calques du compositeur, dans l'ordre de leurs lignes." }
+      },
+      "id": {
+        "title": "Identifiant",
+        "description": "Ce qui identifie un élément dans son compositeur. Il ne change jamais et aucun autre élément ne le reprend ensuite, si bien qu'un lien désigne toujours le même élément."
+      },
+      "color": {
+        "title": "Couleur",
+        "description": "La couleur que l'auteur a donnée à un élément, en valeur hexadécimale à six chiffres comme #3b82f6. Un élément qui n'en a pas reste sans couleur."
+      },
+      "beat": {
+        "title": "Temps fort",
+        "description": "Une étape de l'histoire, faite d'une suite ordonnée de scènes.",
+        "properties": {
+          "title": { "title": "Titre" },
+          "description": { "title": "Description", "description": "Ce que le temps fort accomplit dans l'histoire." },
+          "scenes": { "title": "Scènes", "description": "Les scènes du temps fort, dans l'ordre du récit." }
+        }
+      },
+      "scene": {
+        "title": "Scène",
+        "description": "L'unité de temps de l'histoire, et une colonne de la chronologie.",
+        "properties": {
+          "title": { "title": "Titre" },
+          "cells": {
+            "title": "Cellules",
+            "description": "Ce que les calques contiennent pour la scène, avec une cellule par calque au plus. Un calque sans cellule ne contient rien pour la scène."
+          }
+        }
+      },
+      "cell": {
+        "title": "Cellule",
+        "description": "Ce qu'un calque contient pour une scène. Une cellule nomme son calque et prend le type de ce calque."
+      },
+      "notesCell": {
+        "title": "Notes",
+        "description": "Du texte libre sur la scène.",
+        "properties": {
+          "text": { "title": "Texte", "description": "Les notes, en texte brut." }
+        }
+      },
+      "loglineCell": {
+        "title": "Logline",
+        "description": "La scène racontée en une ligne.",
+        "properties": {
+          "text": { "title": "Texte", "description": "La ligne, en texte brut sans retour à la ligne." }
+        }
+      },
+      "scriptCell": {
+        "title": "Script",
+        "description": "Le texte de la scène.",
+        "properties": {
+          "blocks": { "title": "Blocs", "description": "Les blocs du script, dans l'ordre de lecture." }
+        }
+      },
+      "block": {
+        "title": "Bloc",
+        "description": "Une unité de texte du script, qui est une narration ou une réplique de dialogue."
+      },
+      "narration": {
+        "title": "Narration",
+        "description": "La prose du narrateur, faite d'actions, de descriptions et des pensées d'un personnage.",
+        "properties": {
+          "text": {
+            "title": "Texte",
+            "description": "La prose, en texte brut. Une ligne vide sépare deux paragraphes."
+          }
+        }
+      },
+      "dialogue": {
+        "title": "Dialogue",
+        "description": "La réplique d'un personnage.",
+        "properties": {
+          "speaker": { "title": "Locuteur", "description": "Qui parle, sous le nom que l'histoire lui donne." },
+          "tone": {
+            "title": "Ton",
+            "description": "La manière de dire la réplique, comme « à voix basse » ou « avec un rire amer »."
+          },
+          "text": { "title": "Texte", "description": "Les mots prononcés, sans guillemets." }
+        }
+      },
+      "layer": {
+        "title": "Calque",
+        "description": "Une ligne de la chronologie, qui suit un type d'information à travers les scènes.",
+        "properties": {
+          "kind": {
+            "title": "Type",
+            "description": "Ce que le calque contient pour chaque scène, à savoir des notes, une logline, un script, ou des liens vers d'autres éléments du projet."
+          },
+          "name": { "title": "Nom" },
+          "accepts": {
+            "title": "Exports acceptés",
+            "description": "Sur un calque de liens, les exports dont ses liens désignent les éléments, par leur nom. Le projet conserve les liens eux-mêmes, hors du compositeur."
+          }
+        }
+      }
+    },
+    "exports": { "scenes": "Scènes" },
+    "layers": { "scenes": "Scènes", "enrichedScenes": "Scènes enrichies" },
+    "presets": {
+      "blank": {
+        "name": "Vierge",
+        "description": "Un temps fort vide avec une scène vide, pour construire une histoire de zéro."
+      },
+      "hollywoodBeats": {
+        "name": "Temps forts hollywoodiens",
+        "description": "Les trois actes d'un film classique, en neuf temps forts.",
+        "beats": {
+          "setup": {
+            "title": "Exposition",
+            "description": "Le monde ordinaire du protagoniste, et ce qui lui manque."
+          },
+          "incitingIncident": {
+            "title": "Élément déclencheur",
+            "description": "Un événement bouleverse ce monde et pose la question à laquelle l'histoire répondra."
+          },
+          "firstPlotPoint": {
+            "title": "Premier nœud dramatique",
+            "description": "Le protagoniste s'engage dans l'histoire. Aucun retour n'est possible, et l'acte un se termine."
+          },
+          "risingAction": {
+            "title": "Montée de l'action",
+            "description": "Les obstacles grandissent à mesure que le protagoniste poursuit son but, et alliés comme ennemis choisissent leur camp."
+          },
+          "midpoint": {
+            "title": "Point médian",
+            "description": "Un renversement ou une révélation fait monter les enjeux et change ce que le protagoniste poursuit."
+          },
+          "secondPlotPoint": {
+            "title": "Second nœud dramatique",
+            "description": "Le pire revers. Tout semble perdu, et l'acte deux se termine."
+          },
+          "crisis": {
+            "title": "Crise",
+            "description": "Le protagoniste rassemble ce qui lui reste et fait le choix qui mène à l'affrontement final."
+          },
+          "climax": {
+            "title": "Climax",
+            "description": "L'affrontement final, où l'histoire répond à sa question."
+          },
+          "resolution": {
+            "title": "Dénouement",
+            "description": "Le nouvel équilibre, avec ce que l'histoire a changé et ce que cela a coûté."
+          }
+        }
+      },
+      "fifteenBeats": {
+        "name": "15 temps forts",
+        "description": "Une structure en quinze étapes, de l'image d'ouverture à l'image finale.",
+        "beats": {
+          "openingImage": {
+            "title": "Image d'ouverture",
+            "description": "Une première image du monde du protagoniste, avant que l'histoire ne le change."
+          },
+          "themeStated": {
+            "title": "Thème énoncé",
+            "description": "Quelqu'un dit de quoi parle l'histoire, et le protagoniste ne l'entend pas encore."
+          },
+          "setup": {
+            "title": "Mise en place",
+            "description": "La vie du protagoniste, son entourage, et ce qui doit changer."
+          },
+          "catalyst": {
+            "title": "Catalyseur",
+            "description": "Un événement rend l'ancienne vie impossible."
+          },
+          "debate": {
+            "title": "Débat",
+            "description": "Le protagoniste hésite devant le risque du voyage."
+          },
+          "breakIntoTwo": {
+            "title": "Passage à l'acte deux",
+            "description": "Le protagoniste choisit d'agir et entre dans un monde nouveau. L'acte deux commence."
+          },
+          "bStory": {
+            "title": "Intrigue B",
+            "description": "Une seconde histoire commence, souvent une relation, et porte le thème."
+          },
+          "funAndGames": {
+            "title": "Jeux et amusements",
+            "description": "La prémisse tient sa promesse, avec les scènes que le public est venu voir."
+          },
+          "midpoint": {
+            "title": "Point médian",
+            "description": "Une fausse victoire ou une fausse défaite fait monter les enjeux."
+          },
+          "badGuysCloseIn": {
+            "title": "Les méchants se rapprochent",
+            "description": "Les ennemis se regroupent au-dehors, et les doutes grandissent au-dedans."
+          },
+          "allIsLost": {
+            "title": "Tout est perdu",
+            "description": "Le point le plus bas. Quelque chose ou quelqu'un est perdu pour de bon."
+          },
+          "darkNightOfTheSoul": {
+            "title": "Nuit noire de l'âme",
+            "description": "Le protagoniste affronte la perte, et trouve la vérité que portait le thème."
+          },
+          "breakIntoThree": {
+            "title": "Passage à l'acte trois",
+            "description": "Les deux intrigues se rejoignent et donnent la réponse. L'acte trois commence."
+          },
+          "finale": {
+            "title": "Final",
+            "description": "Le protagoniste applique ce qu'il a appris, et règle le conflit."
+          },
+          "finalImage": {
+            "title": "Image finale",
+            "description": "Une dernière image qui répond à la première, et montre le changement."
+          }
+        }
+      }
+    }
+  }
+}

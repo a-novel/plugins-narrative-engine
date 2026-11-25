@@ -1,0 +1,124 @@
+{
+  "beats": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "title": "Exposition",
+      "description": "Le monde ordinaire du protagoniste, et ce qui lui manque.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "title": "Élément déclencheur",
+      "description": "Un événement bouleverse ce monde et pose la question à laquelle l'histoire répondra.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "title": "Premier nœud dramatique",
+      "description": "Le protagoniste s'engage dans l'histoire. Aucun retour n'est possible, et l'acte un se termine.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "title": "Montée de l'action",
+      "description": "Les obstacles grandissent à mesure que le protagoniste poursuit son but, et alliés comme ennemis choisissent leur camp.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000008",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "title": "Point médian",
+      "description": "Un renversement ou une révélation fait monter les enjeux et change ce que le protagoniste poursuit.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000a",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000b",
+      "title": "Second nœud dramatique",
+      "description": "Le pire revers. Tout semble perdu, et l'acte deux se termine.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000c",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000d",
+      "title": "Crise",
+      "description": "Le protagoniste rassemble ce qui lui reste et fait le choix qui mène à l'affrontement final.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000e",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000f",
+      "title": "Climax",
+      "description": "L'affrontement final, où l'histoire répond à sa question.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000010",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000011",
+      "title": "Dénouement",
+      "description": "Le nouvel équilibre, avec ce que l'histoire a changé et ce que cela a coûté.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000012",
+          "title": "",
+          "cells": []
+        }
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "00000000-0000-4000-8000-000000000013",
+      "kind": "logline",
+      "name": "Scènes"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000014",
+      "kind": "script",
+      "name": "Scènes enrichies"
+    }
+  ]
+}

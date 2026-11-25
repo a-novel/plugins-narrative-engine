@@ -1,0 +1,224 @@
+{
+  "title": "Scenes Composer",
+  "description": "Lays a story out as scenes in time, grouped in beats, with layers of information across them.",
+  "messages": {
+    "schema": {
+      "title": "Composer",
+      "description": "A story laid out in time: beats that hold scenes, and the layers that run across them.",
+      "properties": {
+        "beats": { "title": "Beats", "description": "The beats of the story, in story order." },
+        "layers": { "title": "Layers", "description": "The layers of the composer, in the order of their rows." }
+      },
+      "id": {
+        "title": "ID",
+        "description": "What identifies an item in its composer. It never changes and no other item takes it later, so a link keeps pointing at the same item."
+      },
+      "color": {
+        "title": "Color",
+        "description": "The color the writer gave an item, as a six-digit hex value such as #3b82f6. An item without one has no color."
+      },
+      "beat": {
+        "title": "Beat",
+        "description": "One step of the story: an ordered set of scenes.",
+        "properties": {
+          "title": { "title": "Title" },
+          "description": { "title": "Description", "description": "What the beat does in the story." },
+          "scenes": { "title": "Scenes", "description": "The scenes of the beat, in story order." }
+        }
+      },
+      "scene": {
+        "title": "Scene",
+        "description": "The story's unit of time, and one column of the timeline.",
+        "properties": {
+          "title": { "title": "Title" },
+          "cells": {
+            "title": "Cells",
+            "description": "What the layers hold for the scene, with one cell per layer at most. A layer without a cell holds nothing for the scene."
+          }
+        }
+      },
+      "cell": {
+        "title": "Cell",
+        "description": "What one layer holds for one scene. A cell names its layer and has the kind of that layer."
+      },
+      "notesCell": {
+        "title": "Notes",
+        "description": "Free text about the scene.",
+        "properties": {
+          "text": { "title": "Text", "description": "The notes, as plain text." }
+        }
+      },
+      "loglineCell": {
+        "title": "Logline",
+        "description": "The scene told in one line.",
+        "properties": {
+          "text": { "title": "Text", "description": "The line, as plain text without a line break." }
+        }
+      },
+      "scriptCell": {
+        "title": "Script",
+        "description": "The text of the scene.",
+        "properties": {
+          "blocks": { "title": "Blocks", "description": "The blocks of the script, in reading order." }
+        }
+      },
+      "block": {
+        "title": "Block",
+        "description": "One unit of script text: a narration or a line of dialogue."
+      },
+      "narration": {
+        "title": "Narration",
+        "description": "Prose the narrator tells: action, description, a character's thoughts.",
+        "properties": {
+          "text": {
+            "title": "Text",
+            "description": "The prose, as plain text. A blank line separates two paragraphs."
+          }
+        }
+      },
+      "dialogue": {
+        "title": "Dialogue",
+        "description": "One character's spoken line.",
+        "properties": {
+          "speaker": { "title": "Speaker", "description": "Who speaks, by the name the story gives them." },
+          "tone": {
+            "title": "Tone",
+            "description": "How the line is said, such as \"whispering\" or \"with a bitter laugh\"."
+          },
+          "text": { "title": "Text", "description": "The words spoken, without quotation marks." }
+        }
+      },
+      "layer": {
+        "title": "Layer",
+        "description": "One row of the timeline, which follows one kind of information across the scenes.",
+        "properties": {
+          "kind": {
+            "title": "Kind",
+            "description": "What the layer holds for each scene: notes, a logline, a script, or links to other items of the project."
+          },
+          "name": { "title": "Name" },
+          "accepts": {
+            "title": "Accepted exports",
+            "description": "On a link layer, the exports whose items its links point at, by name. The project keeps the links themselves, outside the composer."
+          }
+        }
+      }
+    },
+    "exports": { "scenes": "Scenes" },
+    "layers": { "scenes": "Scenes", "enrichedScenes": "Enriched scenes" },
+    "presets": {
+      "blank": {
+        "name": "Blank",
+        "description": "One empty beat with one empty scene, to build a story from scratch."
+      },
+      "hollywoodBeats": {
+        "name": "Hollywood beats",
+        "description": "The three acts of a classic film, in nine beats.",
+        "beats": {
+          "setup": {
+            "title": "Setup",
+            "description": "The protagonist's ordinary world, and what is missing from it."
+          },
+          "incitingIncident": {
+            "title": "Inciting incident",
+            "description": "An event upsets that world and raises the question the story will answer."
+          },
+          "firstPlotPoint": {
+            "title": "First plot point",
+            "description": "The protagonist commits to the story. There is no way back, and act one ends."
+          },
+          "risingAction": {
+            "title": "Rising action",
+            "description": "Obstacles grow as the protagonist goes after the goal, and allies and enemies take sides."
+          },
+          "midpoint": {
+            "title": "Midpoint",
+            "description": "A reversal or a revelation raises the stakes and changes what the protagonist is after."
+          },
+          "secondPlotPoint": {
+            "title": "Second plot point",
+            "description": "The worst setback. All seems lost, and act two ends."
+          },
+          "crisis": {
+            "title": "Crisis",
+            "description": "The protagonist gathers what is left and makes the choice that leads to the final confrontation."
+          },
+          "climax": {
+            "title": "Climax",
+            "description": "The final confrontation, where the story answers its question."
+          },
+          "resolution": {
+            "title": "Resolution",
+            "description": "The new balance, with what the story changed and what it cost."
+          }
+        }
+      },
+      "fifteenBeats": {
+        "name": "15 beats",
+        "description": "A beat sheet in fifteen steps, from the opening image to the final one.",
+        "beats": {
+          "openingImage": {
+            "title": "Opening image",
+            "description": "A first picture of the protagonist's world, before the story changes it."
+          },
+          "themeStated": {
+            "title": "Theme stated",
+            "description": "Someone says what the story is about, and the protagonist does not hear it yet."
+          },
+          "setup": {
+            "title": "Setup",
+            "description": "The protagonist's life, the people in it, and what needs to change."
+          },
+          "catalyst": {
+            "title": "Catalyst",
+            "description": "An event makes the old life impossible."
+          },
+          "debate": {
+            "title": "Debate",
+            "description": "The protagonist hesitates before the risk of the journey."
+          },
+          "breakIntoTwo": {
+            "title": "Break into two",
+            "description": "The protagonist chooses to act and enters a new world. Act two begins."
+          },
+          "bStory": {
+            "title": "B story",
+            "description": "A second story begins, often a relationship, and carries the theme."
+          },
+          "funAndGames": {
+            "title": "Fun and games",
+            "description": "The premise keeps its promise, with the scenes the audience came for."
+          },
+          "midpoint": {
+            "title": "Midpoint",
+            "description": "A false victory or a false defeat raises the stakes."
+          },
+          "badGuysCloseIn": {
+            "title": "Bad guys close in",
+            "description": "Enemies regroup outside, and doubts grow inside."
+          },
+          "allIsLost": {
+            "title": "All is lost",
+            "description": "The lowest point. Something or someone is lost for good."
+          },
+          "darkNightOfTheSoul": {
+            "title": "Dark night of the soul",
+            "description": "The protagonist faces the loss, and finds the truth the theme held."
+          },
+          "breakIntoThree": {
+            "title": "Break into three",
+            "description": "The two stories meet and give the answer. Act three begins."
+          },
+          "finale": {
+            "title": "Finale",
+            "description": "The protagonist applies what was learned, and settles the conflict."
+          },
+          "finalImage": {
+            "title": "Final image",
+            "description": "A last picture that answers the first, and shows the change."
+          }
+        }
+      }
+    }
+  }
+}

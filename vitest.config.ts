@@ -13,7 +13,7 @@ export default defineConfig({
       enabled: true,
       provider: "v8",
       reporter: ["text", "lcov"],
-      include: ["{contract,kit}/src/**/*.ts"],
+      include: ["{contract,kit}/src/**/*.ts", "plugins/*/ui/**/*.ts"],
       exclude: ["**/*.fixture.ts"],
     },
     projects: [
@@ -22,7 +22,7 @@ export default defineConfig({
         test: {
           name: "node",
           environment: "node",
-          include: ["{contract,kit}/src/**/*.test.ts"],
+          include: ["{contract,kit}/src/**/*.test.ts", "plugins/*/ui/**/*.test.ts"],
           exclude: ["**/*.browser.test.ts"],
         },
       },
