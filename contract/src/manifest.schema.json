@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Narrative Engine plugin manifest",
+  "description": "The description of one plugin version: the schema of its content and the items it exports.",
+  "type": "object",
+  "required": ["manifest", "schema", "exports"],
+  "properties": {
+    "manifest": {
+      "description": "The version of the manifest format.",
+      "const": 1
+    },
+    "schema": {
+      "description": "The JSON Schema (draft 2020-12) of an instance's content. Its default is the content of a new instance, and every title and description is a translation key.",
+      "type": "object"
+    },
+    "exports": {
+      "description": "The lists of linkable items an instance exposes, by export name. A link addresses an item as `<export>/<id>`, so a name holds no slash.",
+      "type": "object",
+      "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9_-]*$" },
+      "additionalProperties": { "$ref": "#/$defs/export" }
+    },
+    "aiSchema": {
+      "description": "Reserved."
+    },
+    "aiContext": {
+      "description": "Reserved."
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "export": {
+      "type": "object",
+      "required": ["name", "select", "id", "label"],
+      "properties": {
+        "name": {
+          "description": "The translation key of the export's display name.",
+          "type": "string"
+        },
+        "select": {
+          "description": "The path to the exported items: `$`, then member names and `[*]`, a subset of JSONPath (RFC 9535).",
+          "type": "string",
+          "pattern": "^\\$(\\.[A-Za-z_][A-Za-z0-9_]*|\\[\\*\\])*$"
+        },
+        "id": {
+          "description": "The JSON Pointer (RFC 6901) to the identifier inside each item.",
+          "$ref": "#/$defs/pointer"
+        },
+        "label": {
+          "description": "The JSON Pointer (RFC 6901) to the label inside each item.",
+          "$ref": "#/$defs/pointer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pointer": {
+      "type": "string",
+      "pattern": "^(/([^/~]|~[01])*)*$"
+    }
+  }
+}
