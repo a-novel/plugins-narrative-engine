@@ -1,0 +1,196 @@
+{
+  "beats": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "title": "Image d'ouverture",
+      "description": "Une première image du monde du protagoniste, avant que l'histoire ne le change.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "title": "Thème énoncé",
+      "description": "Quelqu'un dit de quoi parle l'histoire, et le protagoniste ne l'entend pas encore.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "title": "Mise en place",
+      "description": "La vie du protagoniste, son entourage, et ce qui doit changer.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "title": "Catalyseur",
+      "description": "Un événement rend l'ancienne vie impossible.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000008",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "title": "Débat",
+      "description": "Le protagoniste hésite devant le risque du voyage.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000a",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000b",
+      "title": "Passage à l'acte deux",
+      "description": "Le protagoniste choisit d'agir et entre dans un monde nouveau. L'acte deux commence.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000c",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000d",
+      "title": "Intrigue B",
+      "description": "Une seconde histoire commence, souvent une relation, et porte le thème.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000e",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000f",
+      "title": "Jeux et amusements",
+      "description": "La prémisse tient sa promesse, avec les scènes que le public est venu voir.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000010",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000011",
+      "title": "Point médian",
+      "description": "Une fausse victoire ou une fausse défaite fait monter les enjeux.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000012",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000013",
+      "title": "Les méchants se rapprochent",
+      "description": "Les ennemis se regroupent au-dehors, et les doutes grandissent au-dedans.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000015",
+      "title": "Tout est perdu",
+      "description": "Le point le plus bas. Quelque chose ou quelqu'un est perdu pour de bon.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000016",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000017",
+      "title": "Nuit noire de l'âme",
+      "description": "Le protagoniste affronte la perte, et trouve la vérité que portait le thème.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000018",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000019",
+      "title": "Passage à l'acte trois",
+      "description": "Les deux intrigues se rejoignent et donnent la réponse. L'acte trois commence.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000001a",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000001b",
+      "title": "Final",
+      "description": "Le protagoniste applique ce qu'il a appris, et règle le conflit.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000001c",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000001d",
+      "title": "Image finale",
+      "description": "Une dernière image qui répond à la première, et montre le changement.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000001e",
+          "title": "",
+          "cells": []
+        }
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "00000000-0000-4000-8000-00000000001f",
+      "kind": "logline",
+      "name": "Scènes"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000020",
+      "kind": "script",
+      "name": "Scènes enrichies"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // The type check reads the kit and the contract from their sources, so it needs no build.
+    "paths": {
+      "@a-novel/plugins-narrative-engine-contract": ["../contract/src/index.ts"],
+      "@a-novel/plugins-narrative-engine-kit": ["../kit/src/index.ts"],
+      "@a-novel/plugins-narrative-engine-kit/*": ["../kit/src/*.ts"]
+    }
+  },
+  "include": ["."]
+}

@@ -23,9 +23,19 @@ runs goes in the kit, whose main entry exports the contract. The commands of `pl
 `kit/src/cli`. Code that knows nothing of plugins goes in
 [nodelib](https://github.com/a-novel-kit/nodelib), where the JSON tools both packages depend on live.
 
-`kit/test/sample` is a small plugin, laid out as the [kit's README](./kit/README.md#the-folder)
-describes. The tests check, build and publish it, then mount it in a browser. It imports the kit by
-its package name, as a plugin does, and the root `package.json` declares what it depends on.
+A plugin lives in `plugins/<name>`, laid out as the [kit's README](./kit/README.md#the-folder)
+describes. The name of its folder is its name in the registry: lowercase letters, digits and
+hyphens. Its `package.json` holds no version, since its manifests name them, so a release of the
+repository leaves a plugin as it is.
+
+The `ui` folder of a plugin holds everything its UI module is built from: the components, and the
+plain modules beside them, such as the types of its content, each with its test. A plugin's tests
+write the fixtures of its current version as file snapshots, and `pnpm test -u` writes them again
+after a change to what they hold.
+
+`kit/test/sample` is a small plugin, laid out the same way. The tests check, build and publish it,
+then mount it in a browser. It imports the kit by its package name, as a plugin does, and the root
+`package.json` declares what it depends on.
 
 Two folders beside it hold a UI alone. `kit/test/overlays` opens what a plugin shows above its own
 content, a list, a menu, a tooltip and a dialog, which the tests check from inside a shadow root.
@@ -38,10 +48,11 @@ Run every command from the repository root.
 | Command        | CI job     | What it checks                                                            |
 | -------------- | ---------- | ------------------------------------------------------------------------- |
 | `pnpm lint`    | `lint-js`  | Prettier, the type checks and ESLint, over the whole repository           |
-| `pnpm test:ci` | `test-js`  | The packages compile, then Vitest runs the tests, in Node and Chromium    |
+| `pnpm test:ci` | `test-js`  | The packages compile, Vitest runs the tests, then every plugin is checked |
 | `pnpm build`   | `build-js` | Each package compiles to its `dist`, the contract first: the kit reads it |
 
-`pnpm test` runs the tests alone. The kit's tests read both packages as compiled, so run
+`pnpm test` runs the tests alone, in Node and Chromium, and `pnpm check:plugins` runs
+`plugin-kit check` in the folder of every plugin. Both read the packages as compiled, so run
 `pnpm build` first after a change to their sources. The browser tests need Chromium.
 `pnpm exec playwright install chromium` downloads it, and CI runs them in the Playwright container
 image.

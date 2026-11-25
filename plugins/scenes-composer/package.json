@@ -1,0 +1,15 @@
+{
+  "name": "scenes-composer",
+  "private": true,
+  "description": "The Scenes Composer, a plugin of the Narrative Engine. Its folder is laid out as the kit's README describes.",
+  "type": "module",
+  "dependencies": {
+    "@a-novel-kit/uikit": "^0.28.0",
+    "@a-novel/plugins-narrative-engine-kit": "workspace:*",
+    "svelte": "^5.59.1"
+  },
+  "devDependencies": {
+    "@a-novel-kit/nodelib-json": "^2.15.1",
+    "yaml": "^2.9.1"
+  }
+}

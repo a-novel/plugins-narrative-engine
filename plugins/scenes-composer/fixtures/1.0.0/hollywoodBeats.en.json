@@ -1,0 +1,124 @@
+{
+  "beats": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "title": "Setup",
+      "description": "The protagonist's ordinary world, and what is missing from it.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "title": "Inciting incident",
+      "description": "An event upsets that world and raises the question the story will answer.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "title": "First plot point",
+      "description": "The protagonist commits to the story. There is no way back, and act one ends.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "title": "Rising action",
+      "description": "Obstacles grow as the protagonist goes after the goal, and allies and enemies take sides.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000008",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "title": "Midpoint",
+      "description": "A reversal or a revelation raises the stakes and changes what the protagonist is after.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000a",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000b",
+      "title": "Second plot point",
+      "description": "The worst setback. All seems lost, and act two ends.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000c",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000d",
+      "title": "Crisis",
+      "description": "The protagonist gathers what is left and makes the choice that leads to the final confrontation.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000e",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000f",
+      "title": "Climax",
+      "description": "The final confrontation, where the story answers its question.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000010",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000011",
+      "title": "Resolution",
+      "description": "The new balance, with what the story changed and what it cost.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000012",
+          "title": "",
+          "cells": []
+        }
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "00000000-0000-4000-8000-000000000013",
+      "kind": "logline",
+      "name": "Scenes"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000014",
+      "kind": "script",
+      "name": "Enriched scenes"
+    }
+  ]
+}

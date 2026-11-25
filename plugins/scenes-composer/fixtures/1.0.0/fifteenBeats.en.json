@@ -1,0 +1,196 @@
+{
+  "beats": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "title": "Opening image",
+      "description": "A first picture of the protagonist's world, before the story changes it.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "title": "Theme stated",
+      "description": "Someone says what the story is about, and the protagonist does not hear it yet.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000004",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "title": "Setup",
+      "description": "The protagonist's life, the people in it, and what needs to change.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000006",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "title": "Catalyst",
+      "description": "An event makes the old life impossible.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000008",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "title": "Debate",
+      "description": "The protagonist hesitates before the risk of the journey.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000a",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000b",
+      "title": "Break into two",
+      "description": "The protagonist chooses to act and enters a new world. Act two begins.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000c",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000d",
+      "title": "B story",
+      "description": "A second story begins, often a relationship, and carries the theme.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000000e",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000000f",
+      "title": "Fun and games",
+      "description": "The premise keeps its promise, with the scenes the audience came for.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000010",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000011",
+      "title": "Midpoint",
+      "description": "A false victory or a false defeat raises the stakes.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000012",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000013",
+      "title": "Bad guys close in",
+      "description": "Enemies regroup outside, and doubts grow inside.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000014",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000015",
+      "title": "All is lost",
+      "description": "The lowest point. Something or someone is lost for good.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000016",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000017",
+      "title": "Dark night of the soul",
+      "description": "The protagonist faces the loss, and finds the truth the theme held.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-000000000018",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000019",
+      "title": "Break into three",
+      "description": "The two stories meet and give the answer. Act three begins.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000001a",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000001b",
+      "title": "Finale",
+      "description": "The protagonist applies what was learned, and settles the conflict.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000001c",
+          "title": "",
+          "cells": []
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-00000000001d",
+      "title": "Final image",
+      "description": "A last picture that answers the first, and shows the change.",
+      "scenes": [
+        {
+          "id": "00000000-0000-4000-8000-00000000001e",
+          "title": "",
+          "cells": []
+        }
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "00000000-0000-4000-8000-00000000001f",
+      "kind": "logline",
+      "name": "Scenes"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000020",
+      "kind": "script",
+      "name": "Enriched scenes"
+    }
+  ]
+}

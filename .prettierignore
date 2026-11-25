@@ -1,1 +1,3 @@
 pnpm-lock.yaml
+# The tests write the fixtures of a plugin, as `JSON.stringify` formats them.
+plugins/*/fixtures/

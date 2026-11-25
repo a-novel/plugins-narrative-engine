@@ -1,0 +1,213 @@
+# Each `title` and `description` is a translation key: `schema.`, then the path of the subschema
+# without `$defs`.
+manifest: 1
+schema:
+  type: object
+  title: schema.title
+  description: schema.description
+  required: [beats, layers]
+  properties:
+    beats:
+      type: array
+      title: schema.properties.beats.title
+      description: schema.properties.beats.description
+      maxItems: 500
+      items: { $ref: "#/$defs/beat" }
+    layers:
+      type: array
+      title: schema.properties.layers.title
+      description: schema.properties.layers.description
+      maxItems: 50
+      items: { $ref: "#/$defs/layer" }
+  additionalProperties: false
+  # A manifest has one default for every language, so the two names are English. A preset writes
+  # both layers in the language of the writer.
+  default:
+    beats: []
+    layers:
+      - { id: "d596181e-9aad-439a-8138-10d438d79a5e", kind: logline, name: Scenes }
+      - { id: "a5ed3dc1-dae2-4bb1-9400-e44cf61a856b", kind: script, name: Enriched scenes }
+  $defs:
+    # A UUID, as `crypto.randomUUID()` writes it. The plugin gives one to each item it creates, and
+    # never gives it twice: a link to a deleted item stays broken.
+    id:
+      type: string
+      title: schema.id.title
+      description: schema.id.description
+      pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    color:
+      type: string
+      title: schema.color.title
+      description: schema.color.description
+      pattern: "^#[0-9A-Fa-f]{6}$"
+    # A text that fits on one line.
+    line:
+      type: string
+      maxLength: 200
+      pattern: "^[^\\n\\r]*$"
+
+    beat:
+      type: object
+      title: schema.beat.title
+      description: schema.beat.description
+      required: [id, title, description, scenes]
+      properties:
+        id: { $ref: "#/$defs/id" }
+        title: { $ref: "#/$defs/line", title: schema.beat.properties.title.title }
+        color: { $ref: "#/$defs/color" }
+        description:
+          type: string
+          title: schema.beat.properties.description.title
+          description: schema.beat.properties.description.description
+          maxLength: 2000
+        scenes:
+          type: array
+          title: schema.beat.properties.scenes.title
+          description: schema.beat.properties.scenes.description
+          maxItems: 500
+          items: { $ref: "#/$defs/scene" }
+      additionalProperties: false
+    scene:
+      type: object
+      title: schema.scene.title
+      description: schema.scene.description
+      required: [id, title, cells]
+      properties:
+        id: { $ref: "#/$defs/id" }
+        title: { $ref: "#/$defs/line", title: schema.scene.properties.title.title }
+        cells:
+          type: array
+          title: schema.scene.properties.cells.title
+          description: schema.scene.properties.cells.description
+          # One cell per layer at most.
+          maxItems: 50
+          items: { $ref: "#/$defs/cell" }
+      additionalProperties: false
+
+    # A union tagged by `kind`, which repeats the kind of the cell's layer: a schema cannot read it
+    # from the layer, and the tag lets a validator report the problems of one branch.
+    #
+    # A link layer has no branch. Its links live in the links of the project, which the host holds,
+    # each from the source target `cells/<scene ID>/<layer ID>` to an exported item. A transition is
+    # a link from the source target `scenes/<scene ID>` to another scene of the composer.
+    cell:
+      title: schema.cell.title
+      description: schema.cell.description
+      oneOf:
+        - { $ref: "#/$defs/notesCell" }
+        - { $ref: "#/$defs/loglineCell" }
+        - { $ref: "#/$defs/scriptCell" }
+    notesCell:
+      type: object
+      title: schema.notesCell.title
+      description: schema.notesCell.description
+      required: [kind, layer, text]
+      properties:
+        kind: { const: notes }
+        layer: { $ref: "#/$defs/id" }
+        text:
+          type: string
+          title: schema.notesCell.properties.text.title
+          description: schema.notesCell.properties.text.description
+          maxLength: 20000
+      additionalProperties: false
+    loglineCell:
+      type: object
+      title: schema.loglineCell.title
+      description: schema.loglineCell.description
+      required: [kind, layer, text]
+      properties:
+        kind: { const: logline }
+        layer: { $ref: "#/$defs/id" }
+        text:
+          type: string
+          title: schema.loglineCell.properties.text.title
+          description: schema.loglineCell.properties.text.description
+          maxLength: 500
+          pattern: "^[^\\n\\r]*$"
+      additionalProperties: false
+    scriptCell:
+      type: object
+      title: schema.scriptCell.title
+      description: schema.scriptCell.description
+      required: [kind, layer, blocks]
+      properties:
+        kind: { const: script }
+        layer: { $ref: "#/$defs/id" }
+        blocks:
+          type: array
+          title: schema.scriptCell.properties.blocks.title
+          description: schema.scriptCell.properties.blocks.description
+          maxItems: 2000
+          items: { $ref: "#/$defs/block" }
+      additionalProperties: false
+
+    # A union tagged by `kind`. A block has a position in its cell and no ID.
+    block:
+      title: schema.block.title
+      description: schema.block.description
+      oneOf:
+        - { $ref: "#/$defs/narration" }
+        - { $ref: "#/$defs/dialogue" }
+    narration:
+      type: object
+      title: schema.narration.title
+      description: schema.narration.description
+      required: [kind, text]
+      properties:
+        kind: { const: narration }
+        text:
+          type: string
+          title: schema.narration.properties.text.title
+          description: schema.narration.properties.text.description
+          maxLength: 100000
+      additionalProperties: false
+    dialogue:
+      type: object
+      title: schema.dialogue.title
+      description: schema.dialogue.description
+      required: [kind, speaker, text]
+      properties:
+        kind: { const: dialogue }
+        speaker:
+          $ref: "#/$defs/line"
+          title: schema.dialogue.properties.speaker.title
+          description: schema.dialogue.properties.speaker.description
+        # A dialogue said in no particular tone has no `tone`.
+        tone:
+          $ref: "#/$defs/line"
+          title: schema.dialogue.properties.tone.title
+          description: schema.dialogue.properties.tone.description
+          minLength: 1
+        text:
+          type: string
+          title: schema.dialogue.properties.text.title
+          description: schema.dialogue.properties.text.description
+          maxLength: 20000
+      additionalProperties: false
+
+    layer:
+      type: object
+      title: schema.layer.title
+      description: schema.layer.description
+      required: [id, kind, name]
+      properties:
+        id: { $ref: "#/$defs/id" }
+        kind:
+          title: schema.layer.properties.kind.title
+          description: schema.layer.properties.kind.description
+          enum: [notes, logline, script, link]
+        name: { $ref: "#/$defs/line", title: schema.layer.properties.name.title }
+        color: { $ref: "#/$defs/color" }
+        # Read on a link layer alone, whose picker offers the items of these exports.
+        accepts:
+          type: array
+          title: schema.layer.properties.accepts.title
+          description: schema.layer.properties.accepts.description
+          maxItems: 20
+          uniqueItems: true
+          # The name of an export, as a manifest writes it.
+          items: { type: string, maxLength: 100, pattern: "^[A-Za-z][A-Za-z0-9_-]*$" }
+      additionalProperties: false
+exports:
+  scenes: { name: exports.scenes, select: "$.beats[*].scenes[*]", id: /id, label: /title }
