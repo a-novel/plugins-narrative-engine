@@ -19,18 +19,19 @@ The plugins A-Novel maintains for the Narrative Engine.
 ## What this is
 
 This repository is the home of the plugins A-Novel maintains for the
-[Narrative Engine](https://github.com/a-novel/service-narrative-engine), and of the contract between
-a plugin and the application that hosts it. A plugin defines one kind of document a writer works on:
-the schema of its content, and the interface that edits it.
+[Narrative Engine](https://github.com/a-novel/service-narrative-engine), and of what they are built
+with: the contract between a plugin and the application that hosts it, and the kit that checks,
+builds, tests and publishes a plugin. A plugin defines one kind of document a writer works on: the
+schema of its content, and the interface that edits it.
 
 ## Installation
 
-The contract lives on GitHub Packages. GitHub asks for a Personal Access Token with the
+The packages live on GitHub Packages. GitHub asks for a Personal Access Token with the
 `read:packages` scope, even for a public package
 ([details](https://github.com/orgs/community/discussions/23386#discussioncomment-3240193)). Point the
 `@a-novel` scope at the registry in an `.npmrc` at your project root, and the `@a-novel-kit` scope
-with it, since the contract depends on a package of
-[nodelib](https://github.com/a-novel-kit/nodelib):
+with it, since the packages depend on [nodelib](https://github.com/a-novel-kit/nodelib) and
+[uikit](https://github.com/a-novel-kit/uikit):
 
 ```ini
 @a-novel:registry=https://npm.pkg.github.com
@@ -38,7 +39,13 @@ with it, since the contract depends on a package of
 //npm.pkg.github.com/:_authToken=${YOUR_PERSONAL_ACCESS_TOKEN}
 ```
 
-Then add the contract:
+A plugin adds the kit, which brings the contract with it:
+
+```bash
+pnpm add @a-novel/plugins-narrative-engine-kit
+```
+
+An application that hosts plugins adds the contract alone:
 
 ```bash
 pnpm add @a-novel/plugins-narrative-engine-contract
@@ -52,6 +59,7 @@ packages.
 | Location          | For                                                                                                                                                                                |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `contract/`       | [`@a-novel/plugins-narrative-engine-contract`](./contract): what a host and a plugin share. Their types, the formats of a plugin version with their checks, and the upgrade chain. |
+| `kit/`            | [`@a-novel/plugins-narrative-engine-kit`](./kit): what a plugin is written with. The contract, and the commands that check, build and publish a plugin.                            |
 | `plugins/<name>/` | One plugin per directory, named after the plugin.                                                                                                                                  |
 
 ## Contributing

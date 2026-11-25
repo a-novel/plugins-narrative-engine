@@ -39,6 +39,10 @@ jobs:
 
   test-js:
     runs-on: ubuntu-latest
+    # The kit's tests mount a plugin in a real Chromium.
+    container:
+      # renovate: datasource=npm depName=playwright
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
     permissions:
       contents: read
       packages: read
@@ -46,6 +50,7 @@ jobs:
       - uses: a-novel-kit/workflows/node-actions/test-node@v1.87.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          test_action: "test:ci"
 
   report-codecov:
     runs-on: ubuntu-latest
