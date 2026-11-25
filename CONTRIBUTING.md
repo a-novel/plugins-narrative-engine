@@ -6,18 +6,40 @@ shared commands.
 
 ## Where code goes
 
-The repository is a pnpm workspace, and the [README](./README.md#packages) names the two locations
-of its packages. A directory there joins the workspace once it holds a `package.json`.
+The repository is a pnpm workspace, and the [README](./README.md#packages) names the locations of
+its packages. A directory there joins the workspace once it holds a `package.json`.
 
 The root holds the tooling: the ESLint and Prettier presets of
 [`@a-novel-kit/nodelib-config`](https://github.com/a-novel-kit/nodelib/tree/master/packages/configs),
-and a `tsconfig.json` that type-checks the root's own TypeScript files.
+the Vitest configuration, and a `tsconfig.json` that type-checks the root's own TypeScript files.
+
+The contract keeps its sources in `contract/src`, each test beside the file it covers as
+`<name>.test.ts`. A `<name>.fixture.ts` file holds data that only tests read. Neither kind is built,
+so neither is published.
+
+A host loads the contract in a browser and a Worker: its build reads no Node types, and a test fails
+when its entry bundles a module outside the package and its dependency. Code that knows nothing of
+plugins goes in [nodelib](https://github.com/a-novel-kit/nodelib), where the JSON tools the contract
+depends on live.
 
 ## What CI checks
 
-`pnpm lint` runs the Prettier check, the type check and ESLint over the whole repository, and CI
-runs it as the `lint-js` job. Run `pnpm format` before committing, since the job fails on any
-Prettier difference.
+Run every command from the repository root.
+
+| Command      | CI job     | What it checks                                                  |
+| ------------ | ---------- | --------------------------------------------------------------- |
+| `pnpm lint`  | `lint-js`  | Prettier, the type checks and ESLint, over the whole repository |
+| `pnpm test`  | `test-js`  | The unit tests, with Vitest                                     |
+| `pnpm build` | `build-js` | The contract compiles to `contract/dist`                        |
+
+Run `pnpm format` before committing, since `lint-js` fails on any Prettier difference.
+
+## Publishing
+
+The contract takes the repository's version, and a release publishes it to GitHub Packages. Cut a
+release from **Actions → release**; a `dry_run` shows the version it would cut. The workflow sizes
+the release from the commit history, bumps the version and tags the commit, and the tag publishes
+the package. The protected `release` environment decides who can cut a release.
 
 ## Questions?
 
