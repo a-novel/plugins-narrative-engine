@@ -17,7 +17,7 @@ jobs:
       contents: read
       packages: read
     steps:
-      - uses: a-novel-kit/workflows/node-actions/lint-node@v1.87.1
+      - uses: a-novel-kit/workflows/node-actions/lint-node@v1.87.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -27,7 +27,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: a-novel-kit/workflows/security-actions/scan-secrets@v1.87.1
+      - uses: a-novel-kit/workflows/security-actions/scan-secrets@v1.87.2
 
   # Audits the workflows themselves, such as for excessive permissions.
   lint-workflows:
@@ -35,4 +35,4 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: a-novel-kit/workflows/security-actions/lint-workflows@v1.87.1
+      - uses: a-novel-kit/workflows/security-actions/lint-workflows@v1.87.2
