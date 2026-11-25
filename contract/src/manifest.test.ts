@@ -40,8 +40,8 @@ describe("checkManifest", () => {
     expect(check()).toEqual([]);
   });
 
-  it("accepts the reserved members", () => {
-    expect(check(["/aiSchema", { type: "object" }], ["/aiContext", "The story so far."])).toEqual([]);
+  it("accepts the reserved member", () => {
+    expect(check(["/aiSchema", { type: "object" }])).toEqual([]);
   });
 
   const shapes: [name: string, edits: Edit[], problem: string][] = [
@@ -50,6 +50,7 @@ describe("checkManifest", () => {
     ["a schema that is no object", [["/schema", []]], '/schema: Instance type "array" is invalid. Expected "object".'],
     ["an export without a label", [["/exports/scenes/label"]], '/exports/scenes: Missing required property "label".'],
     ["an unknown member", [["/migration", true]], "/migration: False boolean schema."],
+    ["an AI context", [["/aiContext", "The story so far."]], "/aiContext: False boolean schema."],
     ["an unknown export member", [["/exports/scenes/path", "$"]], "/exports/scenes/path: False boolean schema."],
     [
       "an export name that holds a slash",
