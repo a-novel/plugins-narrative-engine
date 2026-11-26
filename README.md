@@ -59,7 +59,7 @@ packages.
 | Location          | For                                                                                                                                                                                |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `contract/`       | [`@a-novel/plugins-narrative-engine-contract`](./contract): what a host and a plugin share. Their types, the formats of a plugin version with their checks, and the upgrade chain. |
-| `kit/`            | [`@a-novel/plugins-narrative-engine-kit`](./kit): what a plugin is written with. The contract, and the commands that check, build and publish a plugin.                            |
+| `kit/`            | [`@a-novel/plugins-narrative-engine-kit`](./kit): what a plugin is written with. The contract, and the commands that check, build, show and publish a plugin.                      |
 | `plugins/<name>/` | One plugin per directory, named after the plugin.                                                                                                                                  |
 
 ## Contributing

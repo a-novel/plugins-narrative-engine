@@ -24,7 +24,7 @@ host is the application that mounts plugins and saves their content, which is St
 | `@a-novel/plugins-narrative-engine-kit`        | A plugin          | The contract between a plugin and its host                 |
 | `@a-novel/plugins-narrative-engine-kit/svelte` | A plugin          | `definePlugin`, which makes a plugin of a Svelte component |
 | `@a-novel/plugins-narrative-engine-kit/test`   | A plugin's tests  | `mountPlugin`, a host that keeps everything in memory      |
-| `plugin-kit`                                   | A plugin's folder | The commands that check, build and publish a plugin        |
+| `plugin-kit`                                   | A plugin's folder | The commands that check, build, show and publish a plugin  |
 
 The main entry exports the whole
 [contract](https://github.com/a-novel/plugins-narrative-engine/tree/master/contract), the
@@ -83,6 +83,9 @@ the shadow root it mounts in. The host gives the rest: the fonts, the canvas and
   whatever uikit its host runs since.
 - **The canvas holds a plugin.** A plugin renders on the page of its host, not inside a card. It
   titles its own groups with uikit's `Section` and builds its own `Card`s, as a page does.
+- **A plugin fills its box.** A host mounts a plugin in a target of a definite size, and its page
+  does not scroll for the plugin. The root of a plugin takes the whole target (`block-size: 100%`),
+  and what outgrows it scrolls inside. A plugin never sizes itself from the screen.
 - **A plugin's own CSS keeps uikit's token contract.** Text takes a style in one declaration,
   `font: var(--text-body)`, and each space, size and color takes the token of its role. A value no
   token holds carries an `/* off-scale: <reason> */` comment directly above it. `plugin-kit check`
@@ -144,6 +147,7 @@ The package installs `plugin-kit`, which runs in the folder of a plugin.
 | -------------------------------- | ------------------------------------------------------------------------ |
 | `plugin-kit check`               | Checks the manifests, the languages and the styles, then every fixture   |
 | `plugin-kit build`               | Writes `dist/ui.js` and one `dist/migrations/<version>.js` per migration |
+| `plugin-kit preview`             | Serves a page that mounts the plugin as a host does, to look at it       |
 | `plugin-kit publish --url <url>` | Checks and builds the plugin, then sends its current version             |
 
 `check` lists every problem under its file, and fails when it finds one. It runs in two stages:
@@ -166,6 +170,26 @@ styles come from its Svelte components, which add them to the shadow root they m
 build that needs a second file fails. The class that scopes a component's styles is hashed with the
 name and the version of the plugin, so two versions on one page never share a style. The tokens add
 about 18 KB to the module, 3.4 KB once compressed.
+
+`preview` serves one page and opens no browser: it prints the address to open. The page mounts the
+UI module as `build` writes it, in [the test host](#testing-a-plugin), so it shows what a registry
+would serve. It builds again and reloads when a file of the plugin changes.
+
+```bash
+plugin-kit preview --port 5300 --host 127.0.0.1
+```
+
+- **The page shows the plugin and nothing else,** in the box a host gives it: the screen, inside
+  the insets of a page.
+- **The address holds the choices,** which the command lists when it starts. `?locale=fr` picks a
+  language of the plugin, and `?content=<name>` starts from the fixture
+  `fixtures/<current version>/<name>.json`. Without `content`, the page starts from the schema
+  default, as a new instance does.
+- **A reload keeps what the plugin saved.** The page keeps the content and the links in the storage
+  of the browser, one copy per version of the plugin and per start. `?reset` forgets the copy of
+  the start it names.
+- **`--host` names the address to listen on,** the machine alone by default. Without `--port`, the
+  server takes the first free port from 5173.
 
 `publish` sends the current version in one `POST` request, with `PLUGIN_PUBLISH_TOKEN` as a bearer
 token when the variable is set:
@@ -191,8 +215,9 @@ stack.
 
 `mountPlugin` mounts a plugin as a host does: in a shadow root, on a document that carries uikit's
 fonts and canvas. The document is lit by Studio's lamp, and the plugin sits in the insets of a
-page. Its host keeps the content and the links in memory, so a test reads back what the plugin
-saved. It needs a real browser, as Vitest gives in browser mode.
+page. Its target is a box of a definite size, what the screen leaves: plugins mounted together
+share the height of the screen. Its host keeps the content and the links in memory, so a test reads
+back what the plugin saved. It needs a real browser, as Vitest gives in browser mode.
 
 A project that imports the UI from its sources compiles Svelte with `css: "injected"`, as `build`
 does, so the styles follow the plugin into the shadow root. Such a UI comes without its tokens: it

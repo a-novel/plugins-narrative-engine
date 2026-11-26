@@ -209,16 +209,24 @@ A font face only loads from the document, and the canvas is the page itself, so 
 host. Of its host's custom properties, a plugin reads one: the lamp the document chose,
 `--color-lamp`.
 
-A host owes two things to every plugin it mounts:
+A host owes three things to every plugin it mounts:
 
 1. **A document that carries the fonts and the canvas**, lit by its lamp.
 2. **A shadow root per plugin, on an element the plugin owns.** The plugin sets its tokens on that
    element, so a style the host gives it through a token reads the plugin's value. Lay a plugin out
    from a parent of that element.
+3. **A box.** The target has a definite inline size and a definite block size. A plugin fills its
+   target and scrolls inside it: it never sizes itself from the screen, and the page around it
+   does not scroll for it.
 
 ```ts
+// The page leaves the plugin one cell of a definite size, which the holder fills.
+page.style.display = "grid";
+page.style.grid = "minmax(0, 1fr) / minmax(0, 1fr)";
+
 const holder = page.appendChild(document.createElement("div"));
 const target = holder.attachShadow({ mode: "open" }).appendChild(document.createElement("div"));
+target.style.blockSize = "100%";
 const mounted = plugin.mount(target, host);
 ```
 
