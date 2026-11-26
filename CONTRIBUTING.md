@@ -33,8 +33,8 @@ plain modules beside them, such as the types of its content, each with its test.
 write the fixtures of its current version as file snapshots, and `pnpm test -u` writes them again
 after a change to what they hold.
 
-`kit/test/sample` is a small plugin, laid out the same way. The tests check, build and publish it,
-then mount it in a browser. It imports the kit by its package name, as a plugin does, and the root
+`kit/test/sample` is a small plugin, laid out the same way. The tests check, build, preview and
+publish it, then mount it in a browser. It imports the kit by its package name, as a plugin does, and the root
 `package.json` declares what it depends on.
 
 Two folders beside it hold a UI alone. `kit/test/overlays` opens what a plugin shows above its own
@@ -58,6 +58,20 @@ Run every command from the repository root.
 image.
 
 Run `pnpm format` before committing, since `lint-js` fails on any Prettier difference.
+
+## Looking at a plugin
+
+`plugin-kit preview` serves a page that mounts a plugin as a host does, from the module
+`plugin-kit build` writes. Compile the packages, then run it from the folder of the plugin:
+
+```bash
+pnpm build
+cd plugins/scenes-composer
+pnpm exec plugin-kit preview --host 127.0.0.1
+```
+
+It prints the address to open and what that address takes: a language, a fixture to start from,
+and `?reset`. The [kit's README](./kit/README.md#the-commands) describes the page.
 
 ## Publishing
 

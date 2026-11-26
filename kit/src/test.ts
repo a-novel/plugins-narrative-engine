@@ -21,6 +21,9 @@ import {
 
 // Studio's lamp, which lights the canvas a plugin renders on.
 document.documentElement.style.setProperty("--color-lamp", "var(--color-lamp-magenta)");
+// The workspace of a host fills the screen, and what it holds shares its height: a plugin gets a
+// box to fill, never a page to grow in.
+Object.assign(document.body.style, { display: "flex", flexDirection: "column", blockSize: "100dvh" });
 
 /** The instance a test host mounts a plugin for, and the only one of its project. */
 export const TEST_INSTANCE: InstanceDescriptor = {
@@ -73,7 +76,9 @@ function touches(link: Link, { source, destination }: LinkFilter): boolean {
 
 /**
  * Mounts a plugin as a host application does: in a shadow root, on a document that carries the
- * fonts and the canvas of the UI kit under Studio's lamp. The host keeps everything in memory.
+ * fonts and the canvas of the UI kit under Studio's lamp. The target is a box of a definite size,
+ * what the screen leaves, which the plugin fills and scrolls inside. The host keeps everything in
+ * memory.
  *
  * Every value that crosses the host is copied, so a value that cannot cross a `postMessage`
  * boundary, such as a reactive proxy, is refused.
@@ -124,11 +129,15 @@ export function mountPlugin(plugin: Plugin, options: MountOptions = {}): TestMou
   };
 
   // The insets of a page, which holds a plugin on its canvas. They sit around the element that holds
-  // the shadow root, which is the plugin's: a plugin sets its own tokens on it.
+  // the shadow root, which is the plugin's: a plugin sets its own tokens on it. The page leaves the
+  // plugin one cell, which that element fills and the target after it, so the target has a definite
+  // size whatever the plugin renders.
   const element = document.body.appendChild(document.createElement("div"));
+  element.style.cssText = "display: grid; flex: 1; grid: minmax(0, 1fr) / minmax(0, 1fr); min-block-size: 0";
   element.style.padding = "var(--space-6) var(--layout-gutter) var(--space-12)";
   const holder = element.appendChild(document.createElement("div"));
   const target = holder.attachShadow({ mode: "open" }).appendChild(document.createElement("div"));
+  target.style.blockSize = "100%";
   // Vitest derives the locator of an element from its text when nothing names it, and the text of a
   // plugin changes. This name keeps `page.elementLocator(target)` on the plugin.
   target.dataset.testid = crypto.randomUUID();

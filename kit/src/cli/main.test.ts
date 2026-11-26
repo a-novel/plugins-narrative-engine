@@ -1,12 +1,12 @@
 import manifest from "../../package.json" with { type: "json" };
 import { SAMPLE, copySample } from "./sample.fixture.js";
 
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, onTestFinished } from "vitest";
 
 // The command as the package ships it, which `pnpm build` compiles.
 const COMMAND = fileURLToPath(new URL(`../../${manifest.bin["plugin-kit"]}`, import.meta.url));
@@ -42,6 +42,21 @@ describe("plugin-kit", () => {
     expect(built).toEqual(["migrations", "migrations/1.1.0.js", "ui.js"]);
     // The test runner sets NODE_ENV, under which Svelte would name each component's file in the module.
     expect(readFileSync(join(SAMPLE, "dist/ui.js"), "utf8")).not.toContain("App.svelte");
+  });
+
+  it("serves the preview of the plugin, and names what its address takes", async () => {
+    const command = spawn(process.execPath, [COMMAND, "preview", "--port", "0", "--host", "127.0.0.1"], {
+      cwd: SAMPLE,
+    });
+    onTestFinished(() => void command.kill());
+
+    let printed = "";
+    command.stdout.setEncoding("utf8").on("data", (text: string) => (printed += text));
+    await expect.poll(() => printed, { timeout: 20_000 }).toContain("?reset");
+
+    const [, address] = /^Previewing sample@1\.1\.0 at (http:\/\/127\.0\.0\.1:\d+\/)$/m.exec(printed) ?? [];
+    expect(printed).toContain("  ?locale=<en|fr>\n  ?content=<outline>, the schema default without it\n");
+    expect(await (await fetch(`${address}plugin.json`)).json()).toMatchObject({ name: "sample", version: "1.1.0" });
   });
 
   it.each([[[]], [["release"]], [["check", "build"]], [["publish"]]])(

@@ -1,7 +1,7 @@
 import type { Host, Link, Manifest, Plugin } from "./index.js";
 import { TEST_INSTANCE, mountPlugin } from "./test.js";
 
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, onTestFinished, vi } from "vitest";
 import { page } from "vitest/browser";
 
 const manifest: Manifest = {
@@ -23,7 +23,7 @@ const links: Link[] = [
   { source: elsewhere, destination: elsewhere, relationship: "knows" },
 ];
 
-/** Mounts a plugin that renders one line, and returns the host it received. */
+/** Mounts a plugin that renders one line, for the time of a test, and returns the host it received. */
 function mount(options?: Parameters<typeof mountPlugin>[1]) {
   let host!: Host;
   const destroy = vi.fn();
@@ -36,7 +36,11 @@ function mount(options?: Parameters<typeof mountPlugin>[1]) {
     },
   };
 
-  return { mounted: mountPlugin(plugin, options), host, destroy };
+  const mounted = mountPlugin(plugin, options);
+  // Plugins mounted together share the screen, so a test leaves none behind.
+  onTestFinished(() => mounted.destroy());
+
+  return { mounted, host, destroy };
 }
 
 describe("mountPlugin", () => {
@@ -74,6 +78,38 @@ describe("mountPlugin", () => {
     expect([insets.paddingTop, insets.paddingBottom]).toEqual(["18px", "36px"]);
     expect(getComputedStyle(host).padding).toBe("0px");
     expect(getComputedStyle(mounted.target).fontSize).toBe("16px");
+  });
+
+  it("gives the plugin a box: a target as tall as the screen leaves, whatever the plugin renders", () => {
+    const { mounted } = mount();
+    const { host } = mounted.target.getRootNode() as ShadowRoot;
+    const insets = getComputedStyle(host.parentElement!);
+
+    // The plugin renders one line, and its target takes the screen inside the insets of the page.
+    const left = window.innerHeight - parseFloat(insets.paddingTop) - parseFloat(insets.paddingBottom);
+    expect(mounted.target.getBoundingClientRect().height).toBeCloseTo(left, 0);
+    expect(mounted.target.getBoundingClientRect().width).toBeCloseTo(host.getBoundingClientRect().width, 0);
+    expect(document.documentElement.scrollHeight).toBe(window.innerHeight);
+  });
+
+  it("holds a plugin that outgrows its box inside it, so the plugin scrolls and the page does not", () => {
+    const { mounted } = mount();
+    const tall = mounted.target.appendChild(document.createElement("div"));
+    tall.style.blockSize = "300vh";
+    mounted.target.style.overflow = "auto";
+
+    expect(mounted.target.scrollHeight).toBeGreaterThan(mounted.target.clientHeight);
+    expect(mounted.target.getBoundingClientRect().bottom).toBeLessThanOrEqual(window.innerHeight);
+    expect(document.documentElement.scrollHeight).toBe(window.innerHeight);
+  });
+
+  it("shares the screen between the plugins it mounts together", () => {
+    const [first, second] = [mount().mounted, mount().mounted];
+    const height = (mounted: typeof first) => mounted.target.getBoundingClientRect().height;
+
+    expect(height(first)).toBeGreaterThan(0);
+    expect(height(first)).toBeCloseTo(height(second), 0);
+    expect(document.documentElement.scrollHeight).toBe(window.innerHeight);
   });
 
   it("names the target, so a locator stays on the plugin whatever it renders", async () => {
