@@ -74,17 +74,18 @@ describe("what a plugin opens in a shadow root", () => {
     await expect.poll(() => sitsUnder(view.getByRole("tooltip"), trigger)).toBe(true);
   });
 
-  // A known gap. The dialog of the UI kit blurs and holds the page through rules on the root of
-  // the document, which match nothing from a shadow root, and a rule of the document cannot see
-  // the dialog inside one. When this test fails, the gap is closed: remove it from the README.
-  it("opens a modal dialog, which neither blurs nor holds the page behind it", async () => {
+  // The page blurs and holds behind the dialog from uikit 0.29.1 on, so this test leaves the page
+  // out until the repository depends on that version (a-novel/plugins-narrative-engine#28).
+  it("opens a modal dialog, and closes it on its action", async () => {
     const view = await mount();
 
     await view.getByRole("button", { name: "Open the dialog" }).click();
     await expect.element(view.getByRole("button", { name: "Keep it" })).toBeVisible();
 
-    const { filter, overflow } = getComputedStyle(document.documentElement);
-    expect(view.getByRole("dialog").element().matches(":modal")).toBe(true);
-    expect({ filter, overflow }).toEqual({ filter: "none", overflow: "visible" });
+    const dialog = view.getByRole("dialog").element() as HTMLDialogElement;
+    expect(dialog.matches(":modal")).toBe(true);
+
+    await view.getByRole("button", { name: "Keep it" }).click();
+    await expect.poll(() => dialog.open).toBe(false);
   });
 });

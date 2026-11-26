@@ -97,14 +97,16 @@ the shadow root it mounts in. The host gives the rest: the fonts, the canvas and
 
 What a plugin opens above its own content behaves as follows from inside a shadow root:
 
-| What a plugin opens                                       | In a shadow root                                                |
-| --------------------------------------------------------- | --------------------------------------------------------------- |
-| The list of a `Select` or a `Combobox`, a menu, a tooltip | Opens against its source, as on a page                          |
-| A modal `Dialog`                                          | Opens and dims the page, which it neither blurs nor holds still |
+| What a plugin opens                                       | In a shadow root                                       |
+| --------------------------------------------------------- | ------------------------------------------------------ |
+| The list of a `Select` or a `Combobox`, a menu, a tooltip | Opens against its source, as on a page                 |
+| A modal `Dialog`, from uikit 0.29.1                       | Dims, blurs and holds the page behind it, as on a page |
+| A modal `Dialog`, before uikit 0.29.1                     | Dims the page, which it neither blurs nor holds still  |
 
-The modal dialog is a known gap. uikit's `Dialog` blurs and holds the page through rules on the
-root of the document, which match nothing from a shadow root. The page behind a plugin's dialog
-stays sharp, and scrolls.
+A plugin that opens a modal dialog depends on uikit 0.29.1 or later. Its dialog then holds the page
+through a stylesheet it adds to the document while it shows, as the
+[contract](https://github.com/a-novel/plugins-narrative-engine/tree/master/contract#mounting-a-plugin)
+tells a host.
 
 ### The manifest
 
