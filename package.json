@@ -23,7 +23,7 @@
   "devDependencies": {
     "@a-novel-kit/nodelib-config": "^2.14.0",
     "@a-novel-kit/nodelib-i18n": "^2.14.0",
-    "@a-novel-kit/uikit": "^0.28.0",
+    "@a-novel-kit/uikit": "^0.29.0",
     "@a-novel/plugins-narrative-engine-kit": "workspace:*",
     "@eslint/compat": "^2.1.1",
     "@eslint/config-helpers": "^0.7.0",
