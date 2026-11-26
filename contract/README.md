@@ -230,6 +230,11 @@ target.style.blockSize = "100%";
 const mounted = plugin.mount(target, host);
 ```
 
+A modal `Dialog` of a plugin built with uikit 0.29.1 or later blurs and holds the page behind it, as
+one of the host's own does: while it shows, it adds a stylesheet of its own to the document, with
+the values of its own tokens. For that, the page scrolls on its root, which the dialog holds still,
+and marks its own frosted surfaces with `data-frost`, so they drop their blur under it.
+
 `validateJson` and `upgrade` block while they run, about a second for a content of a few megabytes.
 Run them in a Worker. They throw on a schema that cannot be evaluated, and `upgrade` rejects with
 what a migration throws. The validator also throws on a content that fails in more places than it
