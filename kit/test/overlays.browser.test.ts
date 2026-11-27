@@ -74,18 +74,33 @@ describe("what a plugin opens in a shadow root", () => {
     await expect.poll(() => sitsUnder(view.getByRole("tooltip"), trigger)).toBe(true);
   });
 
-  // The page blurs and holds behind the dialog from uikit 0.29.1 on, so this test leaves the page
-  // out until the repository depends on that version (a-novel/plugins-narrative-engine#28).
-  it("opens a modal dialog, and closes it on its action", async () => {
+  it("opens a modal dialog that blurs and holds the page behind it, and closes it on its action", async () => {
     const view = await mount();
+    const root = () => getComputedStyle(document.documentElement);
+    // A frosted surface of the page, as a host's header, drops its own blur while the dialog shows.
+    const frost = document.body.appendChild(document.createElement("div"));
+    frost.dataset.frost = "";
+    frost.style.backdropFilter = "blur(4px)";
+    onTestFinished(() => frost.remove());
 
     await view.getByRole("button", { name: "Open the dialog" }).click();
     await expect.element(view.getByRole("button", { name: "Keep it" })).toBeVisible();
 
     const dialog = view.getByRole("dialog").element() as HTMLDialogElement;
     expect(dialog.matches(":modal")).toBe(true);
+    // The radius is uikit's to choose, so the test asks only for a blur.
+    await expect.poll(() => root().filter).toMatch(/^blur\(/);
+    await expect.poll(() => root().overflow).toBe("hidden");
+    await expect.poll(() => getComputedStyle(frost).backdropFilter).toBe("none");
 
     await view.getByRole("button", { name: "Keep it" }).click();
     await expect.poll(() => dialog.open).toBe(false);
+    await expect
+      .poll(() => ({ filter: root().filter, overflow: root().overflow }))
+      .toEqual({
+        filter: "none",
+        overflow: "visible",
+      });
+    await expect.poll(() => getComputedStyle(frost).backdropFilter).toBe("blur(4px)");
   });
 });
