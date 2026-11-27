@@ -118,7 +118,7 @@ number, where 0 means both items count as one and a negative number means the de
 first.
 
 A rule has a kind, from a closed list that holds `sequence` alone. A `sequence` orders its steps as
-the content holds them, and each step can hold parts:
+the arrays of the content hold them, and each step can hold parts:
 
 ```json
 {
@@ -131,7 +131,7 @@ the content holds them, and each step can hold parts:
 | Member         | Rule                                                                     |
 | -------------- | ------------------------------------------------------------------------ |
 | `rule`         | `sequence`                                                               |
-| `steps.select` | The path to the steps in the content, in the subset of an export         |
+| `steps.select` | The path to the steps, in the subset of an export, through arrays alone  |
 | `steps.id`     | A JSON Pointer to the identifier inside each step                        |
 | `steps.target` | The name the steps are addressed under, spelled as the name of an export |
 | `parts`        | Optional: the items inside each step                                     |
@@ -141,6 +141,11 @@ the content holds them, and each step can hold parts:
 A step is addressed `<target>/<step ID>`, and a part `<target>/<step ID>/<part ID>`. A rule names its
 own items by path, exported or not. When `steps.target` is the name of an export, the steps take that
 export's `select` and `id`, so one address means one item.
+
+The steps are the items of arrays. An object keeps its members in no order: JSON does not order
+them, and neither does a store that holds the content. So `[*]` in `steps.select` reaches nothing in
+an object, which holds no step. The parts of one step share one distance, so `parts.select` reaches
+the members of an object as an export's path does.
 
 A `sequence` derives a link from each step and each part to each other one. The distance of a link
 is the position of its destination's step minus the position of its source's step: 0 inside one
@@ -186,7 +191,8 @@ const problems = [
 
 `checkRules` reads a content of the version through its rules, and lists each step and each part
 the rules cannot address. A step and a part each need a text identifier. No two steps of a rule
-share one, and no two parts of one step.
+share one, and no two parts of one step. It also lists each object that holds steps, which have no
+order there.
 
 ### A migration
 
@@ -245,8 +251,9 @@ distance. An address no rule reads answers nothing, and so does a manifest witho
   parts of the steps within the distance. It never builds the links of a whole content: 150 steps
   already relate more than 20,000 pairs.
 - **It skips what has no address of its own.** That is a step or a part without a text identifier,
-  or one whose identifier an earlier step, or an earlier part of its step, already holds. A skipped
-  step takes no position, and its parts are skipped with it. `checkRules` lists what is skipped.
+  or one whose identifier an earlier step, or an earlier part of its step, already holds. It also
+  skips the steps an object holds. A skipped step takes no position, and its parts are skipped with
+  it. `checkRules` lists what is skipped.
 
 `upgrade` runs each step's migration, then validates against that step's schema and moves what fails
 aside, as `salvageJson` of nodelib-json does. A missing required property takes its schema default.

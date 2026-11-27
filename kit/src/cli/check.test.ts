@@ -231,6 +231,27 @@ describe("check", () => {
       ]);
     });
 
+    it("refuses a fixture that keeps its steps in an object", async () => {
+      const keyed = [
+        "manifest: 1",
+        "schema: { type: object, default: { beats: {} } }",
+        "exports: {}",
+        "links:",
+        "  order:",
+        "    rule: sequence",
+        '    steps: { select: "$.beats[*]", id: /id, target: beats }',
+        "",
+      ].join("\n");
+      const problems = await checkWith({
+        "versions/1.2.0.yaml": keyed,
+        "fixtures/1.2.0/keyed.json": '{ "beats": { "opening": { "id": "opening" } } }',
+      });
+
+      expect(problems).toEqual([
+        'fixtures/1.2.0/keyed.json: /beats: the steps of the rule "order" are the items of an array, and an object keeps its members in no order.',
+      ]);
+    });
+
     it("reads the fixtures of each version through the rules of that version", async () => {
       const [ruleless] = manifest.split("links:");
       const problems = await checkWith({

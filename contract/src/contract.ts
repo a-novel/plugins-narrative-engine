@@ -27,7 +27,10 @@ export interface Link {
  * another. A host reads it when asked, and never stores it.
  */
 export interface DynamicLink {
-  /** The address of the destination inside the instance, as the `target` of an {@link Identifier}. */
+  /**
+   * The address the rule gives the destination inside the instance: `<target>/<step ID>`, or
+   * `<target>/<step ID>/<part ID>` for a part.
+   */
   destination: string;
   /** The name of the rule in the manifest. */
   relationship: string;

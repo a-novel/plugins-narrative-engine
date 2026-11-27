@@ -621,6 +621,28 @@ describe("listDynamicLinks", () => {
     ]);
   });
 
+  it("takes no step from an object, whose members a save keeps in no order", () => {
+    const keyed: Json = { beats: [{ scenes: { zeta: { id: "zeta" }, alpha: { id: "alpha" }, mid: { id: "mid" } } }] };
+    const byBeat: Json = { beats: { first: { scenes: [{ id: "s-0" }, { id: "s-1" }] } } };
+    const mixed: Json = {
+      beats: [{ scenes: [{ id: "s-0" }] }, { scenes: { keyed: { id: "s-k" } } }, { scenes: [{ id: "s-1" }] }],
+    };
+
+    expect(read(keyed, "scenes/alpha", 1)).toEqual([]);
+    expect(read(byBeat, "scenes/s-0", 1)).toEqual([]);
+    expect(read(mixed, "scenes/s-k", 1)).toEqual([]);
+    expect(read(mixed, "scenes/s-0", 1)).toEqual(["scenes/s-1 1"]);
+  });
+
+  it("reads the parts an object holds, which share one distance", () => {
+    const cells = { second: { layer: "l-1" }, first: { layer: "l-0" } };
+
+    expect(read({ beats: [{ scenes: [{ id: "s-0", cells }] }] }, "scenes/s-0", 0)).toEqual([
+      "scenes/s-0/l-1 0",
+      "scenes/s-0/l-0 0",
+    ]);
+  });
+
   it("reads the parts of the steps within the distance alone", () => {
     const opened = new Set<string>();
     // 150 steps relate more than 20,000 pairs of them.
@@ -689,6 +711,26 @@ describe("checkRules", () => {
       '/beats/0/scenes/0/cells/1/layer: a part of one step of the rule "order" has no text identifier.',
       '/beats/0/scenes/0/cells/2/layer: a part of one step of the rule "order" has no text identifier.',
       '/beats/0/scenes/0/cells/3/layer: a part of one step of the rule "order" shares the identifier "l-0" with an earlier one.',
+    ]);
+  });
+
+  it("lists each object that holds steps, at its place", () => {
+    const unordered =
+      'the steps of the rule "order" are the items of an array, and an object keeps its members in no order.';
+    const keyed: Json = { beats: [{ scenes: { zeta: { id: "zeta" }, alpha: {} } }, { scenes: [{ id: "s-0" }] }] };
+
+    expect(checkRules({ order }, keyed)).toEqual([`/beats/0/scenes: ${unordered}`]);
+    expect(checkRules({ order }, { beats: { first: { scenes: [{}] } } })).toEqual([`/beats: ${unordered}`]);
+    expect(checkRules({ order: { rule: "sequence", steps: { ...order.steps, select: "$[*]" } } }, {})).toEqual([
+      `/: ${unordered}`,
+    ]);
+  });
+
+  it("lets an object hold the parts of a step", () => {
+    const cells = { second: { layer: "l-1" }, first: { layer: "l-0" }, third: {} };
+
+    expect(checkRules({ order }, { beats: [{ scenes: [{ id: "s-0", cells }] }] })).toEqual([
+      '/beats/0/scenes/0/cells/third/layer: a part of one step of the rule "order" has no text identifier.',
     ]);
   });
 

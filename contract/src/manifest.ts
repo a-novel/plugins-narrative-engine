@@ -34,14 +34,19 @@ export interface ExportDefinition {
  */
 export interface LinkRule {
   /**
-   * The kind of the rule, from a closed list. A `sequence` orders its steps as the content holds
-   * them, and derives a link from each step and each part to each other one. The distance of a link
-   * is the position of its destination's step minus the position of its source's step.
+   * The kind of the rule, from a closed list. A `sequence` orders its steps as the arrays of the
+   * content hold them, and derives a link from each step and each part to each other one. The
+   * distance of a link is the position of its destination's step minus the position of its source's
+   * step.
    */
   rule: "sequence";
   /** The items the rule orders. */
   steps: {
-    /** The path to the steps in the content, in the subset an {@link ExportDefinition} selects with. */
+    /**
+     * The path to the steps in the content, in the subset an {@link ExportDefinition} selects with.
+     * Here `[*]` reaches the items of an array alone: an object keeps its members in no order, so it
+     * holds no step.
+     */
     select: string;
     /** The JSON Pointer (RFC 6901) to the identifier inside each step. */
     id: string;
@@ -270,8 +275,9 @@ export function listExports(exports: Manifest["exports"], content: Json): Omit<E
  * linear in the values it visits.
  *
  * A step or a part is skipped when it has no text identifier, or when an earlier step, or an
- * earlier part of its step, holds the same one. A skipped step takes no position, and its parts are
- * skipped with it. {@link checkRules} lists what is skipped.
+ * earlier part of its step, holds the same one. So are the steps an object holds, which have no
+ * order. A skipped step takes no position, and its parts are skipped with it. {@link checkRules}
+ * lists what is skipped.
  *
  * @throws RangeError or SyntaxError on a rule that {@link checkManifest} refuses.
  */
@@ -284,7 +290,7 @@ export function listDynamicLinks(
   const found: DynamicLink[] = [];
 
   for (const [relationship, rule] of Object.entries(links ?? {})) {
-    const steps = identify(content, rule.steps).items;
+    const steps = identify(content, rule.steps, { ordered: true }).items;
     // Only a step whose address opens the source can hold it, so the parts of the others stay unread.
     const position = steps.findIndex(
       (step) => `${source}/`.startsWith(`${rule.steps.target}/${step.id}/`) && addresses(rule, step).includes(source)
@@ -317,7 +323,8 @@ function addresses({ steps, parts }: LinkRule, step: Identified): string[] {
  * has an address lists nothing.
  *
  * A step and a part each need a text identifier. No two steps of a rule share one, and no two parts
- * of one step. {@link listDynamicLinks} skips what this lists.
+ * of one step. Steps are the items of arrays: an object the path of the steps meets with `[*]` is
+ * listed at its own place. {@link listDynamicLinks} skips what this lists.
  *
  * @throws RangeError or SyntaxError on a rule that {@link checkManifest} refuses.
  */
@@ -327,11 +334,13 @@ export function checkRules(links: Manifest["links"], content: Json): string[] {
 
 /** Lists the steps and the parts of a content that one rule cannot address. */
 function checkRule(name: string, { steps, parts }: LinkRule, content: Json): string[] {
-  const sequence = identify(content, steps);
+  const sequence = identify(content, steps, { ordered: true });
   const inParts =
-    parts === undefined ? [] : sequence.items.flatMap((step) => identify(step.value, parts, step.at).refused);
+    parts === undefined ? [] : sequence.items.flatMap((step) => identify(step.value, parts, { base: step.at }).refused);
+  const unordered = `the steps of the rule "${name}" are the items of an array, and an object keeps its members in no order.`;
 
   return [
+    ...sequence.unordered.map((at) => `${formatJsonPointer(at) || "/"}: ${unordered}`),
     ...sequence.refused.map((step) => refusal(step, `a step of the rule "${name}"`)),
     ...inParts.map((part) => refusal(part, `a part of one step of the rule "${name}"`)),
   ];
@@ -344,7 +353,7 @@ function refusal({ at, id }: Refused, subject: string): string {
       ? `shares the identifier ${JSON.stringify(id)} with an earlier one`
       : "has no text identifier";
 
-  return `${formatJsonPointer(at)}: ${subject} ${reason}.`;
+  return `${formatJsonPointer(at) || "/"}: ${subject} ${reason}.`;
 }
 
 /** An Identified is a step or a part that holds its identifier: where it is in the content, and its value. */
@@ -363,19 +372,21 @@ interface Refused {
 /**
  * Splits the values a rule selects from `from`, in document order. A value is an item when it has
  * a text identifier that no earlier item holds, and is refused otherwise. `base` leads to `from` in
- * the content.
+ * the content. An `ordered` selection reaches the items of arrays alone, and lists in `unordered`
+ * the place of each object its `[*]` met.
  */
 function identify(
   from: Json,
   { select: path, id }: { select: string; id: string },
-  base: string[] = []
-): { items: Identified[]; refused: Refused[] } {
+  { base = [], ordered = false }: { base?: string[]; ordered?: boolean } = {}
+): { items: Identified[]; refused: Refused[]; unordered: string[][] } {
   const idTokens = parseJsonPointer(id);
   const held = new Set<string>();
   const items: Identified[] = [];
   const refused: Refused[] = [];
+  const unordered: string[][] = [];
 
-  for (const [tokens, value] of select(from, path)) {
+  for (const [tokens, value] of select(from, path, ordered ? unordered : undefined)) {
     const found = resolveJsonPointer(value, idTokens);
     const at = [...base, ...tokens];
 
@@ -388,7 +399,7 @@ function identify(
     items.push({ at, id: found, value });
   }
 
-  return { items, refused };
+  return { items, refused, unordered };
 }
 
 /** A Selected is a value a path reaches, after the reference tokens that lead to it from where the path starts. */
@@ -399,24 +410,34 @@ type Selected = [at: string[], value: Json];
  * evaluated here, in time linear in the values it visits. No expression of the subset can make it
  * revisit one.
  *
+ * With `unordered`, `*` reaches the items of an array alone: a save keeps the members of an object
+ * in no order, so the place of each object it meets is added there instead.
+ *
  * @throws RangeError on a path outside the subset.
  */
-function select(from: Json, path: string): Selected[] {
+function select(from: Json, path: string, unordered?: string[][]): Selected[] {
   if (!PATH.test(path)) throw new RangeError(`A path stays inside the subset: ${path}`);
 
   let selected: Selected[] = [[[], from]];
-  for (const segment of path.match(SEGMENT) ?? []) selected = selected.flatMap((value) => children(value, segment));
+  for (const segment of path.match(SEGMENT) ?? []) {
+    selected = selected.flatMap((value) => children(value, segment, unordered));
+  }
 
   return selected;
 }
 
 /** Applies one segment of a path to a value: `*` reaches every child, a name reaches one member. */
-function children([at, value]: Selected, segment: string): Selected[] {
+function children([at, value]: Selected, segment: string, unordered?: string[][]): Selected[] {
   if (segment !== "*") {
     const member = resolveJsonPointer(value, [segment]);
     return member === undefined ? [] : [[[...at, segment], member]];
   }
 
   if (Array.isArray(value)) return value.map((item, index): Selected => [[...at, String(index)], item]);
-  return isJsonObject(value) ? Object.entries(value).map(([name, member]): Selected => [[...at, name], member]) : [];
+  if (!isJsonObject(value)) return [];
+
+  if (unordered === undefined) return Object.entries(value).map(([name, member]): Selected => [[...at, name], member]);
+  unordered.push(at);
+
+  return [];
 }

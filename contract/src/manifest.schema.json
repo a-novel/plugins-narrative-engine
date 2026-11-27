@@ -54,7 +54,7 @@
       "additionalProperties": false
     },
     "rule": {
-      "description": "A rule of the one kind, `sequence`. Its steps are ordered as the content holds them, and it derives a link from each step and each part to each other one. The distance of a link is the position of its destination's step minus the position of its source's step.",
+      "description": "A rule of the one kind, `sequence`. Its steps are ordered as the arrays of the content hold them, and it derives a link from each step and each part to each other one. The distance of a link is the position of its destination's step minus the position of its source's step.",
       "type": "object",
       "required": ["rule", "steps"],
       "properties": {
@@ -67,7 +67,7 @@
           "required": ["select", "id", "target"],
           "properties": {
             "select": {
-              "description": "The path to the steps in the content.",
+              "description": "The path to the steps in the content. Its `[*]` reaches the items of an array alone: an object keeps its members in no order.",
               "$ref": "#/$defs/path"
             },
             "id": {
