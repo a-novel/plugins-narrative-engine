@@ -17,6 +17,22 @@ schema:
       properties:
         id: { type: string }
         title: { type: string, title: schema.beat.title }
+        scenes:
+          type: array
+          items:
+            $ref: "#/$defs/scene"
+      additionalProperties: false
+    scene:
+      type: object
+      required: [id, title]
+      properties:
+        id: { type: string }
+        title: { type: string }
       additionalProperties: false
 exports:
   beats: { name: exports.beats, select: "$.beats[*]", id: /id, label: /title }
+links:
+  order:
+    rule: sequence
+    steps: { select: "$.beats[*]", id: /id, target: beats }
+    parts: { select: "$.scenes[*]", id: /id }

@@ -26,8 +26,8 @@ module, so it runs in a browser, a Worker and Node.
 | Subject       | What the package gives                                                                |
 | ------------- | ------------------------------------------------------------------------------------- |
 | The UI module | The `Plugin` and `Host` types: what a plugin exports, and what it can ask of the host |
-| The manifest  | The `Manifest` and `Messages` types, `checkManifest`, `checkMessages`, `listExports`  |
-| The content   | `upgrade`, with the `Migration` type                                                  |
+| The manifest  | The `Manifest` and `Messages` types, `checkManifest`, `checkMessages`                 |
+| The content   | `listExports`, `listDynamicLinks`, `checkRules`, and `upgrade` with `Migration`       |
 
 Its one dependency is
 [`@a-novel-kit/nodelib-json`](https://github.com/a-novel-kit/nodelib/tree/master/packages/json),
@@ -64,7 +64,8 @@ before saving. A plugin keeps its own editing state, such as its undo history.
 
 ### The manifest
 
-A manifest holds the schema of the content and the items an instance exports for links.
+A manifest holds the schema of the content, the items an instance exports for links, and the rules
+that derive its dynamic links.
 
 ```json
 {
@@ -87,6 +88,9 @@ A manifest holds the schema of the content and the items an instance exports for
   },
   "exports": {
     "beats": { "name": "exports.beats", "select": "$.beats[*]", "id": "/id", "label": "/title" }
+  },
+  "links": {
+    "order": { "rule": "sequence", "steps": { "select": "$.beats[*]", "id": "/id", "target": "beats" } }
   }
 }
 ```
@@ -101,9 +105,46 @@ A manifest holds the schema of the content and the items an instance exports for
 | `exports.<name>.name`           | A translation key                                                                                 |
 | `exports.<name>.select`         | `$`, then member names (`.beats`) and `[*]`: the subset of JSONPath the host evaluates            |
 | `exports.<name>.id` and `label` | A JSON Pointer inside each selected item. An item is exported when its `id` reads as a string     |
+| `links`                         | Optional: the rules, by the relationship of the dynamic links each one derives                    |
 
 `[*]` reaches every item of an array and every member value of an object. The identifier of an item
 is what a link stores, so it must survive a reorder: an index would not.
+
+#### Rules
+
+A static link is one a plugin declares, through `host.links.replace`. A dynamic link is one the host
+derives from a rule and the content. It is never stored, and it carries a distance: a signed whole
+number, where 0 means both items count as one and a negative number means the destination comes
+first.
+
+A rule has a kind, from a closed list that holds `sequence` alone. A `sequence` orders its steps as
+the content holds them, and each step can hold parts:
+
+```json
+{
+  "rule": "sequence",
+  "steps": { "select": "$.beats[*].scenes[*]", "id": "/id", "target": "scenes" },
+  "parts": { "select": "$.cells[*]", "id": "/layer" }
+}
+```
+
+| Member         | Rule                                                                     |
+| -------------- | ------------------------------------------------------------------------ |
+| `rule`         | `sequence`                                                               |
+| `steps.select` | The path to the steps in the content, in the subset of an export         |
+| `steps.id`     | A JSON Pointer to the identifier inside each step                        |
+| `steps.target` | The name the steps are addressed under, spelled as the name of an export |
+| `parts`        | Optional: the items inside each step                                     |
+| `parts.select` | The path to the parts, in the same subset, where `$` is their step       |
+| `parts.id`     | A JSON Pointer to the identifier inside each part                        |
+
+A step is addressed `<target>/<step ID>`, and a part `<target>/<step ID>/<part ID>`. A rule names its
+own items by path, exported or not. When `steps.target` is the name of an export, the steps take that
+export's `select` and `id`, so one address means one item.
+
+A `sequence` derives a link from each step and each part to each other one. The distance of a link
+is the position of its destination's step minus the position of its source's step: 0 inside one
+step, 1 for the next step, -1 for the previous one.
 
 The package also exports the shape as a JSON Schema, for tools that read a manifest without this
 package: `@a-novel/plugins-narrative-engine-contract/manifest.schema.json`.
@@ -129,18 +170,23 @@ English is the reference: every other language holds exactly its keys.
 
 ### Checking a version
 
-Both checks return a list of problems, each opening with a JSON Pointer to its place, and an empty
+Each check returns a list of problems, each opening with a JSON Pointer to its place, and an empty
 list for a valid document. `checkMessages` checks English too, passed as its own translation.
 
 ```ts
-import { checkManifest, checkMessages } from "@a-novel/plugins-narrative-engine-contract";
+import { checkManifest, checkMessages, checkRules } from "@a-novel/plugins-narrative-engine-contract";
 
 const problems = [
   ...checkManifest(manifest, english),
   ...checkMessages(english, english),
   ...checkMessages(english, french),
+  ...checkRules(manifest.links, sample),
 ];
 ```
+
+`checkRules` reads a content of the version through its rules, and lists each step and each part
+the rules cannot address. A step and a part each need a text identifier. No two steps of a rule
+share one, and no two parts of one step.
 
 ### A migration
 
@@ -160,13 +206,13 @@ export default migrate;
 
 ## Hosting plugins
 
-A host implements `Host` for each plugin it mounts, and runs the content through three functions.
+A host implements `Host` for each plugin it mounts, and runs the content through four functions.
 None of them modifies its input. A host validates with `@a-novel-kit/nodelib-json`, which it
 installs itself.
 
 ```ts
 import { validateJson } from "@a-novel-kit/nodelib-json";
-import { listExports, upgrade } from "@a-novel/plugins-narrative-engine-contract";
+import { listDynamicLinks, listExports, upgrade } from "@a-novel/plugins-narrative-engine-contract";
 
 // On load and before a save: an empty list means the content is valid.
 const problems = validateJson(manifest.schema, content);
@@ -179,13 +225,28 @@ const result = await upgrade(content, [
 
 // For the link picker.
 const items = listExports(manifest.exports, content);
+
+// The items within one step of a beat, each with its signed distance.
+const around = listDynamicLinks(manifest.links, content, "beats/opening", 1);
 ```
 
-| Function       | What it returns                                                                                       |
-| -------------- | ----------------------------------------------------------------------------------------------------- |
-| `validateJson` | The problems of a content, each with a JSON Pointer to the failing value                              |
-| `upgrade`      | The content at the last step with everything the steps set aside, or the step that stopped it and why |
-| `listExports`  | The items a content exports, without the instance ID, which the host adds                             |
+| Function           | What it returns                                                                                       |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `validateJson`     | The problems of a content, each with a JSON Pointer to the failing value                              |
+| `upgrade`          | The content at the last step with everything the steps set aside, or the step that stopped it and why |
+| `listExports`      | The items a content exports, without the instance ID, which the host adds                             |
+| `listDynamicLinks` | The dynamic links from one item of a content to the items within a distance of it                     |
+
+`listDynamicLinks` takes the address of a step or of a part, and answers with the address of each
+destination inside the same instance, the relationship, which is the name of the rule, and the
+distance. An address no rule reads answers nothing, and so does a manifest without rules.
+
+- **Its time follows the items it visits.** Each call reads the identifier of every step, then the
+  parts of the steps within the distance. It never builds the links of a whole content: 150 steps
+  already relate more than 20,000 pairs.
+- **It skips what has no address of its own.** That is a step or a part without a text identifier,
+  or one whose identifier an earlier step, or an earlier part of its step, already holds. A skipped
+  step takes no position, and its parts are skipped with it. `checkRules` lists what is skipped.
 
 `upgrade` runs each step's migration, then validates against that step's schema and moves what fails
 aside, as `salvageJson` of nodelib-json does. A missing required property takes its schema default.

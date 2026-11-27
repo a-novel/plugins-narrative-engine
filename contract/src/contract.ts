@@ -22,6 +22,22 @@ export interface Link {
   relationship: string;
 }
 
+/**
+ * A DynamicLink is a link a rule derives from the content of an instance, from one of its items to
+ * another. A host reads it when asked, and never stores it.
+ */
+export interface DynamicLink {
+  /** The address of the destination inside the instance, as the `target` of an {@link Identifier}. */
+  destination: string;
+  /** The name of the rule in the manifest. */
+  relationship: string;
+  /**
+   * How far the destination is from the source, as a signed whole number. At 0 both items count as
+   * one. A negative distance means the destination comes before the source.
+   */
+  distance: number;
+}
+
 /** A LinkFilter narrows a list of links to those that touch the given instances. */
 export interface LinkFilter {
   /** The ID of the instance the links start from. */

@@ -71,7 +71,7 @@ describe("plugin-kit", () => {
     await expect.poll(() => printed, { timeout: 20_000 }).toContain("?reset");
 
     const [, address] = /^Previewing sample@1\.1\.0 at (http:\/\/127\.0\.0\.1:\d+\/)$/m.exec(printed) ?? [];
-    expect(printed).toContain("  ?locale=<en|fr>\n  ?content=<outline>, the schema default without it\n");
+    expect(printed).toContain("  ?locale=<en|fr>\n  ?content=<outline|scenes>, the schema default without it\n");
     expect(await (await fetch(`${address}plugin.json`)).json()).toMatchObject({ name: "sample", version: "1.1.0" });
   });
 

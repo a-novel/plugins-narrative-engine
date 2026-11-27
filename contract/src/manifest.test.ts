@@ -1,5 +1,13 @@
 import { type Edit, edit, generate } from "./composer.fixture.js";
-import { type Manifest, checkManifest, checkMessages, listExports } from "./manifest.js";
+import {
+  type LinkRule,
+  type Manifest,
+  checkManifest,
+  checkMessages,
+  checkRules,
+  listDynamicLinks,
+  listExports,
+} from "./manifest.js";
 
 import { describe, expect, it } from "vitest";
 
@@ -32,8 +40,20 @@ const manifest: JsonObject = {
   },
 };
 
+// The rule of a composer: its scenes in order, across beats, each with its cells.
+const order = {
+  rule: "sequence",
+  steps: { select: "$.beats[*].scenes[*]", id: "/id", target: "scenes" },
+  parts: { select: "$.cells[*]", id: "/layer" },
+} satisfies LinkRule;
+
 /** Checks the valid manifest with edits applied. */
 const check = (...edits: Edit[]) => checkManifest(edit(manifest, ...edits), english);
+
+const ruled = edit(manifest, ["/links", { order }]);
+
+/** Checks the valid manifest with the rule, and edits applied. */
+const checkRuled = (...edits: Edit[]) => checkManifest(edit(ruled, ...edits), english);
 
 describe("checkManifest", () => {
   it("accepts a valid manifest", () => {
@@ -63,6 +83,72 @@ describe("checkManifest", () => {
     expect(check(...edits)).toEqual([problem]);
   });
 
+  it("accepts a manifest without rules, and one with none", () => {
+    expect(manifest).not.toHaveProperty("links");
+    expect(check()).toEqual([]);
+    expect(check(["/links", {}])).toEqual([]);
+  });
+
+  it("accepts a rule, with or without parts", () => {
+    expect(checkRuled()).toEqual([]);
+    expect(checkRuled(["/links/order/parts"])).toEqual([]);
+  });
+
+  const rules: [name: string, edits: Edit[], problem: string][] = [
+    ["rules that are no object", [["/links", []]], '/links: Instance type "array" is invalid. Expected "object".'],
+    [
+      "a rule of a kind outside the list",
+      [["/links/order/rule", "graph"]],
+      '/links/order/rule: Instance does not match "sequence".',
+    ],
+    ["a rule without a kind", [["/links/order/rule"]], '/links/order: Missing required property "rule".'],
+    ["a rule without steps", [["/links/order/steps"]], '/links/order: Missing required property "steps".'],
+    [
+      "steps without a target",
+      [["/links/order/steps/target"]],
+      '/links/order/steps: Missing required property "target".',
+    ],
+    ["parts without an identifier", [["/links/order/parts/id"]], '/links/order/parts: Missing required property "id".'],
+    ["an unknown rule member", [["/links/order/label", "/title"]], "/links/order/label: False boolean schema."],
+    [
+      "parts with a target of their own",
+      [["/links/order/parts/target", "cells"]],
+      "/links/order/parts/target: False boolean schema.",
+    ],
+    [
+      "a target that holds a slash",
+      [["/links/order/steps/target", "beats/scenes"]],
+      "/links/order/steps/target: String does not match pattern.",
+    ],
+  ];
+
+  it.each(rules)("refuses %s", (_, edits, problem) => {
+    expect(checkRuled(...edits)).toEqual([problem]);
+  });
+
+  it.each(["steps", "parts"])("refuses the JSON Pointer of %s that is none", (member) => {
+    expect(checkRuled([`/links/order/${member}/id`, "id"])).toEqual([
+      `/links/order/${member}/id: String does not match pattern.`,
+    ]);
+  });
+
+  const asExport: [name: string, member: string, value: string, expected: string][] = [
+    ["other items", "select", "$.beats[*]", "$.beats[*].scenes[*]"],
+    ["another identifier", "id", "/key", "/id"],
+  ];
+
+  it.each(asExport)("refuses steps addressed as an export that read %s", (_, member, value, expected) => {
+    expect(checkRuled([`/links/order/steps/${member}`, value])).toEqual([
+      `/links/order/steps/${member}: steps addressed as the export "scenes" take its ${member}, "${expected}".`,
+    ]);
+  });
+
+  it.each(["moments", "constructor"])("lets steps addressed as %s, which is no export, select freely", (target) => {
+    const steps = { select: "$.moments[*]", id: "/key", target };
+
+    expect(checkRuled(["/links/order/steps", steps])).toEqual([]);
+  });
+
   it("refuses a manifest that is no object", () => {
     expect(checkManifest(null, english)).toEqual(['/: Instance type "null" is invalid. Expected "object".']);
   });
@@ -90,6 +176,18 @@ describe("checkManifest", () => {
       "/exports/scenes/select: String does not match pattern.",
     ]);
     expect(() => listExports({ scenes: { name: "", select, id: "/id", label: "/title" } }, {})).toThrow(RangeError);
+  });
+
+  it.each(outsideSubset.map((select) => [select.slice(0, 40), select]))("refuses the rule path %s", (_, select) => {
+    // Steps under a name of their own, which no export holds to its path.
+    const steps = { select, id: "/id", target: "moments" };
+
+    expect(checkRuled(["/links/order/steps", steps], ["/links/order/parts/select", select])).toEqual([
+      "/links/order/steps/select: String does not match pattern.",
+      "/links/order/parts/select: String does not match pattern.",
+    ]);
+    expect(() => listDynamicLinks({ order: { rule: "sequence", steps } }, {}, "moments/m-0", 1)).toThrow(RangeError);
+    expect(() => checkRules({ order: { ...order, parts: { select, id: "/id" } } }, generate(5000))).toThrow(RangeError);
   });
 
   it.each(["", "/id", "/a/0/b~0c~1d"])("accepts the JSON Pointer %j", (pointer) => {
@@ -360,5 +458,257 @@ describe("listExports", () => {
     const broken: Manifest["exports"] = { scenes: { name: "", select: "$", id: "id", label: "/title" } };
 
     expect(() => listExports(broken, {})).toThrow(SyntaxError);
+  });
+});
+
+// Four scenes in order, across two beats. The third one holds no cell.
+const scenes = {
+  beats: [
+    {
+      id: "b-0",
+      scenes: [
+        { id: "s-0", cells: [{ layer: "l-0" }, { layer: "l-1" }] },
+        { id: "s-1", cells: [{ layer: "l-0" }] },
+      ],
+    },
+    {
+      id: "b-1",
+      scenes: [
+        { id: "s-2", cells: [] },
+        { id: "s-3", cells: [{ layer: "l-1" }] },
+      ],
+    },
+  ],
+};
+
+/** Reads the dynamic links of the composer's rule, as `<destination> <distance>`. */
+function read(content: Json, source: string, distance: number, links: Manifest["links"] = { order }): string[] {
+  return listDynamicLinks(links, content, source, distance).map((link) => `${link.destination} ${link.distance}`);
+}
+
+describe("listDynamicLinks", () => {
+  it("lists the items within a distance of a part, each with the signed distance of its step", () => {
+    expect(listDynamicLinks({ order }, scenes, "scenes/s-1/l-0", 1)).toEqual([
+      { destination: "scenes/s-0", relationship: "order", distance: -1 },
+      { destination: "scenes/s-0/l-0", relationship: "order", distance: -1 },
+      { destination: "scenes/s-0/l-1", relationship: "order", distance: -1 },
+      { destination: "scenes/s-1", relationship: "order", distance: 0 },
+      { destination: "scenes/s-2", relationship: "order", distance: 1 },
+    ]);
+  });
+
+  it("starts from a step as from one of its parts", () => {
+    expect(read(scenes, "scenes/s-0", 0)).toEqual(["scenes/s-0/l-0 0", "scenes/s-0/l-1 0"]);
+    expect(read(scenes, "scenes/s-0/l-1", 0)).toEqual(["scenes/s-0 0", "scenes/s-0/l-0 0"]);
+    expect(read(scenes, "scenes/s-2", 0)).toEqual([]);
+  });
+
+  it("stops at both ends of the sequence", () => {
+    expect(read(scenes, "scenes/s-0", 1)).toEqual([
+      "scenes/s-0/l-0 0",
+      "scenes/s-0/l-1 0",
+      "scenes/s-1 1",
+      "scenes/s-1/l-0 1",
+    ]);
+    expect(read(scenes, "scenes/s-3", 1)).toEqual(["scenes/s-2 -1", "scenes/s-3/l-1 0"]);
+  });
+
+  it("reaches the whole sequence at a distance that covers it, and nothing at one below zero", () => {
+    expect(read(scenes, "scenes/s-3", Infinity)).toEqual([
+      "scenes/s-0 -3",
+      "scenes/s-0/l-0 -3",
+      "scenes/s-0/l-1 -3",
+      "scenes/s-1 -2",
+      "scenes/s-1/l-0 -2",
+      "scenes/s-2 -1",
+      "scenes/s-3/l-1 0",
+    ]);
+    expect(read(scenes, "scenes/s-3", 2.5)).toEqual(read(scenes, "scenes/s-3", 2));
+    expect(read(scenes, "scenes/s-3", -1)).toEqual([]);
+    expect(read(scenes, "scenes/s-3", NaN)).toEqual([]);
+  });
+
+  it("derives the opposite link from the destination", () => {
+    const content = generate(50_000);
+    const [scene] = content.beats[2]!.scenes;
+    const source = `scenes/${scene!.id}`;
+    const found = listDynamicLinks({ order }, content, source, 2);
+
+    expect(new Set(found.map(({ distance }) => distance))).toEqual(new Set([-2, -1, 0, 1, 2]));
+    for (const { destination, distance } of found) {
+      const opposite = { destination: source, relationship: "order", distance: -distance || 0 };
+
+      expect(listDynamicLinks({ order }, content, destination, 2)).toContainEqual(opposite);
+    }
+  });
+
+  it.each(["scenes/s-9", "scenes/s-0/l-9", "scenes/s-0/", "scenes/", "scenes", "beats/b-0", "s-0", ""])(
+    "lists nothing for the address %j, which the rule does not read",
+    (source) => {
+      expect(read(scenes, source, 1)).toEqual([]);
+    }
+  );
+
+  it("lists nothing without a rule, or on a content without the selected members", () => {
+    expect(listDynamicLinks(undefined, scenes, "scenes/s-0", 1)).toEqual([]);
+    expect(listDynamicLinks({}, scenes, "scenes/s-0", 1)).toEqual([]);
+    expect(read({ beats: "none" }, "scenes/s-0", 1)).toEqual([]);
+  });
+
+  it("reads a rule without parts, whose steps are its only items", () => {
+    const steps = { order: { rule: "sequence", steps: order.steps } } satisfies Manifest["links"];
+
+    expect(read(scenes, "scenes/s-1", 1, steps)).toEqual(["scenes/s-0 -1", "scenes/s-2 1"]);
+    expect(read(scenes, "scenes/s-1/l-0", 1, steps)).toEqual([]);
+  });
+
+  it("names each link after the rule that derives it", () => {
+    const links: Manifest["links"] = {
+      order,
+      beat: { rule: "sequence", steps: { select: "$.beats[*]", id: "/id", target: "beats" } },
+      scene: { rule: "sequence", steps: order.steps },
+    };
+
+    expect(listDynamicLinks(links, scenes, "scenes/s-3", 0)).toEqual([
+      { destination: "scenes/s-3/l-1", relationship: "order", distance: 0 },
+    ]);
+    expect(listDynamicLinks(links, scenes, "scenes/s-3", 1)).toEqual([
+      { destination: "scenes/s-2", relationship: "order", distance: -1 },
+      { destination: "scenes/s-3/l-1", relationship: "order", distance: 0 },
+      { destination: "scenes/s-2", relationship: "scene", distance: -1 },
+    ]);
+    expect(listDynamicLinks(links, scenes, "beats/b-1", 1)).toEqual([
+      { destination: "beats/b-0", relationship: "beat", distance: -1 },
+    ]);
+  });
+
+  it("tells a step from one whose identifier opens the same way", () => {
+    const content: Json = {
+      beats: [{ scenes: [{ id: "s-1" }, { id: "s-10", cells: [{ layer: "l-0" }] }, { id: "s-100" }] }],
+    };
+
+    expect(read(content, "scenes/s-10", 1)).toEqual(["scenes/s-1 -1", "scenes/s-10/l-0 0", "scenes/s-100 1"]);
+    expect(read(content, "scenes/s-10/l-0", 0)).toEqual(["scenes/s-10 0"]);
+  });
+
+  it("skips a step without a text identifier, which takes no position", () => {
+    const unnamed: Json[] = [{ id: "s-0" }, { cells: [{ layer: "l-0" }] }, { id: 7 }, { id: "s-1" }];
+
+    expect(read({ beats: [{ scenes: unnamed }] }, "scenes/s-0", 1)).toEqual(["scenes/s-1 1"]);
+  });
+
+  it("skips a step that shares its identifier with an earlier one", () => {
+    const twice: Json[] = [
+      { id: "s-0", cells: [{ layer: "l-0" }] },
+      { id: "s-1" },
+      { id: "s-0", cells: [{ layer: "l-1" }] },
+      { id: "s-2" },
+    ];
+
+    expect(read({ beats: [{ scenes: twice }] }, "scenes/s-1", 1)).toEqual([
+      "scenes/s-0 -1",
+      "scenes/s-0/l-0 -1",
+      "scenes/s-2 1",
+    ]);
+  });
+
+  it("skips a part without a text identifier, and one that shares its identifier inside its step", () => {
+    const cells: Json[] = [{ layer: "l-0" }, {}, { layer: 3 }, { layer: "l-0" }, { layer: "l-1" }];
+
+    expect(read({ beats: [{ scenes: [{ id: "s-0", cells }] }] }, "scenes/s-0", 0)).toEqual([
+      "scenes/s-0/l-0 0",
+      "scenes/s-0/l-1 0",
+    ]);
+  });
+
+  it("reads the parts of the steps within the distance alone", () => {
+    const opened = new Set<string>();
+    // 150 steps relate more than 20,000 pairs of them.
+    const many = Array.from({ length: 150 }, (_, index) => ({
+      id: `s-${index}`,
+      get cells() {
+        opened.add(this.id);
+
+        return [{ layer: "l-0" }];
+      },
+    }));
+
+    expect(read({ beats: [{ scenes: many }] }, "scenes/s-75/l-0", 1)).toHaveLength(5);
+    expect(opened).toEqual(new Set(["s-74", "s-75", "s-76"]));
+  });
+
+  it("refuses an identifier that is no JSON Pointer", () => {
+    const broken: Manifest["links"] = { order: { rule: "sequence", steps: { ...order.steps, id: "id" } } };
+
+    expect(() => listDynamicLinks(broken, scenes, "scenes/s-0", 1)).toThrow(SyntaxError);
+  });
+});
+
+describe("checkRules", () => {
+  it("lists nothing when every step and every part has an address", () => {
+    expect(checkRules({ order }, scenes)).toEqual([]);
+    expect(checkRules({ order }, generate(50_000))).toEqual([]);
+    expect(checkRules({ order }, { layers: [] })).toEqual([]);
+  });
+
+  it("lists nothing without a rule", () => {
+    expect(checkRules(undefined, { beats: [{ scenes: [{}, {}] }] })).toEqual([]);
+  });
+
+  it("lists each step without a text identifier, at the place of its identifier", () => {
+    const unnamed: Json[] = [{ id: "s-0" }, {}, { id: 7 }];
+
+    expect(checkRules({ order }, { beats: [{ scenes: [] }, { scenes: unnamed }] })).toEqual([
+      '/beats/1/scenes/1/id: a step of the rule "order" has no text identifier.',
+      '/beats/1/scenes/2/id: a step of the rule "order" has no text identifier.',
+    ]);
+  });
+
+  it("lists each step that shares its identifier with an earlier one, in another beat too", () => {
+    const content = { beats: [{ scenes: [{ id: "s-0" }, { id: "s-1" }] }, { scenes: [{ id: "s-0" }] }] };
+
+    expect(checkRules({ order }, content)).toEqual([
+      '/beats/1/scenes/0/id: a step of the rule "order" shares the identifier "s-0" with an earlier one.',
+    ]);
+  });
+
+  it("lists each part without a text identifier, and each that shares one inside its step", () => {
+    const cells: Json[] = [{ layer: "l-0" }, {}, { layer: 3 }, { layer: "l-0" }];
+    const content = {
+      beats: [
+        {
+          scenes: [
+            { id: "s-0", cells },
+            { id: "s-1", cells: [{ layer: "l-0" }] },
+          ],
+        },
+      ],
+    };
+
+    expect(checkRules({ order }, content)).toEqual([
+      '/beats/0/scenes/0/cells/1/layer: a part of one step of the rule "order" has no text identifier.',
+      '/beats/0/scenes/0/cells/2/layer: a part of one step of the rule "order" has no text identifier.',
+      '/beats/0/scenes/0/cells/3/layer: a part of one step of the rule "order" shares the identifier "l-0" with an earlier one.',
+    ]);
+  });
+
+  it("leaves the parts of a step it cannot address unread", () => {
+    const content = { beats: [{ scenes: [{ cells: [{}, {}] }] }] };
+
+    expect(checkRules({ order }, content)).toEqual([
+      '/beats/0/scenes/0/id: a step of the rule "order" has no text identifier.',
+    ]);
+  });
+
+  it("names the rule of each problem", () => {
+    const links: Manifest["links"] = {
+      order,
+      beat: { rule: "sequence", steps: { select: "$.beats[*]", id: "/id", target: "beats" } },
+    };
+
+    expect(checkRules(links, { beats: [{ id: "b-0", scenes: [{}] }, { id: "b-0" }] })).toEqual([
+      '/beats/0/scenes/0/id: a step of the rule "order" has no text identifier.',
+      '/beats/1/id: a step of the rule "beat" shares the identifier "b-0" with an earlier one.',
+    ]);
   });
 });
