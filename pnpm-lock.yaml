@@ -190,13 +190,13 @@ importers:
     devDependencies:
       '@a-novel-kit/nodelib-config':
         specifier: ^2.14.0
-        version: 2.16.0(@eslint/compat@2.1.1(eslint@10.15.0(jiti@2.7.0)))(@eslint/config-helpers@0.7.0)(@eslint/js@10.0.1(eslint@10.15.0(jiti@2.7.0)))(@trivago/prettier-plugin-sort-imports@6.0.2(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(@types/node@26.6.7)(@vitest/browser-playwright@5.1.1)(eslint-config-prettier@10.1.8(eslint@10.15.0(jiti@2.7.0)))(eslint@10.15.0(jiti@2.7.0))(estree-walker@3.0.3)(globals@17.14.0)(playwright@1.65.1)(prettier-plugin-css-order@2.2.0(postcss@8.5.33)(prettier@3.10.1))(prettier-plugin-packagejson@3.1.0(prettier@3.10.1))(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0))(typescript-eslint@8.74.0(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.8(@types/node@26.6.7)(jiti@2.7.0)(yaml@2.9.1))(vitest@5.1.1)
+        version: 2.16.1(@eslint/compat@2.1.1(eslint@10.15.0(jiti@2.7.0)))(@eslint/config-helpers@0.7.0)(@eslint/js@10.0.1(eslint@10.15.0(jiti@2.7.0)))(@trivago/prettier-plugin-sort-imports@6.0.2(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(@types/node@26.6.7)(@vitest/browser-playwright@5.1.1)(eslint-config-prettier@10.1.8(eslint@10.15.0(jiti@2.7.0)))(eslint@10.15.0(jiti@2.7.0))(estree-walker@3.0.3)(globals@17.14.0)(playwright@1.65.1)(prettier-plugin-css-order@2.2.0(postcss@8.5.33)(prettier@3.10.1))(prettier-plugin-packagejson@3.1.0(prettier@3.10.1))(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0))(typescript-eslint@8.74.0(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.8(@types/node@26.6.7)(jiti@2.7.0)(yaml@2.9.1))(vitest@5.1.1)
       '@a-novel-kit/nodelib-i18n':
         specifier: ^2.14.0
-        version: 2.16.0(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
+        version: 2.16.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel-kit/uikit':
         specifier: ^0.29.0
-        version: 0.29.1(@a-novel-kit/nodelib-i18n@2.16.0(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
+        version: 0.29.1(@a-novel-kit/nodelib-i18n@2.16.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel/plugins-narrative-engine-kit':
         specifier: workspace:*
         version: link:kit
@@ -274,16 +274,16 @@ importers:
     dependencies:
       '@a-novel-kit/nodelib-json':
         specifier: ^2.15.1
-        version: 2.16.0
+        version: 2.16.1
 
   kit:
     dependencies:
       '@a-novel-kit/nodelib-json':
         specifier: ^2.15.1
-        version: 2.16.0
+        version: 2.16.1
       '@a-novel-kit/nodelib-server':
         specifier: ^2.16.0
-        version: 2.16.0
+        version: 2.16.1
       '@a-novel-kit/uikit-fonts':
         specifier: ^0.29.0
         version: 0.29.1
@@ -307,7 +307,7 @@ importers:
     dependencies:
       '@a-novel-kit/uikit':
         specifier: ^0.29.0
-        version: 0.29.1(@a-novel-kit/nodelib-i18n@2.16.0(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
+        version: 0.29.1(@a-novel-kit/nodelib-i18n@2.16.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel/plugins-narrative-engine-kit':
         specifier: workspace:*
         version: link:../../kit
@@ -317,15 +317,15 @@ importers:
     devDependencies:
       '@a-novel-kit/nodelib-json':
         specifier: ^2.15.1
-        version: 2.16.0
+        version: 2.16.1
       yaml:
         specifier: ^2.9.1
         version: 2.9.1
 
 packages:
 
-  '@a-novel-kit/nodelib-config@2.16.0':
-    resolution: {integrity: sha512-jK7+C+nYF1B2kh7YFMs+BFPZnRmEjzsL1fppp8RqxL2CSzoYhcyTbibxf3A3dCoPuxElXBHtZpfP8fExg3Wn5A==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-config/2.16.0/fa36e5c10d525caf46ba9453b013e4355d05d0e4}
+  '@a-novel-kit/nodelib-config@2.16.1':
+    resolution: {integrity: sha512-UMmDsJLWLdndWNwlMCROj1cJHU7jEePL0o7EXkVCqHMxFLRUjwP2Tpg6qugKXajxae4a9gg/F9270bqhraxMYQ==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-config/2.16.1/8863f7b0645152f120d981a159b9a8bcdabc260e}
     engines: {node: '>=24.0.0', npm: '>=10.9.2'}
     hasBin: true
     peerDependencies:
@@ -360,19 +360,19 @@ packages:
       vite: ^8.3.8
       vitest: ^5.1.1
 
-  '@a-novel-kit/nodelib-i18n@2.16.0':
-    resolution: {integrity: sha512-iYE3MtiJNFz00CIMazSg6Ceh+JH2pYEhAvUEt2Umpur+Ul8Mj3pRz3Op5bD5d8Rhg4EL06TN/JukrlAdsRN4dw==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-i18n/2.16.0/496a158b0a924d8536adbc257b3d1495df98ab32}
+  '@a-novel-kit/nodelib-i18n@2.16.1':
+    resolution: {integrity: sha512-KilqPKznZlwYPQ43Sd8O+pa+RI6Bo9Ug0xpQnoeRXQsFrIMggTJ8pOmZIYh1N+N7K9ysnEk1xAF/fZkwvJ7y1g==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-i18n/2.16.1/4ab358918c48365a009a0834367ed6e05509fdf3}
     engines: {node: '>=24.0.0', npm: '>=10.9.2'}
     peerDependencies:
       i18next: ^27.2.7
       svelte: ^5.59.1
 
-  '@a-novel-kit/nodelib-json@2.16.0':
-    resolution: {integrity: sha512-TAwXFK+yv9rp8mXMMsyoW5YkPJI/sm9tVpb11LEPwRQcKbv/5D6lfWw4s13JQuisqTFXkGKU9LYeXac1dYgndw==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-json/2.16.0/a4a914af85114271baf6728666ba0eca340227a9}
+  '@a-novel-kit/nodelib-json@2.16.1':
+    resolution: {integrity: sha512-KtXBV68MJ0dgvVTvQ27bhDBQP6k/thf/JnssH4rXInW2AmovR6fakmZciLtMVchG2EmBj/x1bSJoWWy04v468Q==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-json/2.16.1/71f6d0ebdb3537036b8d05bc1affd5dd95e04009}
     engines: {node: '>=24.0.0', npm: '>=10.9.2'}
 
-  '@a-novel-kit/nodelib-server@2.16.0':
-    resolution: {integrity: sha512-tSAAQITu9LjTYMNsNeSdaTWSzCLuVlrh7boR3B8MrYHNg+45cszdMAuIMZM+ZRFAUUUrq86/QoHRU4x0qlii7w==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-server/2.16.0/77438ddebc75a4fd5b3beb81c1c208b15a47949b}
+  '@a-novel-kit/nodelib-server@2.16.1':
+    resolution: {integrity: sha512-KxfOEtBSROkPszegxh7K/OdS3V8MHMvnOebdnmkaQSmdyZ7Mt7tDEQpz4ioH/vmzC6Ikz+/9eVsgbk83FMIQIA==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-server/2.16.1/189465402283a902cf1152c2fee16ef6705b155b}
     engines: {node: '>=24.0.0', npm: '>=10.9.2'}
     peerDependencies:
       '@opentelemetry/api': ^1.10.0
@@ -1613,7 +1613,7 @@ packages:
 
 snapshots:
 
-  '@a-novel-kit/nodelib-config@2.16.0(@eslint/compat@2.1.1(eslint@10.15.0(jiti@2.7.0)))(@eslint/config-helpers@0.7.0)(@eslint/js@10.0.1(eslint@10.15.0(jiti@2.7.0)))(@trivago/prettier-plugin-sort-imports@6.0.2(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(@types/node@26.6.7)(@vitest/browser-playwright@5.1.1)(eslint-config-prettier@10.1.8(eslint@10.15.0(jiti@2.7.0)))(eslint@10.15.0(jiti@2.7.0))(estree-walker@3.0.3)(globals@17.14.0)(playwright@1.65.1)(prettier-plugin-css-order@2.2.0(postcss@8.5.33)(prettier@3.10.1))(prettier-plugin-packagejson@3.1.0(prettier@3.10.1))(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0))(typescript-eslint@8.74.0(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.8(@types/node@26.6.7)(jiti@2.7.0)(yaml@2.9.1))(vitest@5.1.1)':
+  '@a-novel-kit/nodelib-config@2.16.1(@eslint/compat@2.1.1(eslint@10.15.0(jiti@2.7.0)))(@eslint/config-helpers@0.7.0)(@eslint/js@10.0.1(eslint@10.15.0(jiti@2.7.0)))(@trivago/prettier-plugin-sort-imports@6.0.2(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(@types/node@26.6.7)(@vitest/browser-playwright@5.1.1)(eslint-config-prettier@10.1.8(eslint@10.15.0(jiti@2.7.0)))(eslint@10.15.0(jiti@2.7.0))(estree-walker@3.0.3)(globals@17.14.0)(playwright@1.65.1)(prettier-plugin-css-order@2.2.0(postcss@8.5.33)(prettier@3.10.1))(prettier-plugin-packagejson@3.1.0(prettier@3.10.1))(prettier-plugin-svelte@4.2.0(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(prettier@3.10.1)(svelte@5.59.1(@typescript-eslint/types@8.74.0))(typescript-eslint@8.74.0(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3))(typescript@6.0.3)(vite@8.3.8(@types/node@26.6.7)(jiti@2.7.0)(yaml@2.9.1))(vitest@5.1.1)':
     dependencies:
       '@eslint/compat': 2.1.1(eslint@10.15.0(jiti@2.7.0))
       '@eslint/config-helpers': 0.7.0
@@ -1637,24 +1637,24 @@ snapshots:
       vitest: 5.1.1(@types/node@26.6.7)(@vitest/browser-playwright@5.1.1)(@vitest/coverage-v8@5.1.1)(@vitest/ui@5.1.1)(vite@8.3.8(@types/node@26.6.7)(jiti@2.7.0)(yaml@2.9.1))
       yaml: 2.9.1
 
-  '@a-novel-kit/nodelib-i18n@2.16.0(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))':
+  '@a-novel-kit/nodelib-i18n@2.16.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))':
     dependencies:
       i18next: 27.2.7(typescript@6.0.3)
       svelte: 5.59.1(@typescript-eslint/types@8.74.0)
 
-  '@a-novel-kit/nodelib-json@2.16.0':
+  '@a-novel-kit/nodelib-json@2.16.1':
     dependencies:
       '@cfworker/json-schema': 4.1.6
 
-  '@a-novel-kit/nodelib-server@2.16.0': {}
+  '@a-novel-kit/nodelib-server@2.16.1': {}
 
   '@a-novel-kit/uikit-fonts@0.29.1': {}
 
   '@a-novel-kit/uikit-tokens@0.29.1': {}
 
-  '@a-novel-kit/uikit@0.29.1(@a-novel-kit/nodelib-i18n@2.16.0(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))':
+  '@a-novel-kit/uikit@0.29.1(@a-novel-kit/nodelib-i18n@2.16.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))':
     dependencies:
-      '@a-novel-kit/nodelib-i18n': 2.16.0(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
+      '@a-novel-kit/nodelib-i18n': 2.16.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel-kit/uikit-fonts': 0.29.1
       '@a-novel-kit/uikit-tokens': 0.29.1
       '@lucide/svelte': 1.79.0(svelte@5.59.1(@typescript-eslint/types@8.74.0))
