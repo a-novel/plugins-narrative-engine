@@ -62,7 +62,7 @@ export function preset(name: Preset, messages: Messages): Content {
       id: crypto.randomUUID(),
       title,
       description,
-      scenes: [{ id: crypto.randomUUID(), title: "", cells: [] }],
+      scenes: [{ id: crypto.randomUUID(), title: "", description: "", cells: [] }],
     })),
     layers: [
       { id: crypto.randomUUID(), kind: "logline", name: messages.layers.scenes },

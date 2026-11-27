@@ -27,12 +27,12 @@ function sentence(start: number, length: number): string {
 const SPEAKERS = ["Mara", "The keeper", "Idris", "A stranger"];
 
 // The two layers of a new composer, then others of every kind. Each kind has a colored layer and an
-// uncolored one, for both looks of a row.
+// uncolored one, for both looks of a track.
 const LAYERS: Omit<Layer, "id">[] = [
   { kind: "logline", name: "Scenes" },
   { kind: "script", name: "Enriched scenes" },
-  { kind: "notes", name: "Characters", color: "#e11d48" },
-  { kind: "notes", name: "Setting", color: "#0ea5e9" },
+  { kind: "notes", name: "Characters", label: "People", color: "#e11d48" },
+  { kind: "notes", name: "Setting", color: "#0ea5e9", height: 40 },
   { kind: "notes", name: "Stakes" },
   { kind: "notes", name: "Research", color: "#84cc16" },
   { kind: "logline", name: "Subplot", color: "#a855f7" },
@@ -41,37 +41,42 @@ const LAYERS: Omit<Layer, "id">[] = [
   { kind: "link", name: "Foreshadowing", accepts: ["scenes"] },
 ];
 
-const BEAT_COLORS = ["#ef4444", undefined, "#3b82f6", undefined, undefined];
+// The widths a writer stretched some columns to, in quarters of the base text size.
+const WIDTHS = [undefined, undefined, 72, undefined, 36, undefined, undefined];
 
 const BEATS = 20;
 const SCENES_PER_BEAT = 10;
 
 /**
  * Builds a large content: 200 scenes in 20 beats, under 10 layers of every kind. Four cells in five
- * are filled, so a row shows filled and empty cells side by side.
+ * are filled, so a track shows cards and empty places side by side. Some scenes and one layer
+ * carry the size a writer stretched them to.
  */
 export function largeContent(): Content {
   const nextId = countingIds();
   const layers = LAYERS.map((layer) => ({ id: nextId(), ...layer }));
 
   let seed = 0;
-  const scene = (): Scene => ({
-    id: nextId(),
-    title: sentence(seed, 2 + (seed % 4)).slice(0, -1),
-    cells: layers.flatMap((layer) => cell(layer, ++seed) ?? []),
-  });
-
-  const beat = (_: unknown, index: number): Beat => {
-    const color = BEAT_COLORS[index % BEAT_COLORS.length];
+  let count = 0;
+  const scene = (): Scene => {
+    const width = WIDTHS[count++ % WIDTHS.length];
 
     return {
       id: nextId(),
-      title: `Beat ${index + 1}`,
-      ...(color && { color }),
-      description: sentence(index, 10 + (index % 12)),
-      scenes: Array.from({ length: SCENES_PER_BEAT }, scene),
+      title: sentence(seed, 2 + (seed % 4)).slice(0, -1),
+      // One scene in three is described.
+      description: count % 3 === 1 ? sentence(seed + 3, 9 + (seed % 9)) : "",
+      ...(width && { width }),
+      cells: layers.flatMap((layer) => cell(layer, ++seed) ?? []),
     };
   };
+
+  const beat = (_: unknown, index: number): Beat => ({
+    id: nextId(),
+    title: `Beat ${index + 1}`,
+    description: sentence(index, 10 + (index % 12)),
+    scenes: Array.from({ length: SCENES_PER_BEAT }, scene),
+  });
 
   return { beats: Array.from({ length: BEATS }, beat), layers };
 }

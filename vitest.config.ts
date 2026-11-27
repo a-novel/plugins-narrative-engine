@@ -14,7 +14,8 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "lcov"],
       include: ["{contract,kit}/src/**/*.ts", "plugins/*/ui/**/*.ts"],
-      exclude: ["**/*.fixture.ts"],
+      // The browser tests mount a UI as built, which no report maps back to its entry and its runes.
+      exclude: ["**/*.fixture.ts", "plugins/*/ui/index.ts", "plugins/*/ui/**/*.svelte.ts"],
     },
     projects: [
       {
@@ -30,9 +31,9 @@ export default defineConfig({
         extends: true,
         test: {
           name: "browser",
-          include: ["kit/{src,test}/**/*.browser.test.ts"],
-          // Builds the sample plugin the tests mount.
-          globalSetup: "kit/test/setup.ts",
+          include: ["kit/{src,test}/**/*.browser.test.ts", "plugins/*/ui/**/*.browser.test.ts"],
+          // Build the plugins the tests mount: the sample of the kit, and the composer.
+          globalSetup: ["kit/test/setup.ts", "plugins/scenes-composer/ui/built.fixture.ts"],
           browser: { enabled: true, provider: playwright(), headless: true, instances: [{ browser: "chromium" }] },
         },
       },

@@ -6,8 +6,14 @@
       "title": "Composer",
       "description": "A story laid out in time: beats that hold scenes, and the layers that run across them.",
       "properties": {
-        "beats": { "title": "Beats", "description": "The beats of the story, in story order." },
-        "layers": { "title": "Layers", "description": "The layers of the composer, in the order of their rows." }
+        "beats": {
+          "title": "Beats",
+          "description": "The beats of the story, in story order."
+        },
+        "layers": {
+          "title": "Layers",
+          "description": "The layers of the composer, in the order of their rows."
+        }
       },
       "id": {
         "title": "ID",
@@ -21,16 +27,34 @@
         "title": "Beat",
         "description": "One step of the story: an ordered set of scenes.",
         "properties": {
-          "title": { "title": "Title" },
-          "description": { "title": "Description", "description": "What the beat does in the story." },
-          "scenes": { "title": "Scenes", "description": "The scenes of the beat, in story order." }
+          "title": {
+            "title": "Title"
+          },
+          "description": {
+            "title": "Description",
+            "description": "What the beat does in the story."
+          },
+          "scenes": {
+            "title": "Scenes",
+            "description": "The scenes of the beat, in story order."
+          }
         }
       },
       "scene": {
         "title": "Scene",
         "description": "The story's unit of time, and one column of the timeline.",
         "properties": {
-          "title": { "title": "Title" },
+          "title": {
+            "title": "Title"
+          },
+          "description": {
+            "title": "Description",
+            "description": "What happens in the scene, in the writer's own words."
+          },
+          "width": {
+            "title": "Width",
+            "description": "The width of the scene's column on a wide screen, in quarters of the base text size. A scene without one takes the default width."
+          },
           "cells": {
             "title": "Cells",
             "description": "What the layers hold for the scene, with one cell per layer at most. A layer without a cell holds nothing for the scene."
@@ -45,21 +69,30 @@
         "title": "Notes",
         "description": "Free text about the scene.",
         "properties": {
-          "text": { "title": "Text", "description": "The notes, as plain text." }
+          "text": {
+            "title": "Text",
+            "description": "The notes, as plain text."
+          }
         }
       },
       "loglineCell": {
         "title": "Logline",
         "description": "The scene told in one line.",
         "properties": {
-          "text": { "title": "Text", "description": "The line, as plain text without a line break." }
+          "text": {
+            "title": "Text",
+            "description": "The line, as plain text without a line break."
+          }
         }
       },
       "scriptCell": {
         "title": "Script",
         "description": "The text of the scene.",
         "properties": {
-          "blocks": { "title": "Blocks", "description": "The blocks of the script, in reading order." }
+          "blocks": {
+            "title": "Blocks",
+            "description": "The blocks of the script, in reading order."
+          }
         }
       },
       "block": {
@@ -80,12 +113,18 @@
         "title": "Dialogue",
         "description": "One character's spoken line.",
         "properties": {
-          "speaker": { "title": "Speaker", "description": "Who speaks, by the name the story gives them." },
+          "speaker": {
+            "title": "Speaker",
+            "description": "Who speaks, by the name the story gives them."
+          },
           "tone": {
             "title": "Tone",
             "description": "How the line is said, such as \"whispering\" or \"with a bitter laugh\"."
           },
-          "text": { "title": "Text", "description": "The words spoken, without quotation marks." }
+          "text": {
+            "title": "Text",
+            "description": "The words spoken, without quotation marks."
+          }
         }
       },
       "layer": {
@@ -96,7 +135,17 @@
             "title": "Kind",
             "description": "What the layer holds for each scene: notes, a logline, a script, or links to other items of the project."
           },
-          "name": { "title": "Name" },
+          "name": {
+            "title": "Name"
+          },
+          "label": {
+            "title": "Type",
+            "description": "What the writer calls what the layer follows, such as a character or a place. A layer without one shows its kind."
+          },
+          "height": {
+            "title": "Height",
+            "description": "The least height of the layer's row on a wide screen, in quarters of the base text size. A layer without one is as tall as what it holds."
+          },
           "accepts": {
             "title": "Accepted exports",
             "description": "On a link layer, the exports whose items its links point at, by name. The project keeps the links themselves, outside the composer."
@@ -104,8 +153,13 @@
         }
       }
     },
-    "exports": { "scenes": "Scenes" },
-    "layers": { "scenes": "Scenes", "enrichedScenes": "Enriched scenes" },
+    "exports": {
+      "scenes": "Scenes"
+    },
+    "layers": {
+      "scenes": "Scenes",
+      "enrichedScenes": "Enriched scenes"
+    },
     "presets": {
       "blank": {
         "name": "Blank",
@@ -219,6 +273,74 @@
           }
         }
       }
+    },
+    "start": {
+      "title": "Choose a structure to start from",
+      "description": "A structure sets the beats of your story. You can rename, add and delete everything afterwards."
+    },
+    "timeline": {
+      "label": "Timeline",
+      "actions": {
+        "of": "Actions on {{name}}",
+        "edit": "Edit",
+        "delete": "Delete",
+        "undo": "Undo",
+        "retry": "Try again",
+        "save": "Save",
+        "cancel": "Cancel"
+      },
+      "beats": {
+        "untitled": "Beat {{position}}",
+        "edit": "Edit the beat",
+        "add": "Add a beat",
+        "addBefore": "Add a beat before",
+        "addAfter": "Add a beat after",
+        "deleted": "You deleted the beat “{{name}}”."
+      },
+      "scenes": {
+        "untitled": "Scene {{position}}",
+        "edit": "Edit the scene",
+        "add": "Add a scene",
+        "addBefore": "Add a scene before",
+        "addAfter": "Add a scene after",
+        "deleted": "You deleted the scene “{{name}}”.",
+        "previous": "Previous scene",
+        "next": "Next scene"
+      },
+      "layers": {
+        "name": "Name",
+        "label": "Type",
+        "color": "Color",
+        "edit": "Edit the layer",
+        "add": "Add a layer",
+        "kinds": {
+          "notes": "Notes",
+          "logline": "Logline",
+          "script": "Script",
+          "link": "Links"
+        },
+        "deleted": "You deleted the layer “{{name}}”.",
+        "names": "Names of the layers"
+      },
+      "cells": {
+        "label": "{{layer}}, {{scene}}",
+        "actions": "Actions on this card",
+        "deleted": "You deleted what “{{layer}}” held for “{{scene}}”.",
+        "words_one": "{{count}} word",
+        "words_other": "{{count}} words"
+      },
+      "sizes": {
+        "defaultWidth": "Default width",
+        "defaultHeight": "Default height"
+      },
+      "fields": {
+        "title": "Title",
+        "description": "Description"
+      }
+    },
+    "failures": {
+      "load": "We could not load this composer.",
+      "save": "We could not save your last changes."
     }
   }
 }

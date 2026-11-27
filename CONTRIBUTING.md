@@ -31,7 +31,9 @@ repository leaves a plugin as it is.
 The `ui` folder of a plugin holds everything its UI module is built from: the components, and the
 plain modules beside them, such as the types of its content, each with its test. A plugin's tests
 write the fixtures of its current version as file snapshots, and `pnpm test -u` writes them again
-after a change to what they hold.
+after a change to what they hold. Its browser tests mount the UI module as `plugin-kit build`
+writes it, which a fixture of the plugin builds once for the run, so they see the plugin a registry
+serves.
 
 `kit/test/sample` is a small plugin, laid out the same way. The tests check, build, preview and
 publish it, then mount it in a browser. It imports the kit by its package name, as a plugin does, and the root
