@@ -195,8 +195,8 @@ importers:
         specifier: ^2.14.0
         version: 2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel-kit/uikit':
-        specifier: ^0.28.0
-        version: 0.28.0(@a-novel-kit/nodelib-i18n@2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
+        specifier: ^0.29.0
+        version: 0.29.1(@a-novel-kit/nodelib-i18n@2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel/plugins-narrative-engine-kit':
         specifier: workspace:*
         version: link:kit
@@ -282,11 +282,11 @@ importers:
         specifier: ^2.15.1
         version: 2.15.1
       '@a-novel-kit/uikit-fonts':
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^0.29.0
+        version: 0.29.1
       '@a-novel-kit/uikit-tokens':
-        specifier: ^0.28.0
-        version: 0.28.0
+        specifier: ^0.29.0
+        version: 0.29.1
       '@a-novel/plugins-narrative-engine-contract':
         specifier: workspace:*
         version: link:../contract
@@ -303,8 +303,8 @@ importers:
   plugins/scenes-composer:
     dependencies:
       '@a-novel-kit/uikit':
-        specifier: ^0.28.0
-        version: 0.28.0(@a-novel-kit/nodelib-i18n@2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
+        specifier: ^0.29.0
+        version: 0.29.1(@a-novel-kit/nodelib-i18n@2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       '@a-novel/plugins-narrative-engine-kit':
         specifier: workspace:*
         version: link:../../kit
@@ -368,18 +368,18 @@ packages:
     resolution: {integrity: sha512-FEpT+i6R0ZljlUeEbduhGmMWFiChlBFlHLJuhJOEu5EDyVsZcBP6tdqNydB5K/d5b4pFXYR5GJbBD418+Ro4Yg==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/nodelib-json/2.15.1/3c0866fbd7424b2dd2e619c677dc50c87c00cb3f}
     engines: {node: '>=24.0.0', npm: '>=10.9.2'}
 
-  '@a-novel-kit/uikit-fonts@0.28.0':
-    resolution: {integrity: sha512-VagJVLtbacDfR2sksBIPCRZyxoYZPFGSU+DsEmSs+RjboqQtpkywGS5brfNjceU1inAVCnzW7DtaYpOiHJzbiA==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/uikit-fonts/0.28.0/a64afaa153275fd55fa93c9482d80974e79dc59e}
+  '@a-novel-kit/uikit-fonts@0.29.1':
+    resolution: {integrity: sha512-DWApd7YcQBiIzyVDQoPicoLbCz8G+OdMyRctYP8ssa3nCaikecFzvNGvkeNihu3hHx7/rWcYSGi9V+oFTN4U+Q==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/uikit-fonts/0.29.1/8a8382cfaddfa5d218e2a72fddd4b298c032452a}
 
-  '@a-novel-kit/uikit-tokens@0.28.0':
-    resolution: {integrity: sha512-xUmSzmzNqZinpMbVjVwMDeFOLmR18Yb3J/D/agk6wizTRnW0jHTRkNQq0aS06o7+bvAWmhmdjUDOHwtIVX/7Yg==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/uikit-tokens/0.28.0/9a0da86346444bca999f12c3ee4434662add8761}
+  '@a-novel-kit/uikit-tokens@0.29.1':
+    resolution: {integrity: sha512-nXEkHAjUVFzzs0rh+OIXkXK+g5tADLEXUSE4t5vHa64Eg9LGKTcTmFiZPjiPZoK/wdXLfbXiJOjWhe5+3QGq8Q==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/uikit-tokens/0.29.1/342a3f03f4bf41d06a5f4c947dc9596b49524b95}
     hasBin: true
 
-  '@a-novel-kit/uikit@0.28.0':
-    resolution: {integrity: sha512-QIASmTiPgErC/sv8IH3b1ICtNEi1+nDJDFpWjHNtgel3AMsdWZ1/TSm0l9OdreNEGjWQt4dGBrLU3eNfv841zg==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/uikit/0.28.0/6b56756767b1d6b392904b52eb8812f8e28cced4}
+  '@a-novel-kit/uikit@0.29.1':
+    resolution: {integrity: sha512-Q/9VGRVZVKlp4xAnDJVglX3ol5azFRcWQ7x+jN3vEXYlEZrpXKYm8g08ebJaiIWxdrLh5VM4S3OolYdSO65jXw==, tarball: https://npm.pkg.github.com/download/@a-novel-kit/uikit/0.29.1/8d9eae151aef59642bd754ad1533afc782b73ed5}
     peerDependencies:
-      '@a-novel-kit/nodelib-i18n': ^2.14.0
-      i18next: ^27.2.3
+      '@a-novel-kit/nodelib-i18n': ^2.15.1
+      i18next: ^27.2.4
       svelte: ^5.59.1
 
   '@babel/code-frame@7.29.7':
@@ -1630,15 +1630,15 @@ snapshots:
     dependencies:
       '@cfworker/json-schema': 4.1.6
 
-  '@a-novel-kit/uikit-fonts@0.28.0': {}
+  '@a-novel-kit/uikit-fonts@0.29.1': {}
 
-  '@a-novel-kit/uikit-tokens@0.28.0': {}
+  '@a-novel-kit/uikit-tokens@0.29.1': {}
 
-  '@a-novel-kit/uikit@0.28.0(@a-novel-kit/nodelib-i18n@2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))':
+  '@a-novel-kit/uikit@0.29.1(@a-novel-kit/nodelib-i18n@2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0)))(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))':
     dependencies:
       '@a-novel-kit/nodelib-i18n': 2.15.1(i18next@27.2.7(typescript@6.0.3))(svelte@5.59.1(@typescript-eslint/types@8.74.0))
-      '@a-novel-kit/uikit-fonts': 0.28.0
-      '@a-novel-kit/uikit-tokens': 0.28.0
+      '@a-novel-kit/uikit-fonts': 0.29.1
+      '@a-novel-kit/uikit-tokens': 0.29.1
       '@lucide/svelte': 1.79.0(svelte@5.59.1(@typescript-eslint/types@8.74.0))
       i18next: 27.2.7(typescript@6.0.3)
       svelte: 5.59.1(@typescript-eslint/types@8.74.0)
