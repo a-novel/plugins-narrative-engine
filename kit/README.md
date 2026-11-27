@@ -193,8 +193,7 @@ plugin-kit preview --port 5300 --host 127.0.0.1
 - **`--host` names the address to listen on,** the machine alone by default. Without `--port`, the
   server takes the first free port from 5173.
 
-`publish` sends the current version in one `POST` request, with `PLUGIN_PUBLISH_TOKEN` as a bearer
-token when the variable is set:
+`publish` sends the current version in one `POST` request:
 
 ```json
 {
@@ -204,7 +203,8 @@ token when the variable is set:
   "exports": {},
   "ui": "the source of the UI module",
   "migration": "the source of the migration to this version, when it has one",
-  "languages": { "en": { "title": "", "description": "", "messages": {} } }
+  "languages": { "en": { "title": "", "description": "", "messages": {} } },
+  "proof": "the version's proof, when the command holds an API key"
 }
 ```
 
@@ -212,6 +212,29 @@ A registry answers 409 for a version it already holds, which `publish` reads as 
 can run twice. Any other refusal fails the command with the status and the body of the answer.
 `--prerelease dev.1` publishes the current version as `<version>-dev.1`, for the registry of a local
 stack.
+
+The publisher proves who it is with an API key, an Ed25519 key pair whose public key JSON Keys
+holds for the registry. `PLUGIN_PUBLISH_PRIVATE_KEY` holds its private key, in PEM. The command
+never sends it. It signs two JWTs for the purpose `publish-narrative-engine-plugin`, each naming the
+key by the JWK thumbprint of its public half:
+
+- **The version's proof** goes in the body as `proof`. It carries the plugin's name, its version and
+  the SHA-256 of each module as sent (`uiSHA256`, and `migrationSHA256` when the version has a
+  migration). It never expires: the registry keeps it with the version, and a host verifies it
+  before it loads the modules.
+- **The request token** goes as the bearer token. It lives five minutes and carries the SHA-256 of
+  the body, proof included, so its signature covers what is published as well as who publishes it.
+
+The command reads the variable before it checks or builds anything:
+
+- **Unset,** the request carries no credential and the version no proof, for the open registry of a
+  local stack.
+- **Set to anything but an Ed25519 private key in PEM,** an empty value included, the command fails
+  and names the variable. A release job whose secret is missing gets an empty variable, so it fails
+  before it sends anything.
+
+A registry that refuses a token answers 401, without saying why. No message of the command quotes
+the key.
 
 ### Testing a plugin
 

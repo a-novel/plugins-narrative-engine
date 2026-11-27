@@ -33,6 +33,7 @@
   ],
   "dependencies": {
     "@a-novel-kit/nodelib-json": "^2.15.1",
+    "@a-novel-kit/nodelib-server": "^2.16.0",
     "@a-novel-kit/uikit-fonts": "^0.29.0",
     "@a-novel-kit/uikit-tokens": "^0.29.0",
     "@a-novel/plugins-narrative-engine-contract": "workspace:*",
