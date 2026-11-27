@@ -54,7 +54,6 @@ schema:
       properties:
         id: { $ref: "#/$defs/id" }
         title: { $ref: "#/$defs/line", title: schema.beat.properties.title.title }
-        color: { $ref: "#/$defs/color" }
         description:
           type: string
           title: schema.beat.properties.description.title
@@ -71,10 +70,22 @@ schema:
       type: object
       title: schema.scene.title
       description: schema.scene.description
-      required: [id, title, cells]
+      required: [id, title, description, cells]
       properties:
         id: { $ref: "#/$defs/id" }
         title: { $ref: "#/$defs/line", title: schema.scene.properties.title.title }
+        description:
+          type: string
+          title: schema.scene.properties.description.title
+          description: schema.scene.properties.description.description
+          maxLength: 2000
+        # A size counts quarters of the base text size, so it follows the text a reader set.
+        width:
+          type: integer
+          title: schema.scene.properties.width.title
+          description: schema.scene.properties.width.description
+          minimum: 32
+          maximum: 240
         cells:
           type: array
           title: schema.scene.properties.cells.title
@@ -198,7 +209,18 @@ schema:
           description: schema.layer.properties.kind.description
           enum: [notes, logline, script, link]
         name: { $ref: "#/$defs/line", title: schema.layer.properties.name.title }
+        # What a writer calls what the layer follows. It changes nothing of what its cells hold.
+        label:
+          $ref: "#/$defs/line"
+          title: schema.layer.properties.label.title
+          description: schema.layer.properties.label.description
         color: { $ref: "#/$defs/color" }
+        height:
+          type: integer
+          title: schema.layer.properties.height.title
+          description: schema.layer.properties.height.description
+          minimum: 8
+          maximum: 160
         # Read on a link layer alone, whose picker offers the items of these exports.
         accepts:
           type: array

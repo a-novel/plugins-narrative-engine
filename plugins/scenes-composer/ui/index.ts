@@ -1,8 +1,5 @@
-import type { Plugin } from "@a-novel/plugins-narrative-engine-kit";
+import App from "./App.svelte";
 
-// TODO: mounts nothing. The composer has no interface yet.
-const plugin: Plugin = {
-  mount: () => ({ destroy() {} }),
-};
+import { definePlugin } from "@a-novel/plugins-narrative-engine-kit/svelte";
 
-export default plugin;
+export default definePlugin(App);

@@ -3,12 +3,12 @@
     {
       "id": "00000000-0000-4000-8000-00000000000b",
       "title": "Beat 1",
-      "color": "#ef4444",
       "description": "Rain fell on the harbor all night while the last.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-00000000000c",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited.",
           "cells": [
             {
               "kind": "logline",
@@ -90,6 +90,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000000d",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -151,6 +152,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000000e",
           "title": "Keeper counted",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -220,6 +223,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000000f",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor.",
           "cells": [
             {
               "kind": "logline",
@@ -301,6 +305,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000010",
           "title": "Rain fell",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -362,6 +368,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000011",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -431,6 +438,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000012",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one of them had.",
           "cells": [
             {
               "kind": "logline",
@@ -512,6 +520,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000013",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -573,6 +582,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000014",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -642,6 +652,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000015",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -730,6 +742,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000017",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -791,6 +804,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000018",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -860,6 +875,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000019",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger.",
           "cells": [
             {
               "kind": "logline",
@@ -941,6 +957,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000001a",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1002,6 +1019,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000001b",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1071,6 +1089,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000001c",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor all night while.",
           "cells": [
             {
               "kind": "logline",
@@ -1152,6 +1171,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000001d",
           "title": "Rain fell",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -1213,6 +1234,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000001e",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1282,6 +1304,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000001f",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -1363,6 +1387,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000020",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1426,12 +1451,12 @@
     {
       "id": "00000000-0000-4000-8000-000000000021",
       "title": "Beat 3",
-      "color": "#3b82f6",
       "description": "On the harbor all night while the last ferry waited for a.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-000000000022",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1501,6 +1526,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000023",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along.",
           "cells": [
             {
               "kind": "logline",
@@ -1582,6 +1608,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000024",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1643,6 +1670,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000025",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -1712,6 +1741,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000026",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger who never came.",
           "cells": [
             {
               "kind": "logline",
@@ -1793,6 +1823,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000027",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -1854,6 +1886,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000028",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -1923,6 +1956,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000029",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell.",
           "cells": [
             {
               "kind": "logline",
@@ -2004,6 +2038,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000002a",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2065,6 +2100,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000002b",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2141,6 +2177,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000002d",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -2222,6 +2260,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000002e",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2283,6 +2322,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000002f",
           "title": "Rain fell",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -2352,6 +2393,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000030",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along the quay twice.",
           "cells": [
             {
               "kind": "logline",
@@ -2433,6 +2475,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000031",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2494,6 +2537,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000032",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2563,6 +2607,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000033",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited.",
           "cells": [
             {
               "kind": "logline",
@@ -2644,6 +2689,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000034",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -2705,6 +2752,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000035",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2774,6 +2822,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000036",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -2862,6 +2912,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000038",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2923,6 +2974,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000039",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -2992,6 +3044,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000003a",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one of them had.",
           "cells": [
             {
               "kind": "logline",
@@ -3073,6 +3126,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000003b",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -3134,6 +3188,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000003c",
           "title": "Rain fell",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -3203,6 +3259,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000003d",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted.",
           "cells": [
             {
               "kind": "logline",
@@ -3284,6 +3341,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000003e",
           "title": "Keeper counted",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -3345,6 +3404,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000003f",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -3414,6 +3474,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000040",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger.",
           "cells": [
             {
               "kind": "logline",
@@ -3495,6 +3556,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000041",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -3558,12 +3620,12 @@
     {
       "id": "00000000-0000-4000-8000-000000000042",
       "title": "Beat 6",
-      "color": "#ef4444",
       "description": "All night while the last ferry waited for a passenger who never came and the.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-000000000043",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -3633,6 +3695,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000044",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor all night while.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -3714,6 +3778,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000045",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -3775,6 +3840,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000046",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -3844,6 +3911,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000047",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself.",
           "cells": [
             {
               "kind": "logline",
@@ -3925,6 +3993,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000048",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -3986,6 +4055,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000049",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -4055,6 +4125,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000004a",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along.",
           "cells": [
             {
               "kind": "logline",
@@ -4136,6 +4207,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000004b",
           "title": "Keeper counted",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -4197,6 +4270,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000004c",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -4273,6 +4347,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000004e",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger who never came.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -4354,6 +4430,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000004f",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -4415,6 +4492,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000050",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -4484,6 +4562,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000051",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell.",
           "cells": [
             {
               "kind": "logline",
@@ -4565,6 +4644,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000052",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -4626,6 +4706,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000053",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -4695,6 +4777,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000054",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one.",
           "cells": [
             {
               "kind": "logline",
@@ -4776,6 +4859,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000055",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -4837,6 +4922,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000056",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -4906,6 +4992,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000057",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along the quay twice.",
           "cells": [
             {
               "kind": "logline",
@@ -4989,12 +5076,12 @@
     {
       "id": "00000000-0000-4000-8000-000000000058",
       "title": "Beat 8",
-      "color": "#3b82f6",
       "description": "While the last ferry waited for a passenger who never came and the keeper counted the lamps.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-000000000059",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5056,6 +5143,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000005a",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5125,6 +5213,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000005b",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -5206,6 +5296,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000005c",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5267,6 +5358,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000005d",
           "title": "Keeper counted",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -5336,6 +5429,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000005e",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor.",
           "cells": [
             {
               "kind": "logline",
@@ -5417,6 +5511,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000005f",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5478,6 +5573,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000060",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5547,6 +5643,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000061",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one of them had.",
           "cells": [
             {
               "kind": "logline",
@@ -5628,6 +5725,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000062",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -5696,6 +5795,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000064",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5765,6 +5865,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000065",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -5846,6 +5948,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000066",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5907,6 +6010,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000067",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -5976,6 +6080,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000068",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger.",
           "cells": [
             {
               "kind": "logline",
@@ -6057,6 +6162,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000069",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -6118,6 +6224,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000006a",
           "title": "Keeper counted",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -6187,6 +6295,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000006b",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor all night while.",
           "cells": [
             {
               "kind": "logline",
@@ -6268,6 +6377,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000006c",
           "title": "Rain fell",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -6329,6 +6440,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000006d",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -6405,6 +6517,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000006f",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself.",
           "cells": [
             {
               "kind": "logline",
@@ -6486,6 +6599,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000070",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -6547,6 +6661,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000071",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -6616,6 +6731,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000072",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -6697,6 +6814,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000073",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -6758,6 +6876,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000074",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -6827,6 +6947,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000075",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger who never came.",
           "cells": [
             {
               "kind": "logline",
@@ -6908,6 +7029,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000076",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -6969,6 +7091,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000077",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -7038,6 +7161,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000078",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell.",
           "cells": [
             {
               "kind": "logline",
@@ -7121,12 +7245,13 @@
     {
       "id": "00000000-0000-4000-8000-000000000079",
       "title": "Beat 11",
-      "color": "#ef4444",
       "description": "Ferry waited for a passenger who never came and the keeper counted the lamps along the quay twice before he.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-00000000007a",
           "title": "Rain fell",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -7188,6 +7313,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000007b",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -7257,6 +7383,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000007c",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -7338,6 +7466,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000007d",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -7399,6 +7528,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000007e",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -7468,6 +7598,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000007f",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along the quay twice.",
           "cells": [
             {
               "kind": "logline",
@@ -7549,6 +7680,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000080",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -7610,6 +7742,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000081",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -7679,6 +7813,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000082",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited.",
           "cells": [
             {
               "kind": "logline",
@@ -7760,6 +7895,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000083",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -7828,6 +7965,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000085",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -7897,6 +8035,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000086",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor.",
           "cells": [
             {
               "kind": "logline",
@@ -7978,6 +8117,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000087",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8039,6 +8179,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000088",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8108,6 +8249,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000089",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one of them had.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -8189,6 +8332,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000008a",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8250,6 +8394,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000008b",
           "title": "Rain fell",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -8319,6 +8465,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000008c",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted.",
           "cells": [
             {
               "kind": "logline",
@@ -8400,6 +8547,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000008d",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8461,6 +8609,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000008e",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8532,12 +8681,12 @@
     {
       "id": "00000000-0000-4000-8000-00000000008f",
       "title": "Beat 13",
-      "color": "#3b82f6",
       "description": "For a passenger who never came and the keeper counted.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-000000000090",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger.",
           "cells": [
             {
               "kind": "logline",
@@ -8619,6 +8768,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000091",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -8680,6 +8831,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000092",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8749,6 +8901,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000093",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor all night while.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -8830,6 +8984,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000094",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8891,6 +9046,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000095",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -8960,6 +9116,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000096",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself.",
           "cells": [
             {
               "kind": "logline",
@@ -9041,6 +9198,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000097",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -9102,6 +9260,8 @@
         {
           "id": "00000000-0000-4000-8000-000000000098",
           "title": "Rain fell",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -9171,6 +9331,7 @@
         {
           "id": "00000000-0000-4000-8000-000000000099",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along.",
           "cells": [
             {
               "kind": "logline",
@@ -9259,6 +9420,8 @@
         {
           "id": "00000000-0000-4000-8000-00000000009b",
           "title": "Keeper counted",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -9320,6 +9483,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000009c",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -9389,6 +9553,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000009d",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger who never came.",
           "cells": [
             {
               "kind": "logline",
@@ -9470,6 +9635,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000009e",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -9531,6 +9697,7 @@
         {
           "id": "00000000-0000-4000-8000-00000000009f",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -9600,6 +9767,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a0",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -9681,6 +9850,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a1",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -9742,6 +9912,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a2",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -9811,6 +9983,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a3",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one.",
           "cells": [
             {
               "kind": "logline",
@@ -9892,6 +10065,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a4",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -9960,6 +10134,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a6",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -10029,6 +10204,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a7",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along the quay twice.",
           "cells": [
             {
               "kind": "logline",
@@ -10110,6 +10286,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a8",
           "title": "Keeper counted",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -10171,6 +10349,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000a9",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -10240,6 +10419,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000aa",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -10321,6 +10502,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ab",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -10382,6 +10564,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ac",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -10451,6 +10634,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ad",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor.",
           "cells": [
             {
               "kind": "logline",
@@ -10532,6 +10716,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ae",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -10593,6 +10778,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000af",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -10664,12 +10851,12 @@
     {
       "id": "00000000-0000-4000-8000-0000000000b0",
       "title": "Beat 16",
-      "color": "#ef4444",
       "description": "Who never came and the keeper counted the lamps along the quay twice.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-0000000000b1",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one of them had.",
           "cells": [
             {
               "kind": "logline",
@@ -10751,6 +10938,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b2",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -10812,6 +11001,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b3",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -10881,6 +11071,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b4",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted.",
           "cells": [
             {
               "kind": "logline",
@@ -10962,6 +11153,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b5",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11023,6 +11215,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b6",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11092,6 +11285,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b7",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -11173,6 +11368,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b8",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11234,6 +11430,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000b9",
           "title": "Keeper counted",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -11303,6 +11501,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ba",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor all night while.",
           "cells": [
             {
               "kind": "logline",
@@ -11391,6 +11590,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000bc",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11452,6 +11652,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000bd",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11521,6 +11722,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000be",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself.",
           "cells": [
             {
               "kind": "logline",
@@ -11602,6 +11804,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000bf",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -11663,6 +11867,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c0",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11732,6 +11937,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c1",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -11813,6 +12020,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c2",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11874,6 +12082,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c3",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -11943,6 +12152,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c4",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger who never came.",
           "cells": [
             {
               "kind": "logline",
@@ -12024,6 +12234,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c5",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -12087,12 +12298,13 @@
     {
       "id": "00000000-0000-4000-8000-0000000000c6",
       "title": "Beat 18",
-      "color": "#3b82f6",
       "description": "Came and the keeper counted the lamps along the quay twice before he let himself.",
       "scenes": [
         {
           "id": "00000000-0000-4000-8000-0000000000c7",
           "title": "Keeper counted",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -12162,6 +12374,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c8",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell.",
           "cells": [
             {
               "kind": "logline",
@@ -12243,6 +12456,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000c9",
           "title": "Rain fell",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -12304,6 +12519,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ca",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -12373,6 +12589,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000cb",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one.",
           "cells": [
             {
               "kind": "logline",
@@ -12454,6 +12671,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000cc",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -12515,6 +12733,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000cd",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -12584,6 +12803,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000ce",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted the lamps along the quay twice.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -12665,6 +12886,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000cf",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -12726,6 +12948,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d0",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -12802,6 +13026,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d2",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited.",
           "cells": [
             {
               "kind": "logline",
@@ -12883,6 +13108,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d3",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -12944,6 +13170,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d4",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -13013,6 +13240,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d5",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor.",
           "cells": [
             {
               "kind": "logline",
@@ -13094,6 +13322,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d6",
           "title": "Rain fell",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -13155,6 +13385,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d7",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -13224,6 +13455,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d8",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself believe that one of them had.",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -13305,6 +13538,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000d9",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -13366,6 +13600,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000da",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -13435,6 +13670,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000db",
           "title": "Ferry waited for a",
+          "description": "A passenger who never came and the keeper counted.",
           "cells": [
             {
               "kind": "logline",
@@ -13523,6 +13759,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000dd",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -13584,6 +13821,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000de",
           "title": "Let himself believe that",
+          "description": "",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -13653,6 +13892,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000df",
           "title": "Rain fell",
+          "description": "The harbor all night while the last ferry waited for a passenger.",
           "cells": [
             {
               "kind": "logline",
@@ -13734,6 +13974,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e0",
           "title": "Ferry waited for a",
+          "description": "",
+          "width": 36,
           "cells": [
             {
               "kind": "logline",
@@ -13795,6 +14037,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e1",
           "title": "Keeper counted",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -13864,6 +14107,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e2",
           "title": "Let himself believe that",
+          "description": "That one of them had gone dark rain fell on the harbor all night while.",
           "cells": [
             {
               "kind": "logline",
@@ -13945,6 +14189,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e3",
           "title": "Rain fell",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -14006,6 +14251,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e4",
           "title": "Ferry waited for a",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -14075,6 +14321,8 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e5",
           "title": "Keeper counted",
+          "description": "Lamps along the quay twice before he let himself.",
+          "width": 72,
           "cells": [
             {
               "kind": "logline",
@@ -14156,6 +14404,7 @@
         {
           "id": "00000000-0000-4000-8000-0000000000e6",
           "title": "Let himself believe that",
+          "description": "",
           "cells": [
             {
               "kind": "logline",
@@ -14232,13 +14481,15 @@
       "id": "00000000-0000-4000-8000-000000000003",
       "kind": "notes",
       "name": "Characters",
+      "label": "People",
       "color": "#e11d48"
     },
     {
       "id": "00000000-0000-4000-8000-000000000004",
       "kind": "notes",
       "name": "Setting",
-      "color": "#0ea5e9"
+      "color": "#0ea5e9",
+      "height": 40
     },
     {
       "id": "00000000-0000-4000-8000-000000000005",

@@ -6,8 +6,14 @@
       "title": "Compositeur",
       "description": "Une histoire disposée dans le temps, avec des temps forts qui contiennent des scènes et les calques qui les traversent.",
       "properties": {
-        "beats": { "title": "Temps forts", "description": "Les temps forts de l'histoire, dans l'ordre du récit." },
-        "layers": { "title": "Calques", "description": "Les calques du compositeur, dans l'ordre de leurs lignes." }
+        "beats": {
+          "title": "Temps forts",
+          "description": "Les temps forts de l'histoire, dans l'ordre du récit."
+        },
+        "layers": {
+          "title": "Calques",
+          "description": "Les calques du compositeur, dans l'ordre de leurs lignes."
+        }
       },
       "id": {
         "title": "Identifiant",
@@ -21,16 +27,34 @@
         "title": "Temps fort",
         "description": "Une étape de l'histoire, faite d'une suite ordonnée de scènes.",
         "properties": {
-          "title": { "title": "Titre" },
-          "description": { "title": "Description", "description": "Ce que le temps fort accomplit dans l'histoire." },
-          "scenes": { "title": "Scènes", "description": "Les scènes du temps fort, dans l'ordre du récit." }
+          "title": {
+            "title": "Titre"
+          },
+          "description": {
+            "title": "Description",
+            "description": "Ce que le temps fort accomplit dans l'histoire."
+          },
+          "scenes": {
+            "title": "Scènes",
+            "description": "Les scènes du temps fort, dans l'ordre du récit."
+          }
         }
       },
       "scene": {
         "title": "Scène",
         "description": "L'unité de temps de l'histoire, et une colonne de la chronologie.",
         "properties": {
-          "title": { "title": "Titre" },
+          "title": {
+            "title": "Titre"
+          },
+          "description": {
+            "title": "Description",
+            "description": "Ce qui se passe dans la scène, avec les mots de l'auteur."
+          },
+          "width": {
+            "title": "Largeur",
+            "description": "La largeur de la colonne de la scène sur un grand écran, en quarts de la taille de texte de base. Une scène sans largeur prend la largeur par défaut."
+          },
           "cells": {
             "title": "Cellules",
             "description": "Ce que les calques contiennent pour la scène, avec une cellule par calque au plus. Un calque sans cellule ne contient rien pour la scène."
@@ -45,21 +69,30 @@
         "title": "Notes",
         "description": "Du texte libre sur la scène.",
         "properties": {
-          "text": { "title": "Texte", "description": "Les notes, en texte brut." }
+          "text": {
+            "title": "Texte",
+            "description": "Les notes, en texte brut."
+          }
         }
       },
       "loglineCell": {
         "title": "Logline",
         "description": "La scène racontée en une ligne.",
         "properties": {
-          "text": { "title": "Texte", "description": "La ligne, en texte brut sans retour à la ligne." }
+          "text": {
+            "title": "Texte",
+            "description": "La ligne, en texte brut sans retour à la ligne."
+          }
         }
       },
       "scriptCell": {
         "title": "Script",
         "description": "Le texte de la scène.",
         "properties": {
-          "blocks": { "title": "Blocs", "description": "Les blocs du script, dans l'ordre de lecture." }
+          "blocks": {
+            "title": "Blocs",
+            "description": "Les blocs du script, dans l'ordre de lecture."
+          }
         }
       },
       "block": {
@@ -80,12 +113,18 @@
         "title": "Dialogue",
         "description": "La réplique d'un personnage.",
         "properties": {
-          "speaker": { "title": "Locuteur", "description": "Qui parle, sous le nom que l'histoire lui donne." },
+          "speaker": {
+            "title": "Locuteur",
+            "description": "Qui parle, sous le nom que l'histoire lui donne."
+          },
           "tone": {
             "title": "Ton",
             "description": "La manière de dire la réplique, comme « à voix basse » ou « avec un rire amer »."
           },
-          "text": { "title": "Texte", "description": "Les mots prononcés, sans guillemets." }
+          "text": {
+            "title": "Texte",
+            "description": "Les mots prononcés, sans guillemets."
+          }
         }
       },
       "layer": {
@@ -96,7 +135,17 @@
             "title": "Type",
             "description": "Ce que le calque contient pour chaque scène, à savoir des notes, une logline, un script, ou des liens vers d'autres éléments du projet."
           },
-          "name": { "title": "Nom" },
+          "name": {
+            "title": "Nom"
+          },
+          "label": {
+            "title": "Type",
+            "description": "Le nom que l'auteur donne à ce que suit le calque, comme un personnage ou un lieu. Sans ce nom, un calque affiche son genre."
+          },
+          "height": {
+            "title": "Hauteur",
+            "description": "La hauteur minimale de la ligne du calque sur un grand écran, en quarts de la taille de texte de base. Un calque sans hauteur est aussi haut que ce qu'il contient."
+          },
           "accepts": {
             "title": "Exports acceptés",
             "description": "Sur un calque de liens, les exports dont ses liens désignent les éléments, par leur nom. Le projet conserve les liens eux-mêmes, hors du compositeur."
@@ -104,8 +153,13 @@
         }
       }
     },
-    "exports": { "scenes": "Scènes" },
-    "layers": { "scenes": "Scènes", "enrichedScenes": "Scènes enrichies" },
+    "exports": {
+      "scenes": "Scènes"
+    },
+    "layers": {
+      "scenes": "Scènes",
+      "enrichedScenes": "Scènes enrichies"
+    },
     "presets": {
       "blank": {
         "name": "Vierge",
@@ -219,6 +273,74 @@
           }
         }
       }
+    },
+    "start": {
+      "title": "Choisissez une structure de départ",
+      "description": "Une structure pose les temps forts de votre histoire. Vous pourrez ensuite tout renommer, compléter et supprimer."
+    },
+    "timeline": {
+      "label": "Chronologie",
+      "actions": {
+        "of": "Actions sur {{name}}",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "undo": "Annuler",
+        "retry": "Réessayer",
+        "save": "Enregistrer",
+        "cancel": "Annuler"
+      },
+      "beats": {
+        "untitled": "Temps fort {{position}}",
+        "edit": "Modifier le temps fort",
+        "add": "Ajouter un temps fort",
+        "addBefore": "Ajouter un temps fort avant",
+        "addAfter": "Ajouter un temps fort après",
+        "deleted": "Vous avez supprimé le temps fort « {{name}} »."
+      },
+      "scenes": {
+        "untitled": "Scène {{position}}",
+        "edit": "Modifier la scène",
+        "add": "Ajouter une scène",
+        "addBefore": "Ajouter une scène avant",
+        "addAfter": "Ajouter une scène après",
+        "deleted": "Vous avez supprimé la scène « {{name}} ».",
+        "previous": "Scène précédente",
+        "next": "Scène suivante"
+      },
+      "layers": {
+        "name": "Nom",
+        "label": "Type",
+        "color": "Couleur",
+        "edit": "Modifier le calque",
+        "add": "Ajouter un calque",
+        "kinds": {
+          "notes": "Notes",
+          "logline": "Logline",
+          "script": "Script",
+          "link": "Liens"
+        },
+        "deleted": "Vous avez supprimé le calque « {{name}} ».",
+        "names": "Noms des calques"
+      },
+      "cells": {
+        "label": "{{layer}}, {{scene}}",
+        "actions": "Actions sur cette carte",
+        "deleted": "Vous avez supprimé le contenu de « {{layer}} » pour « {{scene}} ».",
+        "words_one": "{{count}} mot",
+        "words_other": "{{count}} mots"
+      },
+      "sizes": {
+        "defaultWidth": "Largeur par défaut",
+        "defaultHeight": "Hauteur par défaut"
+      },
+      "fields": {
+        "title": "Titre",
+        "description": "Description"
+      }
+    },
+    "failures": {
+      "load": "Nous n'avons pas pu charger ce compositeur.",
+      "save": "Nous n'avons pas pu enregistrer vos dernières modifications."
     }
   }
 }

@@ -14,8 +14,6 @@ export type Beat = {
   id: string;
 
   title: string;
-  /** A six-digit hex value. A beat without one has no color. */
-  color?: string;
   /** What the beat does in the story. */
   description: string;
 
@@ -28,6 +26,13 @@ export type Scene = {
   id: string;
 
   title: string;
+  /** What happens in the scene, in the writer's own words. */
+  description: string;
+  /**
+   * The width of the scene's column on a wide screen, in quarters of the base text size. A scene
+   * without one takes the default width.
+   */
+  width?: number;
 
   /** What the layers hold for the scene, with one cell per layer at most. */
   cells: Cell[];
@@ -99,8 +104,15 @@ export type Layer = {
   kind: "notes" | "logline" | "script" | "link";
 
   name: string;
+  /** What the writer calls what the layer follows. A layer without one shows its kind. */
+  label?: string;
   /** A six-digit hex value. A layer without one has no color. */
   color?: string;
+  /**
+   * The least height of the layer's row on a wide screen, in quarters of the base text size. A
+   * layer without one is as tall as what it holds.
+   */
+  height?: number;
   /** On a link layer, the names of the exports whose items its links point at. */
   accepts?: string[];
 };

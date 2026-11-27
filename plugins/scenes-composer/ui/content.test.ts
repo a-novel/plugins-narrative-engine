@@ -26,9 +26,22 @@ function sample() {
     blocks: [{ kind: "narration", text: "Rain fell on the harbor.\n\nNobody came." }, dialogue],
   };
 
-  const scene: Scene = { id: nextId(), title: "The last ferry", cells: [notesCell, loglineCell, scriptCell] };
-  const beat: Beat = { id: nextId(), title: "Setup", color: "#E11D48", description: "", scenes: [scene] };
-  const linkLayer: Layer = { id: link, kind: "link", name: "Callbacks", color: "#f59e0b", accepts: ["scenes"] };
+  const scene: Scene = {
+    id: nextId(),
+    title: "The last ferry",
+    description: "A quay, at night.",
+    width: 64,
+    cells: [notesCell, loglineCell, scriptCell],
+  };
+  const beat: Beat = { id: nextId(), title: "Setup", description: "", scenes: [scene] };
+  const linkLayer: Layer = {
+    id: link,
+    kind: "link",
+    name: "Callbacks",
+    color: "#F59E0B",
+    height: 24,
+    accepts: ["scenes"],
+  };
 
   const content: Content = {
     beats: [beat],
@@ -71,8 +84,14 @@ describe("the schema", () => {
   it.each<[string, (parts: ReturnType<typeof sample>) => void, string]>([
     ["an ID that is not a UUID", ({ beat }) => (beat.id = "setup"), "/beats/0/id"],
     ["an ID in capitals", ({ scene }) => (scene.id = crypto.randomUUID().toUpperCase()), "/beats/0/scenes/0/id"],
-    ["a color by its name", ({ beat }) => (beat.color = "red"), "/beats/0/color"],
+    ["a color by its name", ({ linkLayer }) => (linkLayer.color = "red"), "/layers/3/color"],
     ["a color of three digits", ({ linkLayer }) => (linkLayer.color = "#f90"), "/layers/3/color"],
+    ["a color on a beat", ({ beat }) => Object.assign(beat, { color: "#e11d48" }), "/beats/0/color"],
+    ["a width that is not a whole number", ({ scene }) => (scene.width = 48.5), "/beats/0/scenes/0/width"],
+    ["a width under the least", ({ scene }) => (scene.width = 31), "/beats/0/scenes/0/width"],
+    ["a width over the most", ({ scene }) => (scene.width = 241), "/beats/0/scenes/0/width"],
+    ["a height under the least", ({ linkLayer }) => (linkLayer.height = 7), "/layers/3/height"],
+    ["a height over the most", ({ linkLayer }) => (linkLayer.height = 161), "/layers/3/height"],
     ["a title on two lines", ({ scene }) => (scene.title = "The last\nferry"), "/beats/0/scenes/0/title"],
     [
       "a logline on two lines",
