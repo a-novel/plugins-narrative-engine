@@ -4,7 +4,7 @@ import { build, writeBuild } from "./build.js";
 import { check } from "./check.js";
 import { readPlugin } from "./folder.js";
 import { preview } from "./preview.js";
-import { publish } from "./publish.js";
+import { publish, readApiKey } from "./publish.js";
 
 import { basename } from "node:path";
 import { parseArgs } from "node:util";
@@ -64,8 +64,8 @@ async function run(): Promise<string> {
   }
 
   if (values.url === undefined) throw new Error(USAGE);
-  const token = process.env.PLUGIN_PUBLISH_TOKEN;
-  const { version, published } = await publish(plugin, { url: values.url, prerelease: values.prerelease, token });
+  const apiKey = readApiKey(process.env);
+  const { version, published } = await publish(plugin, { url: values.url, prerelease: values.prerelease, apiKey });
   return `${plugin.name}@${version} ${published ? "is published" : "was already published"}.`;
 }
 
