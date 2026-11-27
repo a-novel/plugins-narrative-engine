@@ -99,10 +99,12 @@ describe("plugin-kit", () => {
   });
 
   // GitHub Actions sets an empty variable for a missing secret.
-  it("fails on an empty API key before any request", async () => {
-    // Port 0 answers nothing: a request would fail on the registry instead.
+  it("fails on an empty API key before the check and any request", async () => {
+    // The copy fails its check, so the check would report its fixture first. Port 0 answers
+    // nothing: a request would fail on the registry instead.
+    const folder = copySample({ "fixtures/1.0.0/outline.json": "{}" });
     expect(
-      await runAsync(SAMPLE, { PLUGIN_PUBLISH_PRIVATE_KEY: "" }, "publish", "--url", "http://127.0.0.1:0/")
+      await runAsync(folder, { PLUGIN_PUBLISH_PRIVATE_KEY: "" }, "publish", "--url", "http://127.0.0.1:0/")
     ).toEqual({
       status: 1,
       stdout: "",
