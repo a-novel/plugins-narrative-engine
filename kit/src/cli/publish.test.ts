@@ -1,11 +1,13 @@
 import { makeApiKey, readToken } from "./apiKey.fixture.js";
 import { readPlugin } from "./folder.js";
 import { API_KEY_VARIABLE, publish, readApiKey } from "./publish.js";
-import { copySample } from "./sample.fixture.js";
+import { SAMPLE, copySample } from "./sample.fixture.js";
 
 import { createHash, generateKeyPairSync } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { type IncomingHttpHeaders, type Server, createServer } from "node:http";
 import type { AddressInfo } from "node:net";
+import { join } from "node:path";
 
 import { afterAll, beforeAll, beforeEach, describe, expect, it, onTestFinished, vi } from "vitest";
 
@@ -59,10 +61,25 @@ describe("publish", () => {
       version: "1.1.0",
       schema: (manifest as { schema: unknown }).schema,
       exports: { beats: { name: "exports.beats", select: "$.beats[*]", id: "/id", label: "/title" } },
+      links: {
+        order: {
+          rule: "sequence",
+          steps: { select: "$.beats[*]", id: "/id", target: "beats" },
+          parts: { select: "$.scenes[*]", id: "/id" },
+        },
+      },
       ui: expect.stringContaining("export"),
       migration: expect.stringContaining("migrated"),
       languages: plugin.languages,
     });
+  });
+
+  it("leaves the rules out of a version that declares none", async () => {
+    const [ruleless] = readFileSync(join(SAMPLE, "versions/1.1.0.yaml"), "utf8").split("links:");
+    await publish(readPlugin(copySample({ "versions/1.1.0.yaml": ruleless! })), { url });
+
+    expect(requests[0]!.body).toHaveProperty("exports");
+    expect(requests[0]!.body).not.toHaveProperty("links");
   });
 
   it("leaves the migration and its digest out of a version that has none", async () => {

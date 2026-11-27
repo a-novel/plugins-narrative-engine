@@ -15,6 +15,8 @@ describe("the package entry", () => {
       "HOST_API",
       "checkManifest",
       "checkMessages",
+      "checkRules",
+      "listDynamicLinks",
       "listExports",
       "upgrade",
     ]);

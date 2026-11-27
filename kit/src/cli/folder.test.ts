@@ -31,7 +31,10 @@ describe("readPlugin", () => {
         version: "1.1.0",
         manifest: expect.objectContaining({ schema: expect.objectContaining({ default: { beats: [] } }) }),
         migration: "migrations/1.1.0.ts",
-        fixtures: { "fixtures/1.1.0/outline.json": { beats } },
+        fixtures: {
+          "fixtures/1.1.0/outline.json": { beats },
+          "fixtures/1.1.0/scenes.json": { beats: expect.any(Array) },
+        },
       },
     ]);
   });

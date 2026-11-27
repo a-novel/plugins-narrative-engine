@@ -110,8 +110,9 @@ tells a host.
 
 ### The manifest
 
-A manifest holds the schema of the content and the items an instance exports for links. A plugin
-writes one per version in YAML, `versions/<version>.yaml`, and publishes it as JSON. The contract
+A manifest holds the schema of the content, the items an instance exports for links, and the rules
+that derive its dynamic links. A plugin writes one per version in YAML, `versions/<version>.yaml`,
+and publishes it as JSON. The contract
 holds
 [its format and its rules](https://github.com/a-novel/plugins-narrative-engine/tree/master/contract#the-manifest),
 which `plugin-kit check` applies.
@@ -161,9 +162,11 @@ The package installs `plugin-kit`, which runs in the folder of a plugin.
    published with its own, so a key it names can leave. The styles of the `ui` folder keep
    [uikit's token contract](#the-styles), which the check of the plugin's own tokens package
    verifies (`uikit-token-contract`).
-2. Every fixture is valid against the schema of its own version. It then upgrades through each later
-   version as a host upgrades an instance, with the migrations as `build` writes them. An upgrade
-   may set content aside only on the step that enters a new major version, and no step may stop it.
+2. Every fixture is valid against the schema of its own version, and the rules of that version
+   address each of its steps and parts, as `checkRules` of the contract verifies. It then upgrades
+   through each later version as a host upgrades an instance, with the migrations as `build` writes
+   them. An upgrade may set content aside only on the step that enters a new major version, and no
+   step may stop it.
 
 `build` bundles each module with everything it imports, minified, into one file that a browser
 loads as it is. The command always builds for production, whatever `NODE_ENV` says. A UI module
@@ -201,12 +204,15 @@ plugin-kit preview --port 5300 --host 127.0.0.1
   "version": "1.1.0",
   "schema": {},
   "exports": {},
+  "links": {},
   "ui": "the source of the UI module",
   "migration": "the source of the migration to this version, when it has one",
   "languages": { "en": { "title": "", "description": "", "messages": {} } },
   "proof": "the version's proof, when the command holds an API key"
 }
 ```
+
+The body carries `links`, the rules of the version, only when its manifest declares them.
 
 A registry answers 409 for a version it already holds, which `publish` reads as done, so a release
 can run twice. Any other refusal fails the command with the status and the body of the answer.

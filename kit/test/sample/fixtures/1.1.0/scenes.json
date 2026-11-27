@@ -1,0 +1,22 @@
+{
+  "beats": [
+    {
+      "id": "opening",
+      "title": "Opening",
+      "scenes": [
+        { "id": "harbor", "title": "The harbor" },
+        { "id": "letter", "title": "The letter" }
+      ]
+    },
+    {
+      "id": "midpoint",
+      "title": "Midpoint",
+      "scenes": [
+        { "id": "storm", "title": "The storm" },
+        { "id": "wreck", "title": "The wreck" }
+      ]
+    },
+    { "id": "finale", "title": "Finale", "scenes": [{ "id": "shore", "title": "The shore" }] },
+    { "id": "epilogue", "title": "Epilogue" }
+  ]
+}

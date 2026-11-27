@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Narrative Engine plugin manifest",
-  "description": "The description of one plugin version: the schema of its content and the items it exports.",
+  "description": "The description of one plugin version: the schema of its content, the items it exports and the rules that derive its dynamic links.",
   "type": "object",
   "required": ["manifest", "schema", "exports"],
   "properties": {
@@ -16,8 +16,13 @@
     "exports": {
       "description": "The lists of linkable items an instance exposes, by export name. A link addresses an item as `<export>/<id>`, so a name holds no slash.",
       "type": "object",
-      "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9_-]*$" },
+      "propertyNames": { "$ref": "#/$defs/name" },
       "additionalProperties": { "$ref": "#/$defs/export" }
+    },
+    "links": {
+      "description": "The rules that derive dynamic links from the content of an instance, by relationship.",
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/rule" }
     },
     "aiSchema": {
       "description": "Reserved."
@@ -34,9 +39,8 @@
           "type": "string"
         },
         "select": {
-          "description": "The path to the exported items: `$`, then member names and `[*]`, a subset of JSONPath (RFC 9535).",
-          "type": "string",
-          "pattern": "^\\$(\\.[A-Za-z_][A-Za-z0-9_]*|\\[\\*\\])*$"
+          "description": "The path to the exported items in the content.",
+          "$ref": "#/$defs/path"
         },
         "id": {
           "description": "The JSON Pointer (RFC 6901) to the identifier inside each item.",
@@ -48,6 +52,63 @@
         }
       },
       "additionalProperties": false
+    },
+    "rule": {
+      "description": "A rule of the one kind, `sequence`. Its steps are ordered as the arrays of the content hold them, and it derives a link from each step and each part to each other one. The distance of a link is the position of its destination's step minus the position of its source's step.",
+      "type": "object",
+      "required": ["rule", "steps"],
+      "properties": {
+        "rule": {
+          "description": "The kind of the rule.",
+          "const": "sequence"
+        },
+        "steps": {
+          "type": "object",
+          "required": ["select", "id", "target"],
+          "properties": {
+            "select": {
+              "description": "The path to the steps in the content. Its `[*]` reaches the items of an array alone: an object keeps its members in no order.",
+              "$ref": "#/$defs/path"
+            },
+            "id": {
+              "description": "The JSON Pointer (RFC 6901) to the identifier inside each step.",
+              "$ref": "#/$defs/pointer"
+            },
+            "target": {
+              "description": "The name the steps are addressed under: a step is `<target>/<step ID>`. Under the name of an export, the steps are that export's items, selected with its `select` and its `id`.",
+              "$ref": "#/$defs/name"
+            }
+          },
+          "additionalProperties": false
+        },
+        "parts": {
+          "description": "The parts of a step, each addressed `<target>/<step ID>/<part ID>`.",
+          "type": "object",
+          "required": ["select", "id"],
+          "properties": {
+            "select": {
+              "description": "The path to the parts, from their step.",
+              "$ref": "#/$defs/path"
+            },
+            "id": {
+              "description": "The JSON Pointer (RFC 6901) to the identifier inside each part.",
+              "$ref": "#/$defs/pointer"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "description": "The first segment of an address, which holds no slash.",
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+    },
+    "path": {
+      "description": "`$`, then member names and `[*]`: a subset of JSONPath (RFC 9535).",
+      "type": "string",
+      "pattern": "^\\$(\\.[A-Za-z_][A-Za-z0-9_]*|\\[\\*\\])*$"
     },
     "pointer": {
       "type": "string",

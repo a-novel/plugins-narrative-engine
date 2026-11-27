@@ -77,7 +77,7 @@ export async function publish(plugin: PluginFolder, { url, prerelease, apiKey }:
 
   const version = prerelease === undefined ? plugin.version : `${plugin.version}-${prerelease}`;
   const { ui, migrations } = await build(plugin, version);
-  const { schema, exports } = plugin.versions.at(-1)!.manifest as Manifest;
+  const { schema, exports, links } = plugin.versions.at(-1)!.manifest as Manifest;
   const migration = migrations[plugin.version];
   // The proof covers both modules byte for byte, as the registry stores and serves them
   // (a-novel/.github#617). JSON leaves out an undefined member, so a version without a migration
@@ -88,12 +88,14 @@ export async function publish(plugin: PluginFolder, { url, prerelease, apiKey }:
     uiSHA256: sha256(ui),
     migrationSHA256: migration === undefined ? undefined : sha256(migration),
   });
-  // The request token signs the digest of the body, so the request sends this very string.
+  // The request token signs the digest of the body, so the request sends this very string. A
+  // manifest that declares no rule sends no `links`.
   const body = JSON.stringify({
     plugin: plugin.name,
     version,
     schema,
     exports,
+    links,
     ui,
     migration,
     languages: plugin.languages,

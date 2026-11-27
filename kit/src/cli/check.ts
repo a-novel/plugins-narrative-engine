@@ -8,13 +8,13 @@ import { join } from "node:path";
 import { validateJson } from "@a-novel-kit/nodelib-json";
 import {
   type Json,
-  type JsonObject,
   type Manifest,
   type Messages,
   type Migration,
   type UpgradeStep,
   checkManifest,
   checkMessages,
+  checkRules,
   upgrade,
 } from "@a-novel/plugins-narrative-engine-contract";
 
@@ -24,9 +24,9 @@ import {
  *
  * Every manifest and every language passes the checks of the contract, where only the current
  * version is held to the English translation keys, and the styles of the UI keep the token contract
- * of the UI kit. Then every fixture is valid against its own version and upgrades to the current
- * one through the built migrations, where a step may set content aside only when it enters a new
- * major version.
+ * of the UI kit. Then every fixture is valid against its own version, whose rules address each of
+ * its steps and parts, and upgrades to the current one through the built migrations, where a step
+ * may set content aside only when it enters a new major version.
  *
  * @throws When a migration does not build, when the plugin does not depend on the UI kit, or when
  *   the token contract check does not run.
@@ -96,9 +96,9 @@ async function checkFixtures({ versions }: PluginFolder, migrations: Record<stri
   );
 
   const problems: string[] = [];
-  for (const [index, { fixtures }] of versions.entries()) {
+  for (const [index, { manifest, fixtures }] of versions.entries()) {
     for (const [file, content] of Object.entries(fixtures)) {
-      const found = await replay(content, steps[index]!.schema, steps.slice(index + 1), lossless);
+      const found = await replay(content, manifest as Manifest, steps.slice(index + 1), lossless);
       problems.push(...found.map((problem) => `${file}: ${problem}`));
     }
   }
@@ -129,13 +129,18 @@ async function load(version: string, source: string | undefined): Promise<Migrat
 /** Checks one fixture against its own version, then against the upgrade to the current one. */
 async function replay(
   content: Json,
-  schema: JsonObject,
+  { schema, links }: Manifest,
   steps: UpgradeStep[],
   lossless: Set<string>
 ): Promise<string[]> {
   const invalid = validateJson(schema, content);
   if (invalid.length > 0) return invalid.map(({ path, message }) => `${path || "/"}: ${message}`);
 
+  return [...checkRules(links, content), ...(await carry(content, steps, lossless))];
+}
+
+/** Carries one fixture to the current version, and lists what stops the upgrade or loses content. */
+async function carry(content: Json, steps: UpgradeStep[], lossless: Set<string>): Promise<string[]> {
   let upgraded;
   try {
     upgraded = await upgrade(content, steps);
